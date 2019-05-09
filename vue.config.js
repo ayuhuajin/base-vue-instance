@@ -1,6 +1,6 @@
 module.exports = {
   devServer: {
-    port: 6666 //启动端口
+    port: 10086 //启动端口
   },
   configureWebpack: c => {
     if (process.env.NODE_ENV == "production") {
