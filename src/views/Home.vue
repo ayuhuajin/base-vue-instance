@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    555
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
