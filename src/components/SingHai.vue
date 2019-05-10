@@ -6,8 +6,12 @@
     <div class="author">
       作者:wsinghai
     </div>
+    <!-- 饿了吗框架 -->
     <el-button>按钮</el-button>
-    <div ref="parameterLine" class="line" style="height: 26vh;width:99%"></div>
+    <!-- echart 曲线图 -->
+    <div ref="parameterLine" class="line" style="height: 200px;width:400px"></div>
+    <!-- 高德地图 -->
+    <div id="container" class="container" style="height:200px;width:400px;border:1px solid #dfe1e6;"></div>
   </div>
 </template>
 
@@ -15,6 +19,7 @@
 import Vue from 'vue';
 import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules/index.ts';
+import gdMap from '@/plugins/gdMaps.ts';
 export default Vue.extend({
   name: 'SingHai',
   mixins: [mixin],
@@ -25,10 +30,65 @@ export default Vue.extend({
     this.init();
     console.log((this as any).cname);
     this.parameterLine();
+    // 加载地图
+    this.loadMap();
   },
   methods: {
     async init() {
       await index.dispatch('getAllCategory');
+    },
+    // 加载地图
+    loadMap() {
+      gdMap().then(
+        AMap => {
+          let that = this;
+          console.log('地图加载成功');
+          let map = new (AMap as any).Map('container', {
+            resizeEnable: true,
+            center: [111.158728, 28.575624],
+            zoom: 5
+          });
+          // 地理编码，地址编经纬度
+          (AMap as any).plugin('AMap.Geocoder', function() {
+            var geocoder = new (AMap as any).Geocoder({
+              // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+              batch: true
+            });
+            let addresses: any = ['厦门市集美区杏林湾营运中心'];
+            let markers: any = [];
+            geocoder.getLocation(addresses, function(status: any, result: any) {
+              if (status === 'complete' && result.geocodes.length) {
+                //批量 生成点标记
+                for (let i = 0; i < result.geocodes.length; i += 1) {
+                  var marker = new (AMap as any).Marker({
+                    map: map,
+                    position: result.geocodes[i].location,
+                    icon: new (AMap as any).Icon({
+                      //自定义图标
+                      image:
+                        'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                      size: new (AMap as any).Size(52, 52), //图标大小
+                      imageSize: new (AMap as any).Size(18, 26)
+                    })
+                  });
+                  // 设置鼠标悬浮 标记点说明
+                  marker.setTitle(`公司`);
+                  // marker.setLabel({
+                  //   offset: new (AMap as any).Pixel(15, 15),
+                  //   content: '定位名称'
+                  // });
+                  markers.push(marker);
+                }
+                map.add(markers); // 添加标记
+                // map.setFitView(markers); // 自适应(setFitView)部分Marker显示
+              }
+            });
+          });
+        },
+        e => {
+          console.log('地图加载失败', e);
+        }
+      );
     },
     parameterLine() {
       this.$nextTick(() => {
