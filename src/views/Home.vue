@@ -1,18 +1,16 @@
 <template>
   <div class="home">
-    555
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <sing-hai />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
+import SingHai from '@/components/SingHai.vue'; // @ is an alias to /src
 export default Vue.extend({
   name: 'home',
   components: {
-    HelloWorld
+    SingHai
   },
   methods: {
     init() {
