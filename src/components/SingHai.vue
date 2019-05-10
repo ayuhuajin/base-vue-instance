@@ -6,7 +6,7 @@
     <div class="author">
       作者:wsinghai
     </div>
-    <el-button>el-button</el-button>
+    <el-button>按钮</el-button>
   </div>
 </template>
 
