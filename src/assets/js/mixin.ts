@@ -1,4 +1,5 @@
-export default {
+import Vue from 'vue';
+export default Vue.extend( {
   data() {
     return {
       cname: '嗨前端'
@@ -6,5 +7,11 @@ export default {
   },
   watch: {},
   computed: {},
+  created(){
+    console.log('mixin-created',this.cname)
+  },
+  mounted(){
+    console.log('mixin-mounted',this.cname);
+  },
   methods: {}
-};
+});

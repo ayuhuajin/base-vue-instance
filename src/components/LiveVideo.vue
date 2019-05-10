@@ -38,7 +38,11 @@ export default Vue.extend({
       dataList: [] as any
     };
   },
+  created() {
+    console.log('liveVideo-created');
+  },
   mounted() {
+    console.log('liveVideo-mounted');
     this.$nextTick(() => {
       let me = this;
       this.instance = videojs(

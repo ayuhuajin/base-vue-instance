@@ -10,9 +10,10 @@ import './plugins/echarts.js';
 import './plugins/video.js';
 
 Vue.config.productionTip = false;
-
+console.log('main.ts');
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app');
+
