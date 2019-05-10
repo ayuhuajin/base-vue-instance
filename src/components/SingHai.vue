@@ -7,6 +7,7 @@
       作者:wsinghai
     </div>
     <el-button>按钮</el-button>
+    <div ref="parameterLine" class="line" style="height: 26vh;width:99%"></div>
   </div>
 </template>
 
@@ -23,10 +24,68 @@ export default Vue.extend({
   mounted() {
     this.init();
     console.log((this as any).cname);
+    this.parameterLine();
   },
   methods: {
     async init() {
       await index.dispatch('getAllCategory');
+    },
+    parameterLine() {
+      this.$nextTick(() => {
+        let myChart: any = (this as any).$echarts.init(this.$refs.parameterLine);
+        myChart.clear();
+        myChart.showLoading({
+          text: '数据获取中',
+          textColor: '#fff',
+          effect: 'whirling',
+          maskColor: 'rgba(255, 255, 255, 0)'
+        });
+        setTimeout(function() {
+          myChart.hideLoading();
+        }, 500);
+
+        myChart.setOption({
+          grid: {
+            left: '39px',
+            right: '1%',
+            top: '12%',
+            bottom: '26%'
+          },
+          tooltip: {
+            show: true,
+            trigger: 'axis'
+          },
+          color: ['#729EFF', '#009944', '#FEC400'],
+          legend: {
+            show: true,
+            data: ['111', '222']
+          },
+          xAxis: {
+            type: 'category',
+            data: [1, 1, 1, 1, 2]
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: 'Forest',
+              type: 'bar',
+              barGap: 0,
+              data: [320, 332, 301, 334, 390]
+            },
+            {
+              name: 'Steppe',
+              type: 'bar',
+              data: [220, 182, 191, 234, 290]
+            }
+          ]
+        });
+
+        window.addEventListener('resize', function() {
+          myChart.resize();
+        });
+      });
     }
   }
 });
