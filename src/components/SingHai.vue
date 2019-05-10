@@ -1,17 +1,19 @@
 <template>
   <div>
-    <div class="name">
+    <section class="name">
       嗨前端
-    </div>
-    <div class="author">
+    </section>
+    <section class="author">
       作者:wsinghai
-    </div>
+    </section>
     <!-- 饿了吗框架 -->
-    <el-button>按钮</el-button>
+    <section>
+      <el-button>按钮</el-button>
+    </section>
     <!-- echart 曲线图 -->
-    <div ref="parameterLine" class="line" style="height: 200px;width:400px"></div>
+    <section ref="parameterLine" class="line" style="height: 200px;width:400px"></section>
     <!-- 高德地图 -->
-    <div id="container" class="container" style="height:200px;width:400px;border:1px solid #dfe1e6;"></div>
+    <section id="container" class="container" style="height:200px;width:400px;border:1px solid #dfe1e6;"></section>
   </div>
 </template>
 
@@ -154,7 +156,7 @@ export default Vue.extend({
 @import '@/assets/css/base.scss';
 .name {
   @include ellipsis;
-  width: 20px;
+  width: 40px;
 }
 .red-color {
   width: 120px;
@@ -163,8 +165,8 @@ export default Vue.extend({
 }
 //占位符 顾名思义，如果不被extend引用，它是不会被编译，也就是：不会占用css文件大小。这是和继承最大区别。
 %circle {
-  border-radius: 50%;
-  width: 20px;
+  border-radius: 5px;
+  width: 120px;
   height: 20px;
   line-height: 20px;
   text-align: center;
