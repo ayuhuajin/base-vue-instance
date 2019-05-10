@@ -6,7 +6,8 @@ import '@/assets/css/reset.css';  //样式重置
 import '@/assets/js/errorMonitoring.js'; // 错误监控
 import '@/services/mock/mock.ts';  // 模拟数据
 import './plugins/element.js';
-import './plugins/echarts.js'
+import './plugins/echarts.js';
+import './plugins/video.js';
 
 Vue.config.productionTip = false;
 

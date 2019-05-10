@@ -14,6 +14,9 @@
     <section ref="parameterLine" class="line" style="height: 200px;width:400px"></section>
     <!-- 高德地图 -->
     <section id="container" class="container" style="height:200px;width:400px;border:1px solid #dfe1e6;"></section>
+    <section style="width:200px;height:200px;">
+      <live-video :key="1" :url="videoUrl" :index="1"></live-video>
+    </section>
   </div>
 </template>
 
@@ -22,12 +25,20 @@ import Vue from 'vue';
 import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules/index.ts';
 import gdMap from '@/plugins/gdMaps.ts';
+import LiveVideo from '@/components/LiveVideo.vue';
 export default Vue.extend({
   name: 'SingHai',
   mixins: [mixin],
-  props: {
-    msg: String
+  components: {
+    LiveVideo
   },
+  data() {
+    return {
+      videoUrl:
+        'http://alhlsgw.lechange.com:9001/LCO/3E00EBAPAZ76A22/0/1/20170925133417/dev_20170925133417_itq70exptp5sa470.m3u8'
+    };
+  },
+
   mounted() {
     this.init();
     console.log((this as any).cname);
@@ -175,5 +186,9 @@ export default Vue.extend({
 .author {
   @extend .red-color; //这里将继承.red-color类的所有样式
   @extend %circle; //这里将继承占位符所有样式
+}
+// video
+.video-plugin {
+  height: 100%;
 }
 </style>
