@@ -15,7 +15,7 @@
     <!-- 高德地图 -->
     <section id="container" class="container" style="height:200px;width:400px;border:1px solid #dfe1e6;"></section>
     <section style="width:200px;height:200px;">
-      <live-video :key="1" :url="videoUrl" :index="1"></live-video>
+      <!-- <live-video :key="1" :url="videoUrl" :index="1"></live-video> -->
     </section>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default Vue.extend({
   name: 'SingHai',
   mixins: [mixin],
   components: {
-    LiveVideo
+    // LiveVideo
   },
   data() {
     return {
