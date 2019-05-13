@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 
 Vue.use(Router);
-console.log('router')
+console.log('router');
 
 export default new Router({
   mode: 'history',
@@ -12,7 +12,7 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
-    },
+    }
     // {
     //   path: '/about',
     //   name: 'about',
