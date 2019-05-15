@@ -17,6 +17,9 @@
     <section style="width:200px;height:200px;">
       <!-- <live-video :key="1" :url="videoUrl" :index="1"></live-video> -->
     </section>
+    <section>
+      <div id="editor" style="min-width:700px;max-width:1200px;margin: 0 auto;"></div>
+    </section>
   </div>
 </template>
 
@@ -27,6 +30,7 @@ import About from '@/views/About.vue';
 import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules/index.ts';
 import gdMap from '@/plugins/gdMaps.ts';
+import wangeditor from 'wangeditor';
 
 export default Vue.extend({
   name: 'SingHai',
@@ -45,6 +49,7 @@ export default Vue.extend({
     this.parameterLine();
     // 加载地图
     this.loadMap();
+    this.createEditor();
   },
   methods: {
     async init() {
@@ -102,6 +107,7 @@ export default Vue.extend({
         }
       );
     },
+    // echart曲线图
     parameterLine() {
       this.$nextTick(() => {
         let myChart: any = (this as any).$echarts.init(this.$refs.parameterLine);
@@ -158,6 +164,13 @@ export default Vue.extend({
           myChart.resize();
         });
       });
+    },
+    // 创建编辑器
+    createEditor() {
+      // var E = window.wangEditor;
+      var editor = new wangeditor('#editor');
+      // 或者 var editor = new E( document.getElementById('editor') )
+      editor.create();
     }
   }
 });
