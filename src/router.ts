@@ -29,6 +29,12 @@ let router = new Router({
       name: 'Git',
       component: () => import('./views/Git.vue'),
       meta: { title: '嗨前端-git' }
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: () => import('./views/Test.vue'),
+      meta: { title: '嗨前端-test' }
     }
   ]
 });

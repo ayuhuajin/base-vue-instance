@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <sing-hai />
+    <base-sidebar></base-sidebar>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import SingHai from '@/components/SingHai.vue'; // @ is an alias to /src
+import BaseSidebar from '@/components/common/BaseSidebar.vue';
 export default Vue.extend({
   name: 'home',
   components: {
-    SingHai
+    BaseSidebar
   },
   methods: {}
 });
