@@ -25,11 +25,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/css/base.scss';
+@include scrollbar;
 .wrap {
   display: flex;
   height: calc(100vh - 81px);
   .base-sidebar {
     height: calc(100vh - 81px);
+    border-right: 1px solid #eee;
+    overflow: auto;
+  }
+  .base-main {
     overflow: auto;
   }
 }
