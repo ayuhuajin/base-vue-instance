@@ -5,7 +5,7 @@ import Home from './views/Home.vue';
 Vue.use(Router);
 console.log('router');
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -20,3 +20,13 @@ export default new Router({
     // }
   ]
 });
+router.beforeEach((to, from, next) => {
+  console.log('beforeEach');
+});
+router.afterEach((to, from) => {
+  if (to.meta && to.meta.title) {
+    document.title = to.meta.title;
+  }
+});
+
+export default router;
