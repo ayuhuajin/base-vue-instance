@@ -7,12 +7,6 @@
 <script>
 export default {
   name: 'app',
-  created() {
-    console.log('app-created');
-  },
-  mounted() {
-    console.log('app-mounted');
-  },
   methods: {}
 };
 </script>

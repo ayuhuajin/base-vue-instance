@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 
 Vue.use(Router);
-console.log('router');
 
 let router = new Router({
   mode: 'history',
@@ -16,22 +15,24 @@ let router = new Router({
     {
       path: '/es6',
       name: 'ES6',
-      component: () => import(/* webpackChunkName: "about" */ './views/ES6.vue')
+      component: () => import('./views/ES6.vue'),
+      meta: { title: '嗨前端-es6' }
     },
     {
       path: '/typescript',
       name: 'TypeScript',
-      component: () => import(/* webpackChunkName: "about" */ './views/TypeScript.vue')
+      component: () => import('./views/TypeScript.vue'),
+      meta: { title: '嗨前端-typescript' }
     },
     {
       path: '/git',
       name: 'Git',
-      component: () => import(/* webpackChunkName: "about" */ './views/Git.vue')
+      component: () => import('./views/Git.vue'),
+      meta: { title: '嗨前端-git' }
     }
   ]
 });
 router.beforeEach((to, from, next) => {
-  console.log('beforeEach');
   next();
 });
 router.afterEach((to, from) => {

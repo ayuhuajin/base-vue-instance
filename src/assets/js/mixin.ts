@@ -7,11 +7,5 @@ export default Vue.extend({
   },
   watch: {},
   computed: {},
-  created() {
-    console.log('mixin-created', this.cname);
-  },
-  mounted() {
-    console.log('mixin-mounted', this.cname);
-  },
   methods: {}
 });

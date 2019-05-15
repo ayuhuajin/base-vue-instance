@@ -25,7 +25,6 @@ import Vue from 'vue';
 import LiveVideo from '@/components/LiveVideo.vue';
 import About from '@/views/About.vue';
 import mixin from '@/assets/js/mixin.ts';
-
 import index from '@/store/modules/index.ts';
 import gdMap from '@/plugins/gdMaps.ts';
 
@@ -41,11 +40,7 @@ export default Vue.extend({
         'http://alhlsgw.lechange.com:9001/LCO/3E00EBAPAZ76A22/0/1/20170925133417/dev_20170925133417_itq70exptp5sa470.m3u8'
     };
   },
-  created() {
-    console.log('singhai-created', (this as any).cname);
-  },
   mounted() {
-    console.log('singhai-mounted', (this as any).cname);
     this.init();
     this.parameterLine();
     // 加载地图

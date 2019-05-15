@@ -12,12 +12,6 @@ export default Vue.extend({
   components: {
     SingHai
   },
-  created() {
-    console.log('home-created');
-  },
-  mounted() {
-    console.log('home-mounted');
-  },
   methods: {}
 });
 </script>
