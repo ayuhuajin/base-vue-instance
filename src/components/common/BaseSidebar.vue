@@ -1,59 +1,37 @@
 <template>
   <div class="base-sidebar">
     <el-menu
-      default-active="1-4-1"
       class="el-menu-vertical-demo"
+      default-active="/"
       @open="handleOpen"
       @close="handleClose"
       :collapse="isCollapse"
+      collapse-transition
+      unique-opened
+      router
     >
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span slot="title">导航一</span>
+          <span slot="title">wsinghai</span>
         </template>
         <el-menu-item-group>
-          <span slot="title">分组一</span>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
+          <el-menu-item index="/">ES6</el-menu-item>
+          <el-menu-item index="typeScript">TypeScript</el-menu-item>
+          <el-menu-item index="git">Git</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">选项4</span>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
+        <el-submenu index="es5">
+          <span slot="title">算法</span>
+          <el-menu-item index="algorithm">排序算法</el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="2">
+      <el-menu-item index="test">
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+        <span slot="title">测试</span>
       </el-menu-item>
       <el-menu-item index="3" disabled>
         <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
+        <span slot="title">暂未开放</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -68,6 +46,7 @@ export default Vue.extend({
       isCollapse: false
     };
   },
+  computed: {},
   mounted() {},
   methods: {
     handleOpen(key: any, keyPath: any) {
@@ -82,6 +61,12 @@ export default Vue.extend({
 <style lang="scss">
 .base-sidebar {
   background: #fff;
+  .el-menu-item.is-active {
+    background: #ecf5ff;
+  }
+  .el-menu-item-group__title {
+    padding: 0;
+  }
   .el-menu {
     width: 200px;
     border-right: none;

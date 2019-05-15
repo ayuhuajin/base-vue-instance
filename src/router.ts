@@ -10,26 +10,47 @@ let router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: { title: '嗨前端-首页' },
+      children: [
+        {
+          path: '/',
+          name: 'ES6',
+          component: () => import('./views/ES6.vue'),
+          meta: { title: '嗨前端-es6' }
+        },
+        {
+          path: '/typescript',
+          name: 'TypeScript',
+          component: () => import('./views/TypeScript.vue'),
+          meta: { title: '嗨前端-typescript' }
+        },
+        {
+          path: '/git',
+          name: 'Git',
+          component: () => import('./views/Git.vue'),
+          meta: { title: '嗨前端-git' }
+        }
+      ]
     },
-    {
-      path: '/es6',
-      name: 'ES6',
-      component: () => import('./views/ES6.vue'),
-      meta: { title: '嗨前端-es6' }
-    },
-    {
-      path: '/typescript',
-      name: 'TypeScript',
-      component: () => import('./views/TypeScript.vue'),
-      meta: { title: '嗨前端-typescript' }
-    },
-    {
-      path: '/git',
-      name: 'Git',
-      component: () => import('./views/Git.vue'),
-      meta: { title: '嗨前端-git' }
-    },
+    // {
+    //   path: '/es6',
+    //   name: 'ES6',
+    //   component: () => import('./views/ES6.vue'),
+    //   meta: { title: '嗨前端-es6' }
+    // },
+    // {
+    //   path: '/typescript',
+    //   name: 'TypeScript',
+    //   component: () => import('./views/TypeScript.vue'),
+    //   meta: { title: '嗨前端-typescript' }
+    // },
+    // {
+    //   path: '/git',
+    //   name: 'Git',
+    //   component: () => import('./views/Git.vue'),
+    //   meta: { title: '嗨前端-git' }
+    // },
     {
       path: '/test',
       name: 'Test',
