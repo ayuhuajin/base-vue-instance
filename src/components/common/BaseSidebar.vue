@@ -16,9 +16,9 @@
           <span slot="title">wsinghai</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/">ES6</el-menu-item>
-          <el-menu-item index="typeScript">TypeScript</el-menu-item>
-          <el-menu-item index="git">Git</el-menu-item>
+          <el-menu-item index="/backEnd">ES6</el-menu-item>
+          <el-menu-item index="/backEnd/typeScript">TypeScript</el-menu-item>
+          <el-menu-item index="/backEnd/git">Git</el-menu-item>
         </el-menu-item-group>
         <el-submenu index="es5">
           <span slot="title">算法</span>

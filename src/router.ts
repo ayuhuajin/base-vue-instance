@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Hai from './views/Hai.vue';
 
 Vue.use(Router);
 
@@ -9,7 +10,19 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      component: Hai,
+      meta: { title: '嗨前端-首页' },
+      children: [
+        {
+          path: '/',
+          name: 'BHeader',
+          component: () => import('./components/frondEnd/BHeader.vue'),
+          meta: { title: 'BHeader' }
+        }
+      ]
+    },
+    {
+      path: '/backEnd',
       component: Home,
       meta: { title: '嗨前端-首页' },
       children: [
@@ -20,13 +33,13 @@ let router = new Router({
           meta: { title: '嗨前端-es6' }
         },
         {
-          path: '/typescript',
+          path: '/backEnd/typeScript',
           name: 'TypeScript',
           component: () => import('./views/TypeScript.vue'),
           meta: { title: '嗨前端-typescript' }
         },
         {
-          path: '/git',
+          path: '/backEnd/git',
           name: 'Git',
           component: () => import('./views/Git.vue'),
           meta: { title: '嗨前端-git' }
