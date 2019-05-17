@@ -1,16 +1,16 @@
 <template>
-  <div>
-    前端content
+  <div class="user-home">
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-  name: 'FContent',
+  name: 'UserHome',
   data() {
     return {
-      title: '学习'
+      title: '前端首页'
     };
   },
   mounted() {},

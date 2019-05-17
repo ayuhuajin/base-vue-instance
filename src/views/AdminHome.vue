@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="admin-home">
     <base-header></base-header>
     <div class="wrap">
       <base-sidebar></base-sidebar>
@@ -14,7 +14,7 @@ import BaseHeader from '@/components/common/BaseHeader.vue';
 import BaseSidebar from '@/components/common/BaseSidebar.vue';
 import BaseMain from '@/components/common/baseMain.vue';
 export default Vue.extend({
-  name: 'home',
+  name: 'AdminHome',
   components: {
     BaseHeader,
     BaseSidebar,

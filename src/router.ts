@@ -1,69 +1,53 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Hai from './views/Hai.vue';
+import UserHome from './views/UserHome.vue';
+import AdminHome from './views/AdminHome.vue';
 
 Vue.use(Router);
 
 let router = new Router({
   mode: 'history',
   routes: [
+    //博客路由
     {
       path: '/',
-      component: Hai,
+      component: UserHome,
       meta: { title: '嗨前端-首页' },
       children: [
         {
           path: '/',
-          name: 'BHeader',
+          name: 'UserHome',
           component: () => import('./components/frondEnd/BHeader.vue'),
-          meta: { title: 'BHeader' }
+          meta: { title: 'UserHome' }
         }
       ]
     },
+    //后台路由
     {
       path: '/backEnd',
-      component: Home,
-      meta: { title: '嗨前端-首页' },
+      component: AdminHome,
+      meta: { title: '嗨前端-后台' },
       children: [
         {
           path: '/',
           name: 'ES6',
-          component: () => import('./views/ES6.vue'),
+          component: () => import('./components/backEnd/ES6.vue'),
           meta: { title: '嗨前端-es6' }
         },
         {
           path: '/backEnd/typeScript',
           name: 'TypeScript',
-          component: () => import('./views/TypeScript.vue'),
+          component: () => import('./components/backEnd/TypeScript.vue'),
           meta: { title: '嗨前端-typescript' }
         },
         {
           path: '/backEnd/git',
           name: 'Git',
-          component: () => import('./views/Git.vue'),
+          component: () => import('./components/backEnd/Git.vue'),
           meta: { title: '嗨前端-git' }
         }
       ]
     },
-    // {
-    //   path: '/es6',
-    //   name: 'ES6',
-    //   component: () => import('./views/ES6.vue'),
-    //   meta: { title: '嗨前端-es6' }
-    // },
-    // {
-    //   path: '/typescript',
-    //   name: 'TypeScript',
-    //   component: () => import('./views/TypeScript.vue'),
-    //   meta: { title: '嗨前端-typescript' }
-    // },
-    // {
-    //   path: '/git',
-    //   name: 'Git',
-    //   component: () => import('./views/Git.vue'),
-    //   meta: { title: '嗨前端-git' }
-    // },
     {
       path: '/test',
       name: 'Test',

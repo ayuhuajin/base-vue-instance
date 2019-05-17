@@ -1,6 +1,6 @@
 <template>
   <div>
-    前端header
+    Hello world
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default Vue.extend({
   name: 'FHeader',
   data() {
     return {
-      title: '学习'
+      title: 'Hello world'
     };
   },
   mounted() {},
