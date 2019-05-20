@@ -1,16 +1,16 @@
 <template>
-  <div class="base-main">
-    <router-view></router-view>
+  <div class="main-header">
+    main-header
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-  name: 'BaseMain',
+  name: 'MainHeader',
   data() {
     return {
-      title: 'BaseMain'
+      title: 'main-header'
     };
   },
   mounted() {},
@@ -19,8 +19,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.base-main {
-  flex: 1;
-  margin: 20px;
+.main-header {
+  background: #fff;
 }
 </style>

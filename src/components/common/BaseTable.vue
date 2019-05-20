@@ -1,26 +1,24 @@
 <template>
-  <div class="base-main">
-    <router-view></router-view>
+  <div class="base-table">
+    table
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-  name: 'BaseMain',
+  name: 'BaseTable',
   data() {
     return {
-      title: 'BaseMain'
+      title: 'BaseTable'
     };
   },
   mounted() {},
   methods: {}
 });
 </script>
-
 <style lang="scss" scoped>
-.base-main {
-  flex: 1;
-  margin: 20px;
+.base-table {
+  background: white;
 }
 </style>
