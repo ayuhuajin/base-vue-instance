@@ -1,6 +1,16 @@
 <template>
   <div class="base-table">
-    table
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="date" label="日期"> </el-table-column>
+      <el-table-column prop="name" label="姓名"> </el-table-column>
+      <el-table-column prop="address" label="地址"> </el-table-column>
+      <el-table-column label="操作" align="center" width="170">
+        <template slot-scope="scope">
+          <span class="content-check" @click="handleEdit(scope.$index, scope.row)">编辑</span>
+          <span class="content-check" @click="handleDelete(scope.$index, scope.row)">删除</span>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -10,13 +20,52 @@ export default Vue.extend({
   name: 'BaseTable',
   data() {
     return {
-      title: 'BaseTable'
+      tableData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }
+      ]
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    handleEdit() {
+      console.log('编辑');
+    },
+    handleDelete() {
+      console.log('删除');
+    }
+  }
 });
 </script>
+<style lang="scss">
+.base-table {
+  th,
+  tr {
+    .cell {
+      text-align: center;
+    }
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .base-table {
   background: white;
