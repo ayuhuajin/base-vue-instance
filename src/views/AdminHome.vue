@@ -12,7 +12,7 @@
 import Vue from 'vue';
 import BaseHeader from '@/components/common/BaseHeader.vue';
 import BaseSidebar from '@/components/common/BaseSidebar.vue';
-import BaseMain from '@/components/common/BaseMain.vue';
+import BaseMain from '@/components/common/baseMain.vue';
 export default Vue.extend({
   name: 'AdminHome',
   components: {

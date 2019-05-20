@@ -1,6 +1,21 @@
 <template>
   <div class="learn-es6">
-    <main-header></main-header>
+    <main-header :titleName="title">
+      <div>
+        <span>分类</span>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+        </el-select>
+      </div>
+      <div>
+        <span>查找</span>
+        <el-input v-model="input" placeholder="请输入查找内容"></el-input>
+      </div>
+      <div>
+        <el-button type="primary">查询</el-button>
+        <el-button type="warning">增加</el-button>
+      </div>
+    </main-header>
     <base-table></base-table>
     <page-change></page-change>
   </div>
@@ -20,7 +35,23 @@ export default Vue.extend({
   },
   data() {
     return {
-      title: '学习ES6'
+      title: '学习ES6',
+      options: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        },
+        {
+          value: '选项2',
+          label: '双皮奶'
+        },
+        {
+          value: '全部',
+          label: '全部'
+        }
+      ],
+      value: '',
+      input: ''
     };
   },
   mounted() {},
@@ -29,9 +60,9 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .learn-es6 {
-  > div {
-    padding: 20px;
-  }
+  // > div {
+  //   padding: 20px;
+  // }
   > div:not(:first-child) {
     margin-top: 20px;
   }
