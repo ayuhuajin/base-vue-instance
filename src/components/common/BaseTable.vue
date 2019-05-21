@@ -59,14 +59,22 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 .base-table {
+  padding: 20px;
   th,
   tr {
     .cell {
+      height: 25px;
+      line-height: 25px;
       text-align: center;
     }
   }
   th {
+    height: 28px;
+    line-height: 28px;
     color: #3c6989;
+  }
+  .el-table__header {
+    border-top: 1px solid #eee;
   }
 }
 </style>

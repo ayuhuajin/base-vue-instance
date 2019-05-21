@@ -45,7 +45,7 @@ export default Vue.extend({
   }
   .searchOption {
     display: flex;
-    padding: 20px;
+    padding: 30px;
     > div {
       display: flex;
       justify-items: center;

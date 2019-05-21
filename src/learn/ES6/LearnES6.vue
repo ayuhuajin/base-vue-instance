@@ -55,20 +55,22 @@ export default Vue.extend({
       pageInfo: {
         pageNumber: 1, // 当前页数
         totalPages: 0, // 总页数
-        // pageFunc: this.getPondData, // 当前页数需要调用的函数
-        pageSize: 10 // 当前页数
+        pageFunc: (this as any).getPageData, // 当前页数需要调用的函数
+        pageSize: 10, // 当前页数
+        class: 'pageClass'
       }
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    getPageData() {
+      console.log('11111,', '#44dce7');
+    }
+  }
 });
 </script>
 <style lang="scss" scoped>
 .learn-es6 {
-  // > div {
-  //   padding: 20px;
-  // }
   > div:not(:first-child) {
     margin-top: 20px;
   }

@@ -1,13 +1,13 @@
 <template>
-  <div class="page-change">
+  <div class="page-change" :class="pageInfo.class">
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="pageChange"
       :current-page="pageInfo.pageNumber"
       :page-size="10"
       background
-      layout="prev, pager, next"
-      :total="200"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="pageInfo.totalPages"
     >
     </el-pagination>
   </div>
@@ -45,6 +45,6 @@ export default Vue.extend({
 <style lang="scss">
 .el-pagination {
   padding: 10px;
-  background: white;
+  text-align: right;
 }
 </style>
