@@ -18,7 +18,7 @@
     </main-header>
     <base-table></base-table>
     <page-change :pageInfo="pageInfo"></page-change>
-    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog"></base-dialog>
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog"></base-dialog>
   </div>
 </template>
 
@@ -77,6 +77,11 @@ export default Vue.extend({
   methods: {
     getPageData() {
       console.log('11111,', '#44dce7');
+    },
+
+    closeDialog() {
+      console.log(5555);
+      this.showDialog = false;
     }
   }
 });
