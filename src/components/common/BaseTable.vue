@@ -1,7 +1,7 @@
 <template>
   <div class="base-table">
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="title" label="标题"> </el-table-column>
+    <el-table :data="tableData" style="width: 100%" @row-dblclick="doubleClick">
+      <el-table-column prop="title" label="标题" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="name" label="作者"> </el-table-column>
       <el-table-column prop="date" label="日期"> </el-table-column>
       <el-table-column prop="category" label="分类"> </el-table-column>
@@ -45,6 +45,9 @@ export default Vue.extend({
   },
   mounted() {},
   methods: {
+    doubleClick() {
+      console.log('双击');
+    },
     handleEdit() {
       console.log('编辑');
     },
@@ -61,6 +64,9 @@ export default Vue.extend({
     .cell {
       text-align: center;
     }
+  }
+  th {
+    color: #3c6989;
   }
 }
 </style>

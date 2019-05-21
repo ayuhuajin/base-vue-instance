@@ -17,7 +17,7 @@
       </div>
     </main-header>
     <base-table></base-table>
-    <page-change></page-change>
+    <page-change :pageInfo="pageInfo"></page-change>
   </div>
 </template>
 
@@ -51,7 +51,13 @@ export default Vue.extend({
         }
       ],
       value: '',
-      input: ''
+      input: '',
+      pageInfo: {
+        pageNumber: 1, // 当前页数
+        totalPages: 0, // 总页数
+        // pageFunc: this.getPondData, // 当前页数需要调用的函数
+        pageSize: 10 // 当前页数
+      }
     };
   },
   mounted() {},

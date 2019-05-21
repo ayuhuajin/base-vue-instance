@@ -10,7 +10,8 @@ import {
   Dialog,
   Input,
   Select,
-  Option
+  Option,
+  Pagination
 } from 'element-ui';
 
 Vue.use(Button);
@@ -24,3 +25,4 @@ Vue.use(Dialog);
 Vue.use(Input);
 Vue.use(Select);
 Vue.use(Option);
+Vue.use(Pagination);
