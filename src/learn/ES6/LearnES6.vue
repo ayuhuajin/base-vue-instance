@@ -18,6 +18,7 @@
     </main-header>
     <base-table></base-table>
     <page-change :pageInfo="pageInfo"></page-change>
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog"></base-dialog>
   </div>
 </template>
 
@@ -26,12 +27,14 @@ import Vue from 'vue';
 import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import PageChange from '@/components/common/PageChange.vue';
+import BaseDialog from '@/components/common/BaseDialog.vue';
 export default Vue.extend({
   name: 'LearnES6',
   components: {
     MainHeader,
     BaseTable,
-    PageChange
+    PageChange,
+    BaseDialog
   },
   data() {
     return {
@@ -50,15 +53,24 @@ export default Vue.extend({
           label: '全部'
         }
       ],
-      value: '',
-      input: '',
+      // 分页设置
       pageInfo: {
         pageNumber: 1, // 当前页数
         totalPages: 0, // 总页数
         pageFunc: (this as any).getPageData, // 当前页数需要调用的函数
         pageSize: 10, // 当前页数
         class: 'pageClass'
-      }
+      },
+      // 弹窗设置
+      dialogInfo: {
+        visible: true,
+        titleName: '文章列表',
+        dialogWidth: '800px',
+        activeClass: 'es6'
+      },
+      showDialog: true,
+      value: '',
+      input: ''
     };
   },
   mounted() {},
