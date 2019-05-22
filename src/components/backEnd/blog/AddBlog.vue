@@ -1,6 +1,6 @@
 <template>
   <div class="add-blog">
-    <div>增加文章</div>
+    <div class="title">增加文章</div>
     <base-form></base-form>
   </div>
 </template>
@@ -25,5 +25,11 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .add-blog {
   background: white;
+  .title {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    font-size: 20px;
+    background: white;
+  }
 }
 </style>
