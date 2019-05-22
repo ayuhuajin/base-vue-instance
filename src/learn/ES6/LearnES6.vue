@@ -9,7 +9,6 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'LearnES6',
-
   data() {
     return {
       title: '海因子'
