@@ -30,9 +30,21 @@ let router = new Router({
       children: [
         {
           path: '/',
-          name: 'ES6',
+          // name: 'ES6',
           component: () => import('./components/backEnd/ES6.vue'),
-          meta: { title: '嗨前端-es6' }
+          meta: { title: '嗨前端-es6' },
+          children: [
+            {
+              path: '/',
+              name: 'ES6',
+              component: () => import('./learn/ES6/LearnES6.vue')
+            },
+            {
+              path: '/backEnd/addList',
+              name: 'AddList',
+              component: () => import('./learn/ES6/AddList.vue')
+            }
+          ]
         },
         {
           path: '/backEnd/typeScript',

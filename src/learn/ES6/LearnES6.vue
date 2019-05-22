@@ -13,7 +13,7 @@
       </div>
       <div>
         <el-button type="primary">查询</el-button>
-        <el-button type="warning">增加</el-button>
+        <el-button @click="handleAdd" type="warning">增加</el-button>
       </div>
     </main-header>
     <base-table></base-table>
@@ -38,7 +38,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      title: '学习ES6',
+      title: '海因子',
       options: [
         {
           value: '选项1',
@@ -68,17 +68,24 @@ export default Vue.extend({
         dialogWidth: '800px',
         activeClass: 'es6'
       },
-      showDialog: true,
+      showDialog: false,
       value: '',
       input: ''
     };
   },
   mounted() {},
   methods: {
+    // 添加数据
+    handleAdd() {
+      this.$router.push({
+        name: 'AddList'
+      });
+    },
+    // 获取分页数据
     getPageData() {
       console.log('11111,', '#44dce7');
     },
-
+    // 关闭弹窗
     closeDialog() {
       console.log(5555);
       this.showDialog = false;

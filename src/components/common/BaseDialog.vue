@@ -68,10 +68,11 @@ export default {
   .el-dialog__header {
     display: flex;
     align-items: center;
-    overflow: hidden;
-    padding: 0 0 0 32px;
-    line-height: 54px;
     height: 54px;
+    padding: 0 0 0 32px;
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+    line-height: 54px;
     .el-dialog__title {
       font-size: 18px;
       font-weight: 400;
