@@ -11,7 +11,9 @@ import {
   Input,
   Select,
   Option,
-  Pagination
+  Pagination,
+  Form,
+  FormItem
 } from 'element-ui';
 
 Vue.use(Button);
@@ -26,3 +28,5 @@ Vue.use(Input);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Pagination);
+Vue.use(Form);
+Vue.use(FormItem);

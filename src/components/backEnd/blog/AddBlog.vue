@@ -9,7 +9,7 @@
 import Vue from 'vue';
 import BaseForm from '@/components/common/BaseForm.vue';
 export default Vue.extend({
-  name: 'LearnES6',
+  name: 'AddBlog',
   components: {
     BaseForm
   },
@@ -22,4 +22,8 @@ export default Vue.extend({
   methods: {}
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.add-blog {
+  background: white;
+}
+</style>
