@@ -1,22 +1,19 @@
 <template>
-  <div class="learn-es6">
-    学习es6
+  <div>
+    表单
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-
 export default Vue.extend({
-  name: 'LearnES6',
-
+  name: 'BaseForm',
   data() {
     return {
-      title: '海因子'
+      title: 'BaseForm'
     };
   },
   mounted() {},
   methods: {}
 });
 </script>
-<style lang="scss" scoped></style>

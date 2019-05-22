@@ -1,6 +1,8 @@
 <template>
   <div class="base-main">
-    <router-view></router-view>
+    <transition name="fade" mode="out-in" appear>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -22,5 +24,13 @@ export default Vue.extend({
 .base-main {
   flex: 1;
   margin: 20px;
+}
+// 过度动画
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

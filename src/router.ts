@@ -30,19 +30,20 @@ let router = new Router({
       children: [
         {
           path: '/',
-          // name: 'ES6',
-          component: () => import('./components/backEnd/ES6.vue'),
-          meta: { title: '嗨前端-es6' },
+          component: () => import('./components/backEnd/blog/BlogView.vue'),
+          meta: { title: '嗨前端' },
           children: [
             {
               path: '/',
-              name: 'ES6',
-              component: () => import('./learn/ES6/LearnES6.vue')
+              name: 'BlogList',
+              component: () => import('./components/backEnd/blog/BlogList.vue'),
+              meta: { title: '嗨前端-列表' }
             },
             {
-              path: '/backEnd/addList',
-              name: 'AddList',
-              component: () => import('./learn/ES6/AddList.vue')
+              path: '/backEnd/addBlog',
+              name: 'AddBlog',
+              component: () => import('./components/backEnd/blog/AddBlog.vue'),
+              meta: { title: '嗨前端-列表' }
             }
           ]
         },

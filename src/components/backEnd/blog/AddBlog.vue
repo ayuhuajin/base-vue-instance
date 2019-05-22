@@ -1,17 +1,22 @@
 <template>
-  <div class="add-list">
-    54654646
+  <div class="add-blog">
+    <div>增加文章</div>
+    <base-form></base-form>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-
+import BaseForm from '@/components/common/BaseForm.vue';
 export default Vue.extend({
   name: 'LearnES6',
-  components: {},
+  components: {
+    BaseForm
+  },
   data() {
-    return {};
+    return {
+      title: '增加'
+    };
   },
   mounted() {},
   methods: {}
