@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="活动名称" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+  <div class="base-form">
+    <el-form :model="ruleForm" :rules="rules" :ref="refObj" :class="formClass" label-width="100px">
+      <slot></slot>
+      <el-form-item class="operation">
+        <el-button type="primary" @click="submitForm(refObj)">立即创建</el-button>
+        <el-button @click="resetForm(refObj)">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -16,18 +14,23 @@
 import Vue from 'vue';
 export default Vue.extend({
   name: 'BaseForm',
+  props: {
+    rules: {
+      type: Object
+    },
+    ruleForm: {
+      type: Object
+    },
+    refObj: {
+      type: String
+    },
+    formClass: {
+      type: String
+    }
+  },
   data() {
     return {
-      title: 'BaseForm',
-      ruleForm: {
-        name: ''
-      },
-      rules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ]
-      }
+      title: 'BaseForm'
     };
   },
   mounted() {},
@@ -48,3 +51,10 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss">
+.base-form {
+  .operation {
+    margin-top: 20px;
+  }
+}
+</style>
