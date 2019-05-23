@@ -49,7 +49,6 @@ let router = new Router({
         },
         {
           path: '/backEnd/category',
-          name: 'Category',
           component: () => import('./components/backEnd/category/CategoryView.vue'),
           meta: { title: '嗨前端-分类' },
           children: [
