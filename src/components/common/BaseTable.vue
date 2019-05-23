@@ -17,7 +17,7 @@ export default Vue.extend({
     },
     tableClass: {
       type: String,
-      default: '123'
+      default: 'tableClass'
     }
   },
   data() {
@@ -27,12 +27,6 @@ export default Vue.extend({
   methods: {
     doubleClick() {
       console.log('双击');
-    },
-    handleEdit() {
-      console.log('编辑');
-    },
-    handleDelete() {
-      console.log('删除');
     }
   }
 });
@@ -56,6 +50,17 @@ export default Vue.extend({
   .el-table__header {
     border-top: 1px solid #eee;
   }
+  .content-edit {
+    font-size: 14px;
+    color: #3389ff;
+    cursor: pointer;
+  }
+  .content-delete {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #ff3817;
+    cursor: pointer;
+  }
 }
 </style>
 
@@ -63,16 +68,5 @@ export default Vue.extend({
 .base-table {
   border: 1px solid #ddd;
   background: white;
-}
-.content-edit {
-  font-size: 14px;
-  color: #3389ff;
-  cursor: pointer;
-}
-.content-delete {
-  margin-left: 20px;
-  font-size: 14px;
-  color: #ff3817;
-  cursor: pointer;
 }
 </style>

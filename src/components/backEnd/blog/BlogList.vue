@@ -96,6 +96,12 @@ export default Vue.extend({
   },
   mounted() {},
   methods: {
+    handleEdit() {
+      console.log('编辑');
+    },
+    handleDelete() {
+      console.log('删除');
+    },
     // 添加数据
     handleAdd() {
       this.$router.push({

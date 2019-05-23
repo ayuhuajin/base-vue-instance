@@ -28,7 +28,16 @@
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
     <!-- 弹窗 -->
-    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog"></base-dialog>
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
+      <div class="category">
+        <span>分类名称</span>
+        <el-input v-model="input" placeholder="请输入分类名称"></el-input>
+      </div>
+      <div>
+        <span class="save" @click="handleSave">保存</span>
+        <span class="cancel" @click="handleCancel">取消</span>
+      </div>
+    </base-dialog>
   </div>
 </template>
 
@@ -52,9 +61,9 @@ export default Vue.extend({
       // 弹窗设置
       dialogInfo: {
         visible: true,
-        titleName: '文章列表',
+        titleName: '添加分类',
         dialogWidth: '800px',
-        activeClass: 'es6'
+        activeClass: 'category-dialog'
       },
       showDialog: false,
       // 分页设置
@@ -87,23 +96,75 @@ export default Vue.extend({
   },
   mounted() {},
   methods: {
+    handleEdit() {
+      console.log('编辑');
+    },
+    handleDelete() {
+      console.log('删除');
+    },
     // 添加数据
     handleAdd() {
       this.showDialog = true;
+    },
+    handleSave() {
+      this.showDialog = false;
+      console.log('保存');
+    },
+    handleCancel() {
+      this.showDialog = false;
+      console.log('取消');
     },
     // 关闭弹窗
     closeDialog() {
       console.log(5555);
       this.showDialog = false;
+    },
+    // 获取分页数据
+    getPageData() {
+      console.log('11111,', '#44dce7');
     }
   }
 });
 </script>
+<style lang="scss">
+.category-dialog {
+  .el-input__inner {
+    line-height: 44px;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .category-list {
   > div:not(:first-child) {
     margin-top: 20px;
+  }
+}
+.save,
+.cancel {
+  margin-top: 20px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid #409eff;
+  text-align: center;
+  line-height: 40px;
+  color: white;
+  cursor: pointer;
+  background: #66b1ff;
+}
+.cancel {
+  margin-left: 20px;
+  border: 1px solid #dcdfe6;
+  color: #333;
+  background: white;
+}
+.category {
+  > span {
+    font-size: 16px;
+    color: #333;
+  }
+  .el-input {
+    margin-top: 10px;
   }
 }
 </style>
