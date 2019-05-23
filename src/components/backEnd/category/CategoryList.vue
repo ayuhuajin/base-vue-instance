@@ -7,10 +7,10 @@
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-  name: 'Template',
+  name: 'CategoryList',
   data() {
     return {
-      title: '学习'
+      title: '分类'
     };
   },
   mounted() {},

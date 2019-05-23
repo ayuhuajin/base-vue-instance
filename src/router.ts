@@ -48,6 +48,19 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/category',
+          name: 'Category',
+          component: () => import('./components/backEnd/category/CategoryView.vue'),
+          meta: { title: '嗨前端-分类' },
+          children: [
+            {
+              path: '/',
+              name: 'CateGoryList',
+              component: () => import('./components/backEnd/category/CategoryList.vue')
+            }
+          ]
+        },
+        {
           path: '/backEnd/typeScript',
           name: 'TypeScript',
           component: () => import('./components/backEnd/TypeScript.vue'),
