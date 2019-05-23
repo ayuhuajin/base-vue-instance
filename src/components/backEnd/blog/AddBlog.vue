@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="图片上传">
-        <base-upload></base-upload>
+        <base-upload :uploadInfo="uploadInfo"></base-upload>
       </el-form-item>
       <el-form-item label="文章正文" prop="content">
         <div id="editor" style="min-width:700px;max-width:1200px;margin: 0 auto;"></div>
@@ -47,6 +47,12 @@ export default Vue.extend({
         ],
         category: [{ required: true, message: '请选择文章分类', trigger: 'blur' }],
         content: [{ required: true, message: '请选择文章分类', trigger: 'blur' }]
+      },
+      uploadInfo: {
+        uploadURl: 'http://www.baidu.com',
+        hide: false,
+        uploadClass: 'uploadClass',
+        desc: ''
       }
     };
   },
@@ -65,7 +71,7 @@ export default Vue.extend({
 <style lang="scss">
 .add-blog {
   .formClass {
-    width: 70%;
+    width: 80%;
     margin: 30px auto;
     padding: 30px 0;
     .el-form-item__label {

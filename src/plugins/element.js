@@ -13,7 +13,9 @@ import {
   Option,
   Pagination,
   Form,
-  FormItem
+  FormItem,
+  MessageBox,
+  Upload
 } from 'element-ui';
 
 Vue.use(Button);
@@ -30,3 +32,6 @@ Vue.use(Option);
 Vue.use(Pagination);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.use(Upload);
+
+Vue.prototype.$alert = MessageBox.alert;
