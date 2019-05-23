@@ -47,6 +47,7 @@ import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import PageChange from '@/components/common/PageChange.vue';
+import index from '@/store/modules/index.ts';
 export default Vue.extend({
   name: 'CategoryList',
   components: {
@@ -94,7 +95,10 @@ export default Vue.extend({
       input: ''
     };
   },
-  mounted() {},
+  mounted() {
+    // index.dispatch('getAllCategory');
+    // index.dispatch('addCategory', { name: '王清海', author: '第一' });
+  },
   methods: {
     handleEdit() {
       console.log('编辑');
