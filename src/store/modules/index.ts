@@ -9,6 +9,12 @@ export default root.registerModule('index', {
     },
     async addCategory({ commit }, payload) {
       let result = await http.post('http://192.168.99.196:12306/addCategory', payload);
+      console.log(result);
+      return result.data;
+    },
+    async delCategory({ commit }, payload) {
+      let result = await http.delete('http://192.168.99.196:12306/delCategory', payload);
+      console.log(result);
       return result.data;
     }
   }

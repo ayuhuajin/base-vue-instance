@@ -11,6 +11,7 @@
         <el-button @click="handleAdd" type="warning">增加</el-button>
       </div>
     </main-header>
+    <div v-for="(item, index) in categoryList" @click="handleDelete(item._id)" :key="index">{{ item }}</div>
     <!-- 表格 -->
     <base-table :tableData="tableData">
       <el-table-column prop="title" label="标题" show-overflow-tooltip> </el-table-column>
@@ -59,6 +60,7 @@ export default Vue.extend({
   data() {
     return {
       title: '分类',
+      categoryList: [],
       // 弹窗设置
       dialogInfo: {
         visible: true,
@@ -95,15 +97,17 @@ export default Vue.extend({
       input: ''
     };
   },
-  mounted() {
-    // index.dispatch('getAllCategory');
-    // index.dispatch('addCategory', { name: '王清海', author: '第一' });
+  async mounted() {
+    this.categoryList = await index.dispatch('getAllCategory');
+    index.dispatch('addCategory', { name: '王清海', author: '第一' });
   },
   methods: {
     handleEdit() {
       console.log('编辑');
     },
-    handleDelete() {
+    async handleDelete(id: any) {
+      console.log(id);
+      await index.dispatch('delCategory', { _id: id });
       console.log('删除');
     },
     // 添加数据
