@@ -1,20 +1,19 @@
 import root from '@/store/root.ts';
 import http from '@/services/http.ts';
+let ip = 'http://10.70.1.11:12306';
 export default root.registerModule('index', {
   actions: {
     //获取所有文章分类
     async getAllCategory({ commit }, payload) {
-      let result = await http.get('http://192.168.99.196:12306/categoryList');
+      let result = await http.get(`${ip}/categoryList`);
       return result.data;
     },
     async addCategory({ commit }, payload) {
-      let result = await http.post('http://192.168.99.196:12306/addCategory', payload);
-      console.log(result);
+      let result = await http.post(`${ip}/addCategory`, payload);
       return result.data;
     },
     async delCategory({ commit }, payload) {
-      let result = await http.delete('http://192.168.99.196:12306/delCategory', payload);
-      console.log(result);
+      let result = await http.post(`${ip}/delCategory`, payload);
       return result.data;
     }
   }

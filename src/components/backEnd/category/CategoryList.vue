@@ -11,7 +11,6 @@
         <el-button @click="handleAdd" type="warning">增加</el-button>
       </div>
     </main-header>
-    <div v-for="(item, index) in categoryList" @click="handleDelete(item._id)" :key="index">{{ item }}</div>
     <!-- 表格 -->
     <base-table :tableData="tableData">
       <el-table-column prop="title" label="标题" show-overflow-tooltip> </el-table-column>
@@ -28,6 +27,7 @@
     </base-table>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
+    <div v-for="(item, index) in categoryList" @click="handleDelete(item._id, index)" :key="index">{{ item }}</div>
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
       <div class="category">
@@ -105,9 +105,10 @@ export default Vue.extend({
     handleEdit() {
       console.log('编辑');
     },
-    async handleDelete(id: any) {
-      console.log(id);
+    async handleDelete(id: any, num: number) {
       await index.dispatch('delCategory', { _id: id });
+      this.categoryList.splice(num, 1);
+
       console.log('删除');
     },
     // 添加数据
