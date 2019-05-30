@@ -26,6 +26,7 @@ export default root.registerModule('index', {
     //根据id 获取视图
     async categoryView({ commit }, payload) {
       let result = await http.get(`${ip}/categoryView?id=${payload._id}`);
+      console.log(999, result);
       return result.data;
     }
   }

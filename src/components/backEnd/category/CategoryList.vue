@@ -4,7 +4,7 @@
     <main-header :titleName="title">
       <div>
         <span>查找</span>
-        <el-input v-model="input" placeholder="请输入查找内容"></el-input>
+        <el-input v-model="categoryName" placeholder="请输入查找内容"></el-input>
       </div>
       <div>
         <el-button type="primary">查询</el-button>
@@ -12,33 +12,23 @@
       </div>
     </main-header>
     <!-- 表格 -->
-    <base-table :tableData="tableData">
-      <el-table-column prop="title" label="标题" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="name" label="作者"> </el-table-column>
+    <base-table :tableData="categoryList">
+      <el-table-column prop="name" label="分类" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="date" label="日期"> </el-table-column>
-      <el-table-column prop="category" label="分类"> </el-table-column>
-      <el-table-column prop="authority" label="权限"> </el-table-column>
       <el-table-column label="操作" align="center" width="170">
         <template slot-scope="scope">
-          <span class="content-edit" @click="handleEdit(scope.$index, scope.row)">编辑</span>
-          <span class="content-delete" @click="handleDelete(scope.$index, scope.row)">删除</span>
+          <span class="content-edit" @click="handleView(scope.row._id, scope.row)">编辑</span>
+          <span class="content-delete" @click="handleDelete(scope.row._id, scope.row)">删除</span>
         </template>
       </el-table-column>
     </base-table>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
-    <!-- 演示 -->
-    <div v-for="(item, index) in categoryList" :key="index">
-      <span>{{ item.name }}</span>
-      <span @click="handleDelete(item._id, index)" style="margin-left:10px;">删除</span>
-      <span @click="handleEdit(item._id, index)" style="margin-left:10px;">编辑</span>
-      <span @click="handleView(item._id, index)" style="margin-left:10px;">视图</span>
-    </div>
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
       <div class="category">
         <span>分类名称</span>
-        <el-input v-model="input" placeholder="请输入分类名称"></el-input>
+        <el-input v-model="categoryName" placeholder="请输入分类名称"></el-input>
       </div>
       <div>
         <span class="save" @click="handleSave">保存</span>
@@ -100,43 +90,65 @@ export default Vue.extend({
           authority: '只读'
         }
       ],
-      input: ''
+      id: '',
+      categoryName: ''
     };
   },
   async mounted() {
-    this.categoryList = await index.dispatch('getAllCategory');
+    this.init();
   },
   methods: {
+    async init() {
+      this.categoryList = await index.dispatch('getAllCategory');
+    },
     // 获取视图
     async handleView(id: any, num: number) {
-      await index.dispatch('categoryView', { _id: id });
+      this.showDialog = true;
+      this.id = id;
+      let obj = await index.dispatch('categoryView', { _id: id });
+      this.categoryName = obj[0].name;
     },
     // 编辑
-    async handleEdit(id: any, num: number) {
-      await index.dispatch('updateCategory', {
-        _id: id,
-        name: 'wsinghai'
-      });
+    async handleEdit(id: any, name: any) {
+      let obj = await index
+        .dispatch('updateCategory', {
+          _id: id,
+          name: name
+        })
+        .then(() => {
+          this.showDialog = false;
+        });
     },
 
     async handleDelete(id: any, num: number) {
       await index.dispatch('delCategory', { _id: id });
       this.categoryList.splice(num, 1);
-
-      console.log('删除');
     },
     // 添加数据
     handleAdd() {
-      index.dispatch('addCategory', { name: '王清海', author: '第一' });
-      // this.showDialog = true;
+      this.showDialog = true;
+      this.id = '';
+      this.categoryName = '';
     },
-    handleSave() {
-      this.showDialog = false;
-      console.log('保存');
+    async handleSave() {
+      if (!this.id) {
+        index
+          .dispatch('addCategory', { name: this.categoryName })
+          .then(() => {
+            this.showDialog = false;
+            this.init();
+          })
+          .catch(err => {
+            console.log('失败');
+          });
+      } else {
+        this.handleEdit(this.id, this.categoryName).then(() => {
+          this.init();
+        });
+      }
     },
     handleCancel() {
       this.showDialog = false;
-      console.log('取消');
     },
     // 关闭弹窗
     closeDialog() {
