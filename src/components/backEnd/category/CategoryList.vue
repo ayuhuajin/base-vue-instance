@@ -27,7 +27,13 @@
     </base-table>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
-    <div v-for="(item, index) in categoryList" @click="handleDelete(item._id, index)" :key="index">{{ item }}</div>
+    <!-- 演示 -->
+    <div v-for="(item, index) in categoryList" :key="index">
+      <span>{{ item.name }}</span>
+      <span @click="handleDelete(item._id, index)" style="margin-left:10px;">删除</span>
+      <span @click="handleEdit(item._id, index)" style="margin-left:10px;">编辑</span>
+      <span @click="handleView(item._id, index)" style="margin-left:10px;">视图</span>
+    </div>
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
       <div class="category">
@@ -99,12 +105,20 @@ export default Vue.extend({
   },
   async mounted() {
     this.categoryList = await index.dispatch('getAllCategory');
-    index.dispatch('addCategory', { name: '王清海', author: '第一' });
   },
   methods: {
-    handleEdit() {
-      console.log('编辑');
+    // 获取视图
+    async handleView(id: any, num: number) {
+      await index.dispatch('categoryView', { _id: id });
     },
+    // 编辑
+    async handleEdit(id: any, num: number) {
+      await index.dispatch('updateCategory', {
+        _id: id,
+        name: 'wsinghai'
+      });
+    },
+
     async handleDelete(id: any, num: number) {
       await index.dispatch('delCategory', { _id: id });
       this.categoryList.splice(num, 1);
@@ -113,7 +127,8 @@ export default Vue.extend({
     },
     // 添加数据
     handleAdd() {
-      this.showDialog = true;
+      index.dispatch('addCategory', { name: '王清海', author: '第一' });
+      // this.showDialog = true;
     },
     handleSave() {
       this.showDialog = false;
