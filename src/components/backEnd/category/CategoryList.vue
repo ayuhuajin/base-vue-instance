@@ -32,7 +32,7 @@
       </div>
       <div>
         <span class="save" @click="handleSave">保存</span>
-        <span class="cancel" @click="handleCancel">取消</span>
+        <span class="cancel" @click="closeDialog">取消</span>
       </div>
     </base-dialog>
   </div>
@@ -99,14 +99,24 @@ export default Vue.extend({
   },
   methods: {
     async init() {
-      this.categoryList = await index.dispatch('getAllCategory');
+      try {
+        this.categoryList = await index.dispatch('getAllCategory');
+      } catch (err) {
+        console.log(err);
+      }
     },
     // 获取视图
     async handleView(id: any, num: number) {
-      this.showDialog = true;
       this.id = id;
-      let obj = await index.dispatch('categoryView', { id: id });
-      this.categoryName = obj[0].name;
+      this.showDialog = true;
+      try {
+        let obj = await index.dispatch('categoryView', { id: id });
+        if (obj) {
+          this.categoryName = obj[0].name;
+        }
+      } catch (err) {
+        console.log('报错');
+      }
     },
     // 编辑
     async handleEdit(id: any, name: any) {
@@ -116,13 +126,22 @@ export default Vue.extend({
           name: name
         })
         .then(() => {
-          this.showDialog = false;
+          this.closeDialog();
+        })
+        .catch(err => {
+          console.log(err);
         });
     },
-
+    // 删除
     async handleDelete(id: any, num: number) {
-      await index.dispatch('delCategory', { id: id });
-      this.categoryList.splice(num, 1);
+      index
+        .dispatch('delCategory', { id: id })
+        .then(() => {
+          this.categoryList.splice(num, 1);
+        })
+        .catch(err => {
+          console.log('删除失败');
+        });
     },
     // 添加数据
     handleAdd() {
@@ -130,29 +149,30 @@ export default Vue.extend({
       this.id = '';
       this.categoryName = '';
     },
+    // 点击保存
     async handleSave() {
       if (!this.id) {
         index
           .dispatch('addCategory', { name: this.categoryName })
           .then(() => {
-            this.showDialog = false;
             this.init();
+            this.closeDialog();
           })
           .catch(err => {
             console.log('失败');
           });
       } else {
-        this.handleEdit(this.id, this.categoryName).then(() => {
-          this.init();
-        });
+        this.handleEdit(this.id, this.categoryName)
+          .then(() => {
+            this.init();
+          })
+          .catch(err => {
+            console.log('编辑失败');
+          });
       }
-    },
-    handleCancel() {
-      this.showDialog = false;
     },
     // 关闭弹窗
     closeDialog() {
-      console.log(5555);
       this.showDialog = false;
     },
     // 获取分页数据
