@@ -13,8 +13,8 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="categoryList">
-      <el-table-column prop="name" label="分类" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="date" label="日期"> </el-table-column>
+      <el-table-column prop="name" label="文章分类" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="date" label="创建日期"> </el-table-column>
       <el-table-column label="操作" align="center" width="170">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleView(scope.row._id, scope.row)">编辑</span>
