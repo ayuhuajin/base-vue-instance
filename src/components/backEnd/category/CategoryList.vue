@@ -105,14 +105,14 @@ export default Vue.extend({
     async handleView(id: any, num: number) {
       this.showDialog = true;
       this.id = id;
-      let obj = await index.dispatch('categoryView', { _id: id });
+      let obj = await index.dispatch('categoryView', { id: id });
       this.categoryName = obj[0].name;
     },
     // 编辑
     async handleEdit(id: any, name: any) {
       let obj = await index
         .dispatch('updateCategory', {
-          _id: id,
+          id: id,
           name: name
         })
         .then(() => {
@@ -121,7 +121,7 @@ export default Vue.extend({
     },
 
     async handleDelete(id: any, num: number) {
-      await index.dispatch('delCategory', { _id: id });
+      await index.dispatch('delCategory', { id: id });
       this.categoryList.splice(num, 1);
     },
     // 添加数据

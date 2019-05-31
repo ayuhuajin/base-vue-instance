@@ -1,6 +1,7 @@
 import root from '@/store/root.ts';
 import http from '@/services/http.ts';
-let ip = 'http://10.70.1.11:12306';
+// let ip = 'http://10.70.1.11:12306';
+let ip = 'http://api.wsinghai.com';
 export default root.registerModule('index', {
   actions: {
     //获取所有文章分类
@@ -25,7 +26,7 @@ export default root.registerModule('index', {
     },
     //根据id 获取视图
     async categoryView({ commit }, payload) {
-      let result = await http.get(`${ip}/categoryView?id=${payload._id}`);
+      let result = await http.get(`${ip}/categoryView?id=${payload.id}`);
       console.log(999, result);
       return result.data;
     }
