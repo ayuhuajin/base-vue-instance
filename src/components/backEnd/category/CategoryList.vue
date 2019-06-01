@@ -138,10 +138,12 @@ export default Vue.extend({
     },
     // 删除
     async handleDelete(id: any, num: number) {
+      console.log(num);
       index
         .dispatch('delCategory', { id: id })
         .then(() => {
-          this.categoryList.splice(num, 1);
+          // this.categoryList.splice(num, 1);
+          this.init();
         })
         .catch(err => {
           console.log('删除失败');
