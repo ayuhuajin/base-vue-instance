@@ -6,7 +6,10 @@ export default root.registerModule('index', {
   actions: {
     //获取所有文章分类
     async getAllCategory({ commit }, payload) {
-      let result = await http.get(`${ip}/categoryList`);
+      let result = await http.get(
+        `${ip}/categoryList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}`
+      );
+      console.log(result);
       return result.data;
     },
     // 添加分类
@@ -27,7 +30,10 @@ export default root.registerModule('index', {
     //根据id 获取视图
     async categoryView({ commit }, payload) {
       let result = await http.get(`${ip}/categoryView?id=${payload.id}`);
-      console.log(999, result);
+      return result.data;
+    },
+    async categorySearch({ commit }, payload) {
+      let result = await http.get(`${ip}/categorySearch?name=${payload.name}`);
       return result.data;
     }
   }

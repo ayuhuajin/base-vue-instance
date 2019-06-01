@@ -4,7 +4,7 @@
       @size-change="handleSizeChange"
       @current-change="pageChange"
       :current-page="pageInfo.pageNumber"
-      :page-size="10"
+      :page-size="pageInfo.pageSize"
       background
       layout="total, sizes, prev, pager, next, jumper"
       :total="pageInfo.totalPages"
@@ -29,7 +29,7 @@ export default Vue.extend({
   mounted() {},
   methods: {
     handleSizeChange(val: number) {
-      // console.log(`每页 ${val} 条`);
+      console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
       this.pageInfo.pageFunc(this.pageInfo.pageNumber, this.pageInfo.pageSize);
     },

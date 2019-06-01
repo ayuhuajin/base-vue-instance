@@ -4,10 +4,10 @@
     <main-header :titleName="title">
       <div>
         <span>查找</span>
-        <el-input v-model="categoryName" placeholder="请输入查找内容"></el-input>
+        <el-input v-model="searchName" placeholder="请输入查找内容"></el-input>
       </div>
       <div>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
       </div>
     </main-header>
@@ -69,31 +69,17 @@ export default Vue.extend({
       // 分页设置
       pageInfo: {
         pageNumber: 1, // 当前页数
-        totalPages: 0, // 总页数
-        pageFunc: (this as any).getPageData, // 当前页数需要调用的函数
-        pageSize: 10, // 当前页数
+        totalPages: 1, // 总页数
+        pageFunc: (this as any).init, // 当前页数需要调用的函数
+        pageSize: 10, // 一页几条数据
         class: 'pageClass'
       },
       // 表格列表
-      tableData: [
-        {
-          title: '腾讯新闻腾讯新闻腾讯新闻',
-          name: '王小虎',
-          date: '2016-05-02',
-          category: 'js',
-          authority: '只读'
-        },
-        {
-          title: '腾讯新闻腾讯新闻腾讯新闻',
-          name: '王小虎',
-          date: '2016-05-02',
-          category: 'js',
-          authority: '只读'
-        }
-      ],
+      tableData: [],
       id: '',
       date: '' as any,
-      categoryName: ''
+      categoryName: '',
+      searchName: ''
     };
   },
   async mounted() {
@@ -102,10 +88,30 @@ export default Vue.extend({
   methods: {
     async init() {
       try {
-        this.categoryList = await index.dispatch('getAllCategory');
+        let result = await index.dispatch('getAllCategory', {
+          pageNumber: this.pageInfo.pageNumber,
+          pageSize: this.pageInfo.pageSize,
+          name: this.searchName
+        });
+        this.categoryList = result.data;
+        this.pageInfo.totalPages = result.total;
       } catch (err) {
         console.log(err);
       }
+    },
+    // 文章分类模糊搜索
+    search() {
+      // index
+      //   .dispatch('categorySearch', {
+      //     name: this.searchName
+      //   })
+      //   .then(data => {
+      //     this.categoryList = data;
+      //   })
+      //   .catch((err: any) => {
+      //     console.log('失败');
+      //   });
+      this.init();
     },
     // 获取视图
     async handleView(id: any, num: number) {
@@ -181,10 +187,6 @@ export default Vue.extend({
     // 关闭弹窗
     closeDialog() {
       this.showDialog = false;
-    },
-    // 获取分页数据
-    getPageData() {
-      console.log('11111,', '#44dce7');
     }
   }
 });
