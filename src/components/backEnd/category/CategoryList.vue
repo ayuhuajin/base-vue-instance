@@ -45,6 +45,7 @@ import BaseTable from '@/components/common/BaseTable.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import PageChange from '@/components/common/PageChange.vue';
 import index from '@/store/modules/index.ts';
+import timeFormate from '@/assets/js/utils/timeFormate.ts';
 export default Vue.extend({
   name: 'CategoryList',
   components: {
@@ -91,6 +92,7 @@ export default Vue.extend({
         }
       ],
       id: '',
+      date: '' as any,
       categoryName: ''
     };
   },
@@ -113,6 +115,7 @@ export default Vue.extend({
         let obj = await index.dispatch('categoryView', { id: id });
         if (obj) {
           this.categoryName = obj[0].name;
+          this.date = obj[0].date;
         }
       } catch (err) {
         console.log('报错');
@@ -123,7 +126,8 @@ export default Vue.extend({
       let obj = await index
         .dispatch('updateCategory', {
           id: id,
-          name: name
+          name: name,
+          date: this.date
         })
         .then(() => {
           this.closeDialog();
@@ -148,12 +152,13 @@ export default Vue.extend({
       this.showDialog = true;
       this.id = '';
       this.categoryName = '';
+      this.date = timeFormate.timeformatDay(new Date());
     },
     // 点击保存
     async handleSave() {
       if (!this.id) {
         index
-          .dispatch('addCategory', { name: this.categoryName })
+          .dispatch('addCategory', { name: this.categoryName, date: this.date })
           .then(() => {
             this.init();
             this.closeDialog();
