@@ -101,16 +101,7 @@ export default Vue.extend({
     },
     // 文章分类模糊搜索
     search() {
-      // index
-      //   .dispatch('categorySearch', {
-      //     name: this.searchName
-      //   })
-      //   .then(data => {
-      //     this.categoryList = data;
-      //   })
-      //   .catch((err: any) => {
-      //     console.log('失败');
-      //   });
+      this.pageInfo.pageNumber = 1;
       this.init();
     },
     // 获取视图
