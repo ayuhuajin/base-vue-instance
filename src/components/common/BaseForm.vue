@@ -38,7 +38,7 @@ export default Vue.extend({
     submitForm(formName: any) {
       (this as any).$refs[formName].validate((valid: any) => {
         if (valid) {
-          alert('submit!');
+          this.$emit('submitForm');
         } else {
           console.log('error submit!!');
           return false;

@@ -1,7 +1,7 @@
 <template>
   <div class="add-blog">
     <div class="title">增加文章</div>
-    <base-form :rules="rules" :ruleForm="ruleForm" :refObj="'form'" :formClass="'formClass'">
+    <base-form :rules="rules" :ruleForm="ruleForm" :refObj="'form'" :formClass="'formClass'" @submitForm="submitForm">
       <el-form-item label="标题" prop="title">
         <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
@@ -31,6 +31,7 @@ import BaseForm from '@/components/common/BaseForm.vue';
 import BaseUpload from '@/components/common/BaseUpload.vue';
 import wangeditor from 'wangeditor';
 import index from '@/store/modules/index.ts';
+import blog from '@/store/modules/blog.ts';
 export default Vue.extend({
   name: 'AddBlog',
   components: {
@@ -44,7 +45,8 @@ export default Vue.extend({
       ruleForm: {
         title: '',
         category: '',
-        content: ''
+        content: '',
+        img: ''
       },
       rules: {
         title: [
@@ -52,7 +54,7 @@ export default Vue.extend({
           { min: 2, max: 25, message: '长度在 3 到 25 个字符', trigger: 'blur' }
         ],
         category: [{ required: true, message: '请选择文章分类', trigger: 'blur' }],
-        content: [{ required: true, message: '请选择文章分类', trigger: 'blur' }]
+        content: [{ message: '请选择文章分类', trigger: 'blur' }]
       },
       uploadInfo: {
         uploadURl: 'http://10.70.1.11:12306/upload',
@@ -63,7 +65,7 @@ export default Vue.extend({
     };
   },
   async mounted() {
-    let result = await index.dispatch('getAllCategory', {
+    let result = await blog.dispatch('getAllBlog', {
       pageNumber: 1,
       pageSize: 999,
       name: ''
@@ -79,6 +81,9 @@ export default Vue.extend({
     },
     changeCategory(e: String) {
       console.log(e);
+    },
+    submitForm() {
+      blog.dispatch('addBlog', this.ruleForm);
     }
   }
 });
