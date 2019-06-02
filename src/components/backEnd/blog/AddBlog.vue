@@ -55,7 +55,7 @@ export default Vue.extend({
         content: [{ required: true, message: '请选择文章分类', trigger: 'blur' }]
       },
       uploadInfo: {
-        uploadURl: 'http://www.baidu.com',
+        uploadURl: 'http://10.70.1.11:12306/upload',
         hide: false,
         uploadClass: 'uploadClass',
         desc: ''

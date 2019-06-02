@@ -6,7 +6,6 @@
       :show-file-list="true"
       :file-list="fileList"
       :class="uploadInfo.uploadClass"
-      :with-credentials="true"
       :on-success="handleSuccess"
       :before-upload="beforeUpload"
       :on-remove="handleRemove"
