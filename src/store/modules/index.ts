@@ -1,6 +1,6 @@
 import root from '@/store/root.ts';
 import http from '@/services/http.ts';
-let ip = 'http://10.70.1.11:12306';
+let ip = 'http://192.168.99.196:12306';
 // let ip = 'http://api.wsinghai.com';
 export default root.registerModule('index', {
   actions: {
@@ -9,7 +9,6 @@ export default root.registerModule('index', {
       let result = await http.get(
         `${ip}/categoryList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}`
       );
-      console.log(result);
       return result.data;
     },
     // 添加分类

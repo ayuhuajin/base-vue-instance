@@ -4,30 +4,33 @@
     <main-header :titleName="title">
       <div>
         <span>分类</span>
-        <el-select v-model="value" placeholder="请选择">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+        <el-select v-model="categoryId" placeholder="请选择">
+          <el-option
+            v-for="(item, index) in categoryList"
+            :key="index"
+            :label="item.name"
+            :value="item._id"
+          ></el-option>
         </el-select>
       </div>
       <div>
         <span>查找</span>
-        <el-input v-model="input" placeholder="请输入查找内容"></el-input>
+        <el-input v-model="name" placeholder="请输入查找内容"></el-input>
       </div>
       <div>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
       </div>
     </main-header>
     <!-- 表格 -->
-    <base-table :tableData="tableData">
+    <base-table :tableData="blogData">
       <el-table-column prop="title" label="标题" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="name" label="作者"> </el-table-column>
-      <el-table-column prop="date" label="日期"> </el-table-column>
-      <el-table-column prop="category" label="分类"> </el-table-column>
-      <el-table-column prop="authority" label="权限"> </el-table-column>
+      <el-table-column prop="time" label="日期"> </el-table-column>
+      <el-table-column prop="categoryId" label="分类"></el-table-column>
       <el-table-column label="操作" align="center" width="170">
         <template slot-scope="scope">
-          <span class="content-edit" @click="handleEdit(scope.$index, scope.row)">编辑</span>
-          <span class="content-delete" @click="handleDelete(scope.$index, scope.row)">删除</span>
+          <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
+          <span class="content-delete" @click="handleDelete(scope.row._id)">删除</span>
         </template>
       </el-table-column>
     </base-table>
@@ -41,6 +44,9 @@ import Vue from 'vue';
 import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import PageChange from '@/components/common/PageChange.vue';
+import timeFormate from '@/assets/js/utils/timeFormate.ts';
+import index from '@/store/modules/index.ts';
+import blog from '@/store/modules/blog';
 export default Vue.extend({
   name: 'BlogList',
   components: {
@@ -51,56 +57,84 @@ export default Vue.extend({
   data() {
     return {
       title: '海因子',
-      options: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        },
-        {
-          value: '选项2',
-          label: '双皮奶'
-        },
-        {
-          value: '全部',
-          label: '全部'
-        }
-      ],
+      category: '',
+      categoryId: '',
+      categoryList: [],
+      name: '',
       // 分页设置
       pageInfo: {
         pageNumber: 1, // 当前页数
         totalPages: 0, // 总页数
-        pageFunc: (this as any).getPageData, // 当前页数需要调用的函数
+        pageFunc: (this as any).initData, // 当前页数需要调用的函数
         pageSize: 10, // 当前页数
         class: 'pageClass'
       },
       // 表格列表
-      tableData: [
-        {
-          title: '腾讯新闻腾讯新闻腾讯新闻',
-          name: '王小虎',
-          date: '2016-05-02',
-          category: 'js',
-          authority: '只读'
-        },
-        {
-          title: '腾讯新闻腾讯新闻腾讯新闻',
-          name: '王小虎',
-          date: '2016-05-02',
-          category: 'js',
-          authority: '只读'
-        }
-      ],
-      value: '',
-      input: ''
+      blogData: [] as any,
+      value: ''
     };
   },
-  mounted() {},
+  async mounted() {
+    await this.getCategoryList();
+    this.initData();
+  },
   methods: {
-    handleEdit() {
-      console.log('编辑');
+    // 初始化表单
+    async initData() {
+      let result = await blog.dispatch('getAllBlog', {
+        pageSize: this.pageInfo.pageSize,
+        pageNumber: this.pageInfo.pageNumber,
+        categoryId: this.categoryId,
+        name: this.name
+      });
+
+      this.blogData = this.getNameById(result.data);
+      this.pageInfo.totalPages = result.total;
     },
-    handleDelete() {
-      console.log('删除');
+    // 获取分类下拉列表
+    async getCategoryList() {
+      let result = await index.dispatch('getAllCategory', {
+        pageNumber: 1,
+        pageSize: 999,
+        name: ''
+      });
+      this.categoryList = result.data;
+    },
+    getNameById(arr: any) {
+      return arr.map((item: any) => {
+        item.time = timeFormate.timeformat(item.time);
+        item.categoryId = this.findName(item.categoryId);
+        return item;
+      });
+    },
+    // 寻找分类名称
+    findName(id: any) {
+      let obj: any = this.categoryList.find((item: any) => {
+        return item._id == id;
+      });
+      if (obj) {
+        return obj.name;
+      }
+    },
+    handleEdit(id: any) {
+      this.$router.push({
+        name: 'AddBlog',
+        query: {
+          id: id
+        }
+      });
+    },
+    handleDelete(id: string) {
+      blog
+        .dispatch('delBlog', {
+          id: id
+        })
+        .then(() => {
+          this.initData();
+        })
+        .catch(err => {
+          console.log('删除失败');
+        });
     },
     // 添加数据
     handleAdd() {
@@ -108,9 +142,10 @@ export default Vue.extend({
         name: 'AddBlog'
       });
     },
-    // 获取分页数据
-    getPageData() {
-      console.log('11111,', '#44dce7');
+    search() {
+      console.log(444);
+      this.pageInfo.pageNumber = 1;
+      this.initData();
     }
   }
 });

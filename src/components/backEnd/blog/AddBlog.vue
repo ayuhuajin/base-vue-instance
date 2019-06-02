@@ -6,7 +6,7 @@
         <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
       <el-form-item label="文章分类" prop="category">
-        <el-select v-model="ruleForm.category" placeholder="文章分类" @change="changeCategory">
+        <el-select v-model="ruleForm.categoryId" placeholder="文章分类" @change="changeCategory">
           <el-option
             v-for="(item, index) in categoryList"
             :key="index"
@@ -40,20 +40,22 @@ export default Vue.extend({
   },
   data() {
     return {
+      editor: null as any,
       title: '增加',
       categoryList: [],
       ruleForm: {
+        id: this.$route.query.id,
         title: '',
-        category: '',
+        categoryId: '',
         content: '',
         img: ''
-      },
+      } as any,
       rules: {
         title: [
           { required: true, message: '请输入文章标题', trigger: 'blur' },
           { min: 2, max: 25, message: '长度在 3 到 25 个字符', trigger: 'blur' }
         ],
-        category: [{ required: true, message: '请选择文章分类', trigger: 'blur' }],
+        categoryId: [{ required: true, message: '请选择文章分类', trigger: 'blur' }],
         content: [{ message: '请选择文章分类', trigger: 'blur' }]
       },
       uploadInfo: {
@@ -65,25 +67,47 @@ export default Vue.extend({
     };
   },
   async mounted() {
-    let result = await blog.dispatch('getAllBlog', {
+    let result = await index.dispatch('getAllCategory', {
       pageNumber: 1,
       pageSize: 999,
       name: ''
     });
     this.categoryList = result.data;
     this.createEditor();
+    if (this.$route.query.id) {
+      blog.dispatch('blogView', this.$route.query.id).then(data => {
+        this.ruleForm.title = data[0].title;
+        this.ruleForm.categoryId = data[0].categoryId;
+        this.ruleForm.content = data[0].content;
+        this.editor.txt.html(data[0].content);
+        this.ruleForm.img = data[0].img;
+      });
+    }
   },
   methods: {
     // 创建编辑器
     createEditor() {
-      var editor = new wangeditor('#editor');
-      editor.create();
+      this.editor = new wangeditor('#editor');
+      this.editor.create();
     },
     changeCategory(e: String) {
-      console.log(e);
+      this.ruleForm.categoryId = e;
     },
     submitForm() {
-      blog.dispatch('addBlog', this.ruleForm);
+      this.ruleForm.content = this.editor.txt.html();
+      if (this.$route.query.id) {
+        blog.dispatch('updateBlog', this.ruleForm).then(() => {
+          this.$router.push({
+            name: 'BlogList'
+          });
+        });
+      } else {
+        blog.dispatch('addBlog', this.ruleForm).then(() => {
+          this.$router.push({
+            name: 'BlogList'
+          });
+        });
+      }
     }
   }
 });
