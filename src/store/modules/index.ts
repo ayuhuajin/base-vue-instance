@@ -1,6 +1,8 @@
 import root from '@/store/root.ts';
 import http from '@/services/http.ts';
-let ip = 'http://192.168.99.196:12306';
+import qs from 'qs';
+let ip = 'http://10.70.1.11:12306';
+// let ip = 'http://192.168.99.196:12306';
 // let ip = 'http://api.wsinghai.com';
 export default root.registerModule('index', {
   actions: {
@@ -22,6 +24,7 @@ export default root.registerModule('index', {
       return result.data;
     },
     // 修改分类
+
     async updateCategory({ commit }, payload) {
       let result = await http.post(`${ip}/updateCateGory`, payload);
       return result.data;

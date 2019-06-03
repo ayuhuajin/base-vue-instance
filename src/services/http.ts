@@ -3,8 +3,11 @@ import url from '@/services/url.ts';
 
 axios.defaults.timeout = 30000;
 axios.defaults.baseURL = url.baseApi; //定义基础baseURl
+//设置axios为form-data
+// axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+// axios.defaults.headers.get['Content-Type'] = 'multipart/form-data';
 // axios.defaults.withCredentials = true; // 是否启用cookie
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
 //http response 拦截器
 axios.interceptors.response.use(
