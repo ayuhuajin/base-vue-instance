@@ -4,7 +4,7 @@
     <main-header :titleName="title">
       <div>
         <span>分类</span>
-        <el-select v-model="categoryId" placeholder="请选择">
+        <el-select v-model="categoryId" placeholder="请选择" @change="changeCategory($event)">
           <el-option
             v-for="(item, index) in categoryList"
             :key="index"
@@ -59,7 +59,7 @@ export default Vue.extend({
       title: '海因子',
       category: '',
       categoryId: '',
-      categoryList: [],
+      categoryList: [] as any,
       name: '',
       // 分页设置
       pageInfo: {
@@ -99,6 +99,10 @@ export default Vue.extend({
         name: ''
       });
       this.categoryList = result.data;
+      this.categoryList.unshift({
+        name: '全部',
+        _id: ''
+      });
     },
     getNameById(arr: any) {
       return arr.map((item: any) => {
@@ -144,6 +148,10 @@ export default Vue.extend({
     },
     search() {
       console.log(444);
+      this.pageInfo.pageNumber = 1;
+      this.initData();
+    },
+    changeCategory(e: string) {
       this.pageInfo.pageNumber = 1;
       this.initData();
     }
