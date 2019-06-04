@@ -46,6 +46,7 @@ export default Vue.extend({
     height: 28px;
     line-height: 28px;
     color: #3c6989;
+    font-weight: bold;
   }
   .el-table__header {
     border-top: 1px solid #eee;

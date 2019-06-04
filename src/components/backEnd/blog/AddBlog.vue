@@ -1,6 +1,6 @@
 <template>
   <div class="add-blog">
-    <div class="title">增加文章</div>
+    <div class="title"><img @click="back" class="back" src="../../../assets/images/icon_back.png" />增加文章</div>
     <base-form :rules="rules" :ruleForm="ruleForm" :refObj="'form'" :formClass="'formClass'" @submitForm="submitForm">
       <el-form-item label="标题" prop="title">
         <el-input v-model="ruleForm.title"></el-input>
@@ -22,6 +22,7 @@
         <div id="editor" style="min-width:700px;max-width:1200px;margin: 0 auto;"></div>
       </el-form-item>
     </base-form>
+    <!-- <span @click="preview">预览</span> -->
   </div>
 </template>
 
@@ -93,6 +94,16 @@ export default Vue.extend({
     changeCategory(e: String) {
       this.ruleForm.categoryId = e;
     },
+    back() {
+      this.$router.push({
+        name: 'BlogList'
+      });
+    },
+    // 预览
+    preview() {
+      console.log(444);
+    },
+    // 发布
     submitForm() {
       this.ruleForm.content = this.editor.txt.html();
       if (this.$route.query.id) {
@@ -146,6 +157,10 @@ export default Vue.extend({
 .add-blog {
   border-radius: 5px;
   background: white;
+  .back {
+    margin-right: 5px;
+    cursor: pointer;
+  }
   .title {
     padding: 10px 20px;
     border-bottom: 1px solid #eee;
