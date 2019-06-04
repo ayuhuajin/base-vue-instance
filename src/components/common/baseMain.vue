@@ -23,7 +23,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .base-main {
   flex: 1;
-  margin: 20px;
+  padding: 20px;
 }
 // 过度动画
 .fade-enter-active,
