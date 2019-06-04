@@ -24,9 +24,9 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="blogData">
-      <el-table-column prop="title" label="标题" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="time" label="日期"> </el-table-column>
-      <el-table-column prop="categoryId" label="分类"></el-table-column>
+      <el-table-column prop="title" label="文章标题" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="time" label="发布日期"> </el-table-column>
+      <el-table-column prop="categoryId" label="类型"></el-table-column>
       <el-table-column label="操作" align="center" width="170">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
@@ -161,7 +161,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .blog-list {
   > div:not(:first-child) {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 }
 </style>

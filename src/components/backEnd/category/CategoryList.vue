@@ -193,7 +193,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .category-list {
   > div:not(:first-child) {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 }
 .save,

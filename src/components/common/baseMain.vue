@@ -23,12 +23,12 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .base-main {
   flex: 1;
-  padding: 20px;
+  padding: 15px 20px;
 }
 // 过度动画
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
