@@ -9,6 +9,11 @@ axios.defaults.baseURL = url.baseApi; //定义基础baseURl
 // axios.defaults.withCredentials = true; // 是否启用cookie
 // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  config.headers.common['Authorization'] = 'Bearer ' + token;
+  return config;
+});
 //http response 拦截器
 axios.interceptors.response.use(
   (response: any) => {

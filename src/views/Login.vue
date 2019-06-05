@@ -11,7 +11,7 @@
           <span>密码：</span>
           <input type="password" placeholder="请输入密码" />
         </div>
-        <div class="login-btn">登录</div>
+        <div class="login-btn" @click="login">登录</div>
       </div>
     </div>
   </div>
@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import index from '@/store/modules/index';
 export default Vue.extend({
   name: 'Login',
   data() {
@@ -27,7 +28,23 @@ export default Vue.extend({
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    login() {
+      index
+        .dispatch('login', {
+          account: 'wsinghai',
+          password: 123456
+        })
+        .then(data => {
+          console.log(data.data.data);
+          localStorage.setItem('token', data.data.data);
+          // localStorage.setItem('token_exp', (new Date() as any).getTime());
+          this.$router.push({
+            name: 'BlogList'
+          });
+        });
+    }
+  }
 });
 </script>
 
