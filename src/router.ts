@@ -74,6 +74,10 @@ let router = new Router({
       ]
     },
     {
+      path: '*',
+      component: () => import('./components/common/404.vue')
+    },
+    {
       path: '/test',
       name: 'Test',
       component: () => import('./views/Test.vue'),
