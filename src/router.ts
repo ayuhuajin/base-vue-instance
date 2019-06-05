@@ -74,6 +74,10 @@ let router = new Router({
       ]
     },
     {
+      path: '/login',
+      component: () => import('./views/Login.vue')
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     },
