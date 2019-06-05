@@ -71,7 +71,7 @@ export default Vue.extend({
       margin-top: 25px;
       text-align: center;
       span {
-        font-size: 18px;
+        font-size: 16px;
         color: #666;
       }
       input {
