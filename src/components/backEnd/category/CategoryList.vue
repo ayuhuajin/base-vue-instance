@@ -13,6 +13,7 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="categoryList">
+      <el-table-column type="index" width="100" label="序号" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="name" label="文章分类" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="date" label="创建日期"> </el-table-column>
       <el-table-column label="操作" align="center" width="170">
