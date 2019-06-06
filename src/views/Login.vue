@@ -42,8 +42,8 @@ export default Vue.extend({
           if (data.data.code == 200) {
             localStorage.setItem('token', data.data.data);
             localStorage.setItem('token_exp', (new Date() as any).getTime());
-            this.$router.push({
-              name: 'BlogList'
+            this.$router.replace({
+              path: (this as any).$route.query.redirect
             });
           } else {
             (this as any).$message({
