@@ -30,15 +30,13 @@ export default Vue.extend({
       password: ''
     };
   },
-  mounted() {
-    console.log(secret.Encrypt(41111));
-  },
+  mounted() {},
   methods: {
     login() {
       index
         .dispatch('login', {
           account: this.account,
-          password: this.password
+          password: secret.Encrypt(this.password)
         })
         .then(data => {
           if (data.data.code == 200) {
