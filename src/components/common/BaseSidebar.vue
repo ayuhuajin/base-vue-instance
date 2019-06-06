@@ -16,8 +16,9 @@
           <span slot="title">wsinghai</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/backEnd">文章</el-menu-item>
-          <el-menu-item index="/backEnd/category">分类</el-menu-item>
+          <el-menu-item index="/backEnd">文章管理</el-menu-item>
+          <el-menu-item index="/backEnd/category">分类管理</el-menu-item>
+          <el-menu-item index="/backEnd/user">用户管理</el-menu-item>
           <el-menu-item index="/backEnd/git">Git</el-menu-item>
         </el-menu-item-group>
         <el-submenu index="es5">

@@ -60,6 +60,18 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/user',
+          component: () => import('./components/backEnd/user/UserView.vue'),
+          meta: { title: '嗨前端-用户' },
+          children: [
+            {
+              path: '/',
+              name: 'UserList',
+              component: () => import('./components/backEnd/user/UserList.vue')
+            }
+          ]
+        },
+        {
           path: '/backEnd/typeScript',
           name: 'TypeScript',
           component: () => import('./components/backEnd/TypeScript.vue'),
