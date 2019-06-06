@@ -20,6 +20,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import index from '@/store/modules/index';
+import secret from '@/assets/js/utils/secret';
 export default Vue.extend({
   name: 'Login',
   data() {
@@ -29,7 +30,9 @@ export default Vue.extend({
       password: ''
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(secret.Encrypt(41111));
+  },
   methods: {
     login() {
       index
