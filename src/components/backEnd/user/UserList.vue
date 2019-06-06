@@ -12,10 +12,9 @@
       </div>
     </main-header>
     <!-- 表格 -->
-    <base-table :tableData="categoryList">
+    <base-table :tableData="userList">
       <el-table-column type="index" width="100" label="序号" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="name" label="文章分类" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="date" label="创建日期"> </el-table-column>
+      <el-table-column prop="account" label="用户" show-overflow-tooltip> </el-table-column>
       <el-table-column label="操作" align="center" width="170">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleView(scope.row._id, scope.row)">编辑</span>
@@ -27,9 +26,11 @@
     <page-change :pageInfo="pageInfo"></page-change>
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
-      <div class="category">
-        <span>分类名称</span>
-        <el-input v-model="categoryName" placeholder="请输入分类名称"></el-input>
+      <div class="user">
+        <span>用户名称</span>
+        <el-input v-model="userName" placeholder="请输入用户名称"></el-input>
+        <span>用户密码</span>
+        <el-input v-model="password" placeholder="请输入用户密码"></el-input>
       </div>
       <div>
         <span class="save" @click="handleSave">保存</span>
@@ -45,8 +46,7 @@ import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import PageChange from '@/components/common/PageChange.vue';
-import index from '@/store/modules/index.ts';
-import timeFormate from '@/assets/js/utils/timeFormate.ts';
+import user from '@/store/modules/user.ts';
 export default Vue.extend({
   name: 'UserList',
   components: {
@@ -58,13 +58,13 @@ export default Vue.extend({
   data() {
     return {
       title: '用户',
-      categoryList: [],
+      userList: [],
       // 弹窗设置
       dialogInfo: {
         visible: true,
-        titleName: '添加分类',
+        titleName: '添加用户',
         dialogWidth: '800px',
-        activeClass: 'category-dialog'
+        activeClass: 'user-dialog'
       },
       showDialog: false,
       // 分页设置
@@ -79,7 +79,8 @@ export default Vue.extend({
       tableData: [],
       id: '',
       date: '' as any,
-      categoryName: '',
+      userName: '',
+      password: '',
       searchName: ''
     };
   },
@@ -89,13 +90,9 @@ export default Vue.extend({
   methods: {
     async init() {
       try {
-        let result = await index.dispatch('getAllCategory', {
-          pageNumber: this.pageInfo.pageNumber,
-          pageSize: this.pageInfo.pageSize,
-          name: this.searchName
-        });
-        this.categoryList = result.data;
-        this.pageInfo.totalPages = result.total;
+        let result = await user.dispatch('getAllUser');
+        console.log(result);
+        this.userList = result;
       } catch (err) {
         console.log(err);
       }
@@ -110,10 +107,10 @@ export default Vue.extend({
       this.id = id;
       this.showDialog = true;
       try {
-        let obj = await index.dispatch('categoryView', { id: id });
+        let obj = await user.dispatch('userView', { id: id });
         if (obj) {
-          this.categoryName = obj[0].name;
-          this.date = obj[0].date;
+          this.userName = obj[0].account;
+          this.password = obj[0].password;
         }
       } catch (err) {
         console.log('报错');
@@ -121,11 +118,11 @@ export default Vue.extend({
     },
     // 编辑
     async handleEdit(id: any, name: any) {
-      let obj = await index
-        .dispatch('updateCategory', {
+      let obj = await user
+        .dispatch('updateUser', {
           id: id,
-          name: name,
-          date: this.date
+          account: this.userName,
+          password: this.password
         })
         .then(() => {
           this.closeDialog();
@@ -137,8 +134,8 @@ export default Vue.extend({
     // 删除
     async handleDelete(id: any, num: number) {
       console.log(num);
-      index
-        .dispatch('delCategory', { id: id })
+      user
+        .dispatch('delUser', { id: id })
         .then(() => {
           // this.categoryList.splice(num, 1);
           this.init();
@@ -151,14 +148,14 @@ export default Vue.extend({
     handleAdd() {
       this.showDialog = true;
       this.id = '';
-      this.categoryName = '';
-      this.date = timeFormate.timeformatDay(new Date());
+      this.userName = '';
+      this.password = '';
     },
     // 点击保存
     async handleSave() {
       if (!this.id) {
-        index
-          .dispatch('addCategory', { name: this.categoryName, date: this.date })
+        user
+          .dispatch('addUser', { account: this.userName, password: this.password })
           .then(() => {
             this.init();
             this.closeDialog();
@@ -167,7 +164,7 @@ export default Vue.extend({
             console.log('失败');
           });
       } else {
-        this.handleEdit(this.id, this.categoryName)
+        this.handleEdit(this.id, this.userName)
           .then(() => {
             this.init();
           })
@@ -184,7 +181,7 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss">
-.category-dialog {
+.user-dialog {
   .el-input__inner {
     line-height: 44px;
   }
@@ -215,10 +212,11 @@ export default Vue.extend({
   color: #333;
   background: white;
 }
-.category {
+.user {
   > span {
+    margin-top: 10px;
     font-size: 16px;
-    color: #333;
+    color: #666;
   }
   .el-input {
     margin-top: 10px;
