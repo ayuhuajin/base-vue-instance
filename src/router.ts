@@ -87,6 +87,7 @@ let router = new Router({
     },
     {
       path: '/login',
+      name: 'login',
       component: () => import('./views/Login.vue')
     },
     {

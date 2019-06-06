@@ -2,6 +2,7 @@
   <div class="base-header">
     <img src="../../assets/images/logo.jpg" alt="logo" />
     <span class="name">嗨前端</span>
+    <span @click="loginOut" class="loginOut">退出</span>
   </div>
 </template>
 
@@ -15,7 +16,14 @@ export default Vue.extend({
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+    loginOut() {
+      localStorage.setItem('token', '');
+      this.$router.push({
+        name: 'login'
+      });
+    }
+  }
 });
 </script>
 
@@ -34,6 +42,12 @@ export default Vue.extend({
     margin-left: 20px;
     font-size: 18px;
     color: #666;
+  }
+  .loginOut {
+    float: right;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
   }
 }
 </style>
