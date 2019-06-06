@@ -105,6 +105,7 @@ export default Vue.extend({
         padding-left: 20px;
         border-radius: 5px;
         overflow: hidden;
+        color: #666;
         line-height: 40px;
         outline: none;
       }
