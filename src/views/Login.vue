@@ -5,11 +5,11 @@
         <h3>wsinghai博客</h3>
         <div>
           <span>账号：</span>
-          <input type="text" placeholder="请输入账号" />
+          <input v-model="account" type="text" placeholder="请输入账号" />
         </div>
         <div>
           <span>密码：</span>
-          <input type="password" placeholder="请输入密码" />
+          <input v-model="password" type="password" placeholder="请输入密码" />
         </div>
         <div class="login-btn" @click="login">登录</div>
       </div>
@@ -24,7 +24,9 @@ export default Vue.extend({
   name: 'Login',
   data() {
     return {
-      title: '登录'
+      title: '登录',
+      account: '',
+      password: ''
     };
   },
   mounted() {},
@@ -32,16 +34,22 @@ export default Vue.extend({
     login() {
       index
         .dispatch('login', {
-          account: 'wsinghai',
-          password: 123456
+          account: this.account,
+          password: this.password
         })
         .then(data => {
-          console.log(data.data.data);
-          localStorage.setItem('token', data.data.data);
-          // localStorage.setItem('token_exp', (new Date() as any).getTime());
-          this.$router.push({
-            name: 'BlogList'
-          });
+          if (data.data.code == 200) {
+            localStorage.setItem('token', data.data.data);
+            localStorage.setItem('token_exp', (new Date() as any).getTime());
+            this.$router.push({
+              name: 'BlogList'
+            });
+          } else {
+            (this as any).$message({
+              type: 'error',
+              message: data.data.msg
+            });
+          }
         });
     }
   }

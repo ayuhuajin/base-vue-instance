@@ -15,6 +15,7 @@ import {
   Form,
   FormItem,
   MessageBox,
+  Message,
   Upload
 } from 'element-ui';
 
@@ -35,3 +36,4 @@ Vue.use(FormItem);
 Vue.use(Upload);
 
 Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$message = Message;
