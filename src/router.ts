@@ -81,7 +81,7 @@ let router = new Router({
           path: '/backEnd/git',
           name: 'Git',
           component: () => import('./components/backEnd/Git.vue'),
-          meta: { title: '嗨前端-git' }
+          meta: { title: '嗨前端-git', requireAuth: true }
         }
       ]
     },
@@ -98,12 +98,26 @@ let router = new Router({
       path: '/test',
       name: 'Test',
       component: () => import('./views/Test.vue'),
-      meta: { title: '嗨前端-test' }
+      meta: { title: '嗨前端-test', requireAuth: true }
     }
   ]
 });
 router.beforeEach((to, from, next) => {
-  next();
+  if (to.meta.requireAuth) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      next();
+    } else {
+      console.log(to.fullPath);
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+      });
+    }
+    next();
+  } else {
+    next();
+  }
 });
 router.afterEach((to, from) => {
   if (to.meta && to.meta.title) {
