@@ -1,8 +1,8 @@
 import root from '@/store/root.ts';
 import http from '@/services/http.ts';
 import qs from 'qs';
-// let ip = 'http://10.70.1.11:12306';
-let ip = 'http://192.168.99.113:12306';
+let ip = 'http://10.70.1.11:12306';
+// let ip = 'http://192.168.99.113:12306';
 // let ip = 'http://api.wsinghai.com';
 export default root.registerModule('index', {
   actions: {

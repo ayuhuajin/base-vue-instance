@@ -91,7 +91,6 @@ export default Vue.extend({
     async init() {
       try {
         let result = await user.dispatch('getAllUser');
-        console.log(result);
         this.userList = result;
       } catch (err) {
         console.log(err);

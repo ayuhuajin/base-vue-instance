@@ -51,10 +51,10 @@ export default Vue.extend({
   mounted() {},
   methods: {
     handleOpen(key: any, keyPath: any) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose(key: any, keyPath: any) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     }
   }
 });
