@@ -9,6 +9,13 @@ import './plugins/element.js';
 import './plugins/echarts.js';
 import './plugins/video.js';
 
+Vue.directive('highlight', function(el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach(block => {
+    (window as any).hljs.highlightBlock(block);
+  });
+});
+
 Vue.config.productionTip = false;
 new Vue({
   router,
