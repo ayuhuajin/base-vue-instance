@@ -11,7 +11,7 @@
           <span>密码：</span>
           <input v-model="password" type="password" placeholder="请输入密码" />
         </div>
-        <div class="login-btn" @click="login">登录</div>
+        <div class="login-btn" @click="login">登录123</div>
       </div>
     </div>
   </div>
