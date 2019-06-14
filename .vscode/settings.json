@@ -1,0 +1,23 @@
+{
+  "path-autocomplete.pathMappings": {
+    "@": "${folder}/src"
+  },
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "editor.formatOnType": false,
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+    "html",
+    "vue",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    "typescriptreact"
+  ]
+}
