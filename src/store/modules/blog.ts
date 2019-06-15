@@ -2,7 +2,7 @@ import root from '@/store/root.ts';
 import http from '@/services/http.ts';
 export default root.registerModule('blog', {
   actions: {
-    //获取所有文章分类
+    //获取所有文章分类1
     async getAllCategory({ commit }, payload) {
       let result = await http.get(
         `/categoryList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}`
