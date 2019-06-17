@@ -41,7 +41,7 @@ export default Vue.extend({
   data() {
     return {
       videoUrl:
-        'http://alhlsgw.lechange.com:9001/LCO/3E00EBAPAZ76A22/0/1/20170925133417/dev_20170925133417_itq70exptp5sa470.m3u8'
+        '//alhlsgw.lechange.com:9001/LCO/3E00EBAPAZ76A22/0/1/20170925133417/dev_20170925133417_itq70exptp5sa470.m3u8'
     };
   },
   mounted() {
