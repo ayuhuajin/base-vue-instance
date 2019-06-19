@@ -42,6 +42,7 @@ export default Vue.extend({
           if (data.data.code == 200) {
             localStorage.setItem('token', data.data.data);
             localStorage.setItem('token_exp', (new Date() as any).getTime());
+            console.log((this as any).$route.query.redirect);
             this.$router.replace({
               path: (this as any).$route.query.redirect
             });
