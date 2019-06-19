@@ -2,6 +2,7 @@ module.exports = {
   devServer: {
     port: 10086 //启动端口
   },
+  outputDir: process.env.NODE_ENV === 'development' ? 'devdist' : 'cms', // 不同的环境打不同包名
   // configureWebpack: c => {
   //   if (process.env.NODE_ENV == 'production') {
   //     c.externals = {
