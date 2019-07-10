@@ -29,7 +29,8 @@ module.exports = {
   css: {
     sourceMap: true //开启cssSourceMap
   },
-  productionSourceMap: false // 生产环境打包 不产生 map文件
+  productionSourceMap: false, // 生产环境打包 不产生 map文件
+  outputDir: process.env.NODE_ENV === 'development' ? 'devdist' : 'cms' // 不同的环境打不同包名
   // configureWebpack: c => {
   //   if (process.env.NODE_ENV == 'production') {
   //     c.externals = {
