@@ -103,6 +103,11 @@ let router = new Router({
   ]
 });
 router.beforeEach((to, from, next) => {
+  // 记住当前url
+  if (to.fullPath.indexOf('login') == -1) {
+    localStorage.setItem('currentUrl', window.location.href);
+  }
+
   if (to.meta.requireAuth) {
     const token = localStorage.getItem('token');
     if (!token) {
