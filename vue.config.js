@@ -1,4 +1,7 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // vue分析工具
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const productionGzipExtensions = ['js', 'css'];
+
 function getProdExternals() {
   return {
     // echarts: 'echarts',
@@ -15,6 +18,15 @@ module.exports = {
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       process.env.NODE_ENV === 'production' ? getProdExternals() : {}; // 排除打包的插件
+      // 开启Gzip压缩
+      config.plugins.push(
+        new CompressionWebpackPlugin({
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      );
       return {
         plugins: [new BundleAnalyzerPlugin()] //性能分析
       };
@@ -40,4 +52,15 @@ module.exports = {
   //     };
   //   }
   // },
+  //开启代理
+  // proxy: {  //开启代理无法携带 cookie,后端无法判断请求正确性，返回401
+  //   '/api': {
+  //     target: 'http://ylwapi.t.nxin.com',
+  //     ws: true,
+  //     changeOrigin: true,
+  //     pathRequiresRewrite: {
+  //       '^/api': '/'
+  //     }
+  //   }
+  // }
 };
