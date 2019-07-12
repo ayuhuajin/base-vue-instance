@@ -15,10 +15,12 @@ Vue.directive('highlight', function(el) {
     (window as any).hljs.highlightBlock(block);
   });
 });
-// 移动端console 调试
-// import Vconsole from 'vconsole';
-// const vConsole = new Vconsole();
-// Vue.use(vConsole);
+// 移动端console 调试(测试环境)
+if (process.env.NODE_ENV !== 'production') {
+  const Vconsole = require('vconsole'); // vue分析工具
+  const vConsole = new Vconsole();
+  Vue.use(vConsole);
+}
 
 Vue.config.productionTip = false;
 new Vue({
