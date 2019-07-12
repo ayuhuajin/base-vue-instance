@@ -1,34 +1,57 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // vue分析工具
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = ['js', 'css'];
+// vconsole-webpack-plugin
 
 function getProdExternals() {
   return {
+    vue: 'Vue'
     // echarts: 'echarts',
-    // 'element-ui': 'element-ui',
+    // VueRouter: 'VueRouter',
+    // vuex: 'Vuex',
     // axios: 'axios',
-    // 'chart.js': 'Chart',
-    // vue: 'Vue'
+    // 'element-ui': 'ELEMENT'
   };
 }
+
+// CDN外链，会插入到index.html中
+const cdn = {
+  // 开发环境
+  dev: {
+    css: ['https://unpkg.com/element-ui/lib/theme-chalk/index.css'],
+    js: []
+  },
+  // 生产环境
+  build: {
+    css: ['https://unpkg.com/element-ui/lib/theme-chalk/index.css'],
+    js: [
+      'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js',
+      'https://cdn.jsdelivr.net/npm/vue-router@3.0.1/dist/vue-router.min.js',
+      'https://cdn.jsdelivr.net/npm/vuex@3.0.1/dist/vuex.min.js',
+      'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js',
+      'https://unpkg.com/element-ui/lib/index.js'
+    ]
+  }
+};
 module.exports = {
   devServer: {
     port: 10086 //启动端口
   },
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
-      process.env.NODE_ENV === 'production' ? getProdExternals() : {}; // 排除打包的插件
-      // 开启Gzip压缩
-      config.plugins.push(
-        new CompressionWebpackPlugin({
-          algorithm: 'gzip',
-          test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-          threshold: 10240,
-          minRatio: 0.8
-        })
-      );
+      config.externals = process.env.NODE_ENV === 'production' ? getProdExternals() : {}; // 排除打包的插件
       return {
-        plugins: [new BundleAnalyzerPlugin()] //性能分析
+        plugins: [
+          //性能分析
+          // new BundleAnalyzerPlugin(),
+          // 开启Gzip压缩
+          new CompressionWebpackPlugin({
+            algorithm: 'gzip',
+            test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+            threshold: 10240,
+            minRatio: 0.8
+          })
+        ] //性能分析
       };
     }
   },
