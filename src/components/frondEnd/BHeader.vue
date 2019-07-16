@@ -37,7 +37,32 @@ export default Vue.extend({
       this.list = [{ name: 'aaaa' }];
     }, 500);
   },
-  methods: {}
+  methods: {
+    // 监听postmessage 传过来的事件
+    monitorMessage() {
+      window.addEventListener(
+        'message',
+        function(event) {
+          console.log(111);
+          console.log(event);
+          // 通过origin属性判断消息来源地址
+          if (event.origin == 'http://localhost:8081') {
+            console.log(event.data);
+            console.log(event.source);
+          }
+        },
+        false
+      );
+    },
+    // 对iframe 进行传递信息
+    trans() {
+      var iframe: any = document.getElementById('myFrame');
+      var targetOrigin = 'http://10.70.1.21:8081/'; // 若写成'http://b.com/c/proxy.html'效果一样
+      // 若写成'http://c.com'就不会执行postMessage了
+      console.log(455445455451100);
+      iframe.contentWindow.postMessage('data to send', targetOrigin);
+    }
+  }
 });
 </script>
 <style lang="scss" scoped>
