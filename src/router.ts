@@ -110,7 +110,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requireAuth) {
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (token) {
       next();
     } else {
       console.log(to.fullPath);
