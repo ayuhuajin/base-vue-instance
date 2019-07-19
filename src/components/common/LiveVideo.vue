@@ -57,6 +57,46 @@ export default Vue.extend({
             .catch((e: any) => {
               console.log('视频初始化失败');
             });
+
+          // 自定义事件;
+          let v = this.el_.querySelector('.vjs-big-play-button');
+          console.log(v);
+          v.removeAttribute('z-index');
+          // 当暂停时，点击开始播放
+          v.addEventListener('click', () => {
+            if (this.paused()) {
+              this.play();
+            }
+          });
+          // 当播放时，触摸暂停。注意这里只有 touchstart 有效，其他事件不能被触发
+          v.addEventListener('touchstart', () => {
+            // if (!this.paused()) {
+            console.log(this.requestFullscreen);
+            // this.requestFullscreen();
+            // this.webkitEnterFullscreen();
+            if (this.requestFullscreen) {
+              this.requestFullscreen();
+            } else if (this.mozRequestFullScreen) {
+              this.mozRequestFullScreen();
+            } else if (this.webkitRequestFullScreen) {
+              this.webkitRequestFullScreen();
+            }
+            // }
+          });
+          v.addEventListener('touch', () => {
+            // if (!this.paused()) {
+            console.log(this.requestFullscreen);
+            // this.requestFullscreen();
+            // this.webkitEnterFullscreen();
+            if (this.requestFullscreen) {
+              this.requestFullscreen();
+            } else if (this.mozRequestFullScreen) {
+              this.mozRequestFullScreen();
+            } else if (this.webkitRequestFullScreen) {
+              this.webkitRequestFullScreen();
+            }
+            // }
+          });
         }
       );
     });
