@@ -16,11 +16,11 @@ Vue.directive('highlight', function(el) {
   });
 });
 // 移动端console 调试(测试环境)
-if (process.env.NODE_ENV !== 'production') {
-  const Vconsole = require('vconsole'); // vue分析工具
-  const vConsole = new Vconsole();
-  Vue.use(vConsole);
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   const Vconsole = require('vconsole'); // vue分析工具
+//   const vConsole = new Vconsole();
+//   Vue.use(vConsole);
+// }
 
 Vue.config.productionTip = false;
 new Vue({
