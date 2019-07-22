@@ -38,6 +38,8 @@ module.exports = {
     port: 10086 //启动端口
   },
   configureWebpack: config => {
+    // webpack配置，值位对象时会合并配置，为方法时会改写配置
+    config.devtool = 'eval-source-map';
     if (process.env.NODE_ENV === 'production') {
       config.externals = process.env.NODE_ENV === 'production' ? getProdExternals() : {}; // 排除打包的插件
       return {
