@@ -8,7 +8,7 @@
       muted
       controls
       preload="auto"
-      poster="../assets/images/logo.jpg"
+      poster="../../assets/images/logo.jpg"
     >
       <source :src="url" type="application/x-mpegURL" />
     </video>
