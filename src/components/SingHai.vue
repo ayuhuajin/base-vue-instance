@@ -17,6 +17,7 @@
     <section style="width:200px;height:200px;">
       <!-- <live-video :key="1" :url="videoUrl" :index="1"></live-video> -->
     </section>
+    <div class="border-1px">wsianghia</div>
     <section>
       <div id="editor" style="min-width:700px;max-width:1200px;margin: 0 auto;"></div>
     </section>
@@ -180,6 +181,14 @@ export default Vue.extend({
 .name {
   @include ellipsis;
   width: 40px;
+}
+.border-1px {
+  // width: 100px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+  line-height: 40px;
+  text-align: center;
+  @include border-1px(1px, solid, red, all);
 }
 .red-color {
   width: 120px;
