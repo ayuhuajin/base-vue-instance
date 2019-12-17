@@ -13,6 +13,9 @@
     <section class="switch">
       开关
     </section>
+    <div :class="$style['module-test']">
+      module 样式测试
+    </div>
     <!-- echart 曲线图 -->
     <section ref="parameterLine" class="line" style="height: 200px;width:400px"></section>
     <!-- 高德地图 -->
@@ -49,6 +52,7 @@ export default Vue.extend({
     };
   },
   mounted() {
+    console.log(this.$style);
     this.init();
     this.parameterLine();
     // 加载地图
@@ -179,6 +183,15 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" module>
+// 通过module作用的style将会重新命名为：文件名_原style名_不定后缀。
+.module-test {
+  color: blue;
+}
+.test {
+  color: red;
+}
+</style>
 <style lang="scss" scoped>
 @import '@/assets/css/base.scss';
 .name {
