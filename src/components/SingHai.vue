@@ -211,6 +211,7 @@ export default Vue.extend({
   @include table-scaffolding;
   @include link-colors(#00c, #0cc, #c0c, #ccc, #cc0);
   // @include stretch;
+  // @include sticky-footer(54px);
 }
 
 .switch {
