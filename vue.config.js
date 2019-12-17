@@ -64,7 +64,16 @@ module.exports = {
     './src/store/modules/index.ts'
   ],
   css: {
-    sourceMap: true //开启cssSourceMap
+    sourceMap: true, //开启cssSourceMap
+    loaderOptions: {
+      sass: {
+        // 设置全局引用
+        data: `
+        @import "./node_modules/compass-mixins/lib/_compass.scss";
+        @import "./node_modules/compass-mixins/lib/compass/_layout.scss";
+        `
+      }
+    }
   },
   productionSourceMap: false, // 生产环境打包 不产生 map文件
   outputDir: process.env.NODE_ENV === 'development' ? 'devdist' : 'cms' // 不同的环境打不同包名

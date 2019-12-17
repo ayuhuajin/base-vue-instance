@@ -16,6 +16,8 @@
     <div :class="$style['module-test']">
       module 样式测试
     </div>
+
+    <div class="compass">引入compass模块</div>
     <!-- echart 曲线图 -->
     <section ref="parameterLine" class="line" style="height: 200px;width:400px"></section>
     <!-- 高德地图 -->
@@ -197,6 +199,13 @@ export default Vue.extend({
 .name {
   @include ellipsis;
   width: 40px;
+}
+.compass {
+  width: 200px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ff4e00;
+  @include border-radius(4px);
 }
 .switch {
   @include switch;
