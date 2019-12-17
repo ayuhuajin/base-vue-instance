@@ -98,7 +98,7 @@ let router = new Router({
       path: '/test',
       name: 'Test',
       component: () => import('./views/Test.vue'),
-      meta: { title: '嗨前端-test', requireAuth: true }
+      meta: { title: '嗨前端-test' }
     }
   ]
 });

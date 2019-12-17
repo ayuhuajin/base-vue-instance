@@ -10,6 +10,9 @@
     <section>
       <el-button>按钮</el-button>
     </section>
+    <section class="switch">
+      开关
+    </section>
     <!-- echart 曲线图 -->
     <section ref="parameterLine" class="line" style="height: 200px;width:400px"></section>
     <!-- 高德地图 -->
@@ -181,6 +184,10 @@ export default Vue.extend({
 .name {
   @include ellipsis;
   width: 40px;
+}
+.switch {
+  @include switch;
+  // background: url('../assets/images/icon_back.png')
 }
 .border-1px {
   // width: 100px;

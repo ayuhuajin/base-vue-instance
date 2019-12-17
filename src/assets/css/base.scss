@@ -8,6 +8,18 @@
   background: $bg;
 }
 
+// 浮动、清除浮动
+@mixin clearFix {
+  &:after {
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    content: "";
+  }
+}
+
 /* 超出省略号 */
 @mixin ellipsis() {
   overflow: hidden;
@@ -34,7 +46,7 @@
     font-size: $size
   }
 }
-
+// 滚动条样式
 @mixin scrollbar(){
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
   ::-webkit-scrollbar
@@ -124,5 +136,30 @@
       transform: scale(0.33);
       -webkit-transform: scale(0.33);
     }
+  }
+}
+// 水平垂直居中、
+@mixin  center-vertical{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+@mixin switch {
+  position: relative;
+  margin-left: 20px;
+  font-size: 16px;
+  color: #ff4e00;
+  padding-left: 5px;
+  &:after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left:-5px;
+    transform:translate(0,-50%);
+    width: 10px;
+    height: 6px;
+    background: url('../assets/images/icon_back.png') no-repeat 97%;
+    background-size: 10px 6px;
   }
 }
