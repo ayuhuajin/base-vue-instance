@@ -206,7 +206,13 @@ export default Vue.extend({
   text-align: center;
   border: 1px solid #ff4e00;
   @include border-radius(4px);
+  @include opacity(0.5);
+  @include clearfix;
+  @include table-scaffolding;
+  @include link-colors(#00c, #0cc, #c0c, #ccc, #cc0);
+  // @include stretch;
 }
+
 .switch {
   @include switch;
   // background: url('../assets/images/icon_back.png')
