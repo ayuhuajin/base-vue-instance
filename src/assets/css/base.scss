@@ -82,31 +82,13 @@
     height: 100%;
     top: 0;
     left: 0;
+    border-#{$direction}: $PX $style $color;
     transform-origin: left top;
     -webkit-transform-origin: left top;
     box-sizing: border-box;
     pointer-events: none;
   }
-  @if $direction == top{
-    &:before {
-      border-top: $PX $style $color;
-    }
-  }
-  @if $direction == bottom{
-    &:before {
-      border-bottom: $PX $style $color;
-    }
-  }
-  @if $direction == left{
-    &:before {
-      border-left: $PX $style $color;
-    }
-  }
-  @if $direction == right{
-    &:before {
-      border-right: $PX $style $color;
-    }
-  }
+  
   @if $direction == all{
     &:before {
       border: $PX $style $color;
@@ -114,7 +96,6 @@
   }
   @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
     &:before {
-      content: "123";
       width: 200%;
       height: 200%;
       transform: scale(0.5);
@@ -122,7 +103,6 @@
   }
   @media (-webkit-min-device-pixel-ratio: 2.5), (min-device-pixel-ratio: 2.5) {
     &:before {
-      content: "456";
       width: 275%;
       height: 275%;
       transform: scale(0.4);
@@ -130,7 +110,6 @@
   }
   @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
     &:before {
-      content: "789";
       width: 300%;
       height: 300%;
       transform: scale(0.33);

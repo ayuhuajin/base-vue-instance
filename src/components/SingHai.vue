@@ -52,7 +52,7 @@ export default Vue.extend({
     };
   },
   mounted() {
-    console.log(this.$style);
+    console.log((this as any).$style);
     this.init();
     this.parameterLine();
     // 加载地图
