@@ -29,6 +29,9 @@
     <section>
       <div id="editor" style="min-width:700px;max-width:1200px;margin: 0 auto;"></div>
     </section>
+
+    <!-- 节流函数测试 -->
+    <div @click="throttle">点击节流</div>
   </div>
 </template>
 
@@ -40,7 +43,7 @@ import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules/index.ts';
 import gdMap from '@/plugins/gdMaps.ts';
 import wangeditor from 'wangeditor';
-
+import _ from 'lodash';
 export default Vue.extend({
   name: 'SingHai',
   mixins: [mixin],
@@ -62,6 +65,13 @@ export default Vue.extend({
     this.createEditor();
   },
   methods: {
+    // 节流
+    throttle: _.throttle(function() {
+      console.log('ceshi');
+    }, 1000),
+    kk() {
+      console.log('ceshi');
+    },
     async init() {
       await index.dispatch('getAllCategory');
     },

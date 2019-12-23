@@ -11,6 +11,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     // "noImplicitAny": false,
+    "noImplicitThis":false, 
+    "suppressImplicitAnyIndexErrors":false,
     "types": [
       "webpack-env"
     ],
