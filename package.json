@@ -5,8 +5,10 @@
   "scripts": {
     "analyz": "npm run build --report",
     "serve": "vue-cli-service serve --open",
+    "test": "vue-cli-service serve --open --mode test",
     "build": "vue-cli-service build",
     "build-dev": "vue-cli-service build --mode development",
+    "build-test": "vue-cli-service build --mode test",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
