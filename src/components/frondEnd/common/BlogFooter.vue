@@ -1,6 +1,6 @@
 <template>
   <div>
-    尾部
+    <div class="footer">版权所有:1236546546545</div>
   </div>
 </template>
 
@@ -17,3 +17,16 @@ export default Vue.extend({
   methods: {}
 });
 </script>
+
+<style scoped>
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  line-height: 60px;
+  color: #666;
+  font-size: 16px;
+  text-align: center;
+  background: #fff;
+}
+</style>
