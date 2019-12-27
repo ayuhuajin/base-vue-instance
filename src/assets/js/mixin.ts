@@ -7,5 +7,13 @@ export default Vue.extend({
   },
   watch: {},
   computed: {},
-  methods: {}
+  methods: {
+    // 公共提示组件
+    showToast(type: string, msg: string) {
+      this.$message({
+        type: type,
+        message: msg
+      });
+    }
+  }
 });

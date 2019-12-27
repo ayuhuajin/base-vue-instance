@@ -19,12 +19,6 @@ let router = new Router({
           name: 'UserHome',
           component: () => import('./components/frondEnd/FrontEnd.vue'),
           meta: { title: '嗨前端' }
-        },
-        {
-          path: '/',
-          name: 'UserHome',
-          component: () => import('./components/frondEnd/BHeader.vue'),
-          meta: { title: '嗨前端' }
         }
       ]
     },
