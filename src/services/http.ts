@@ -4,7 +4,6 @@ import url from '@/services/url.ts';
 
 axios.defaults.timeout = 30000;
 axios.defaults.baseURL = url.baseApi; //定义基础baseURl
-console.log(url.baseApi);
 //设置axios为form-data
 // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 // axios.defaults.headers.get['Content-Type'] = 'multipart/form-data';
