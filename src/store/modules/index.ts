@@ -14,6 +14,13 @@ export default root.registerModule('index', {
       );
       return result.data;
     },
+    //界面展示获取所有文章分类
+    async getCategoryList({ commit }, payload) {
+      let result = await http.get(
+        `/getCategoryList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}`
+      );
+      return result.data;
+    },
     // 添加分类
     async addCategory({ commit }, payload) {
       let result = await http.post(`/addCategory`, payload);

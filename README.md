@@ -24,6 +24,12 @@
   
 
 ## 项目布局
+component 
+  backEnd:后端界面
+  frondEnd:前端界面
+  common:基础组件
+plugins:插件
+service：接口相关
 
 ## 功能
 

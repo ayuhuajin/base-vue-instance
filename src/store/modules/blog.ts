@@ -18,6 +18,15 @@ export default root.registerModule('blog', {
       );
       return result.data;
     },
+    //界面展示获取所有博客
+    async getBlogList({ commit }, payload) {
+      let result = await http.get(
+        `/getBlogList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}&categoryId=${
+          payload.categoryId
+        }`
+      );
+      return result.data;
+    },
     // 添加博客
     async addBlog({ commit }, payload) {
       let result = await http.post(`/addBlog`, payload);
@@ -36,6 +45,11 @@ export default root.registerModule('blog', {
     // 获取博客视图
     async blogView({ commit }, payload) {
       let result = await http.get(`/blogView?id=${payload}`);
+      return result.data;
+    },
+    // 界面展示获取博客视图
+    async getBlogView({ commit }, payload) {
+      let result = await http.get(`/getBlogView?id=${payload}`);
       return result.data;
     }
   }
