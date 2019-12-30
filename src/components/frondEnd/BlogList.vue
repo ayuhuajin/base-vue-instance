@@ -61,6 +61,8 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '@/assets/css/common.scss';
 .fblog-list {
+  max-width: 1200px;
+  margin: 0 auto;
   ul {
     margin-top: 25px;
   }

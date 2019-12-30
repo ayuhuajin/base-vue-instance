@@ -36,6 +36,7 @@ export default Vue.extend({
   },
   async mounted() {
     this.blog = await blog.dispatch('getBlogView', this.id);
+    console.log(this.blog);
   },
   methods: {
     //html_decode
@@ -58,7 +59,8 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '@/assets/css/common.scss';
 .fblog-detail {
-  margin-top: 20px;
+  max-width: 1200px;
+  margin: 20px auto 20px;
   padding: 30px 45px;
   border-radius: 5px;
   background: #fff;

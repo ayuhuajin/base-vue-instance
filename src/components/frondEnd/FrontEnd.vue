@@ -1,7 +1,7 @@
 <template>
   <div class="frond-end">
     <blog-header></blog-header>
-    <router-view class="kk"></router-view>
+    <router-view class="layout"></router-view>
     <blog-footer></blog-footer>
   </div>
 </template>
@@ -25,10 +25,3 @@ export default Vue.extend({
   methods: {}
 });
 </script>
-
-<style lang="scss">
-.kk {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-</style>
