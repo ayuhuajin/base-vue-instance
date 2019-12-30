@@ -18,27 +18,38 @@ export default Vue.extend({
       list: [
         {
           id: 0,
-          name: '首页'
+          name: '首页',
+          routerName: 'UserList'
         },
         {
           id: 1,
-          name: '技能'
+          name: '技能',
+          routerName: 'UserList'
         },
         {
           id: 2,
-          name: '项目'
+          name: '项目',
+          routerName: 'UserList'
         },
         {
           id: 3,
-          name: '项目'
+          name: '项目',
+          routerName: 'UserList'
         },
         {
           id: 4,
-          name: '框架'
+          name: '框架',
+          routerName: 'UserList'
         },
         {
           id: 5,
-          name: '工具'
+          name: '工具',
+          routerName: 'UserList'
+        },
+        {
+          id: 6,
+          name: '友情链接',
+          routerName: 'UserList'
         }
       ],
       msg: '头部'
@@ -47,6 +58,9 @@ export default Vue.extend({
   methods: {
     tabView(item, index) {
       this.num = index;
+      this.$router.push({
+        name: item.routerName
+      });
     }
   }
 });

@@ -1,6 +1,6 @@
 <template>
   <div class="fblog-list">
-    <ul>
+    <ul v-if="blogList.length > 0">
       <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
         <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 3}.jpg`)" alt="" />
         <div>
@@ -9,12 +9,13 @@
         </div>
       </li>
     </ul>
+    <no-data :haveData="noData"></no-data>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import BlogList from '@/components/frondEnd/BlogList';
+import NoData from '@/components/frondEnd/common/NoData';
 import blog from '@/store/modules/blog';
 import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
@@ -22,8 +23,10 @@ import dateFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
   name: 'FBlogList',
   mixins: [minxin],
+  components: { NoData },
   data() {
     return {
+      noData: false,
       blogList: []
     };
   },
@@ -36,6 +39,11 @@ export default Vue.extend({
         name: ''
       });
       this.blogList = this.blogList.data;
+      if (this.blogList.length > 0) {
+        this.noData = false;
+      } else {
+        this.noData = true;
+      }
     } catch (err) {
       this.showToast('error', err.response.data);
     }
