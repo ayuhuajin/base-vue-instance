@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="footer">版权所有:1236546546545</div>
+    <div class="footer">Copyright © 2018-2020 All Rights Reserved.</div>
   </div>
 </template>
 
@@ -23,9 +23,9 @@ export default Vue.extend({
   position: fixed;
   bottom: 0;
   width: 100%;
-  line-height: 60px;
+  line-height: 40px;
   color: #666;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   background: #fff;
 }

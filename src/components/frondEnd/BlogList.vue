@@ -1,11 +1,11 @@
 <template>
   <div class="fblog-list">
     <ul>
-      <li v-for="item in blogList" :key="item._id" @click="toDetail(item)">
-        <img src="../../assets/images/icon_back.png" alt="" />
+      <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
+        <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 3}.jpg`)" alt="" />
         <div>
           <h4>{{ item.title }}</h4>
-          <!-- <p>{{ item.content }}</p> -->
+          <p>{{ formate(item.time) }}</p>
         </div>
       </li>
     </ul>
@@ -18,6 +18,7 @@ import BlogList from '@/components/frondEnd/BlogList';
 import blog from '@/store/modules/blog';
 import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
+import dateFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
   name: 'FBlogList',
   mixins: [minxin],
@@ -46,6 +47,11 @@ export default Vue.extend({
     // });
   },
   methods: {
+    // 格式化时间
+    formate(date) {
+      return this.dateFormate('timeformatDay', date);
+    },
+    // 跳转详情
     toDetail(item) {
       this.$router.push({
         name: 'UserDetail',
@@ -80,8 +86,10 @@ export default Vue.extend({
     }
     img {
       margin-right: 20px;
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
+      border: 1px solid #eee;
+      border-radius: 4px;
     }
     > div {
       h4 {

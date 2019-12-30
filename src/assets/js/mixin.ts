@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import timeFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
   data() {
     return {
@@ -14,6 +15,10 @@ export default Vue.extend({
         type: type,
         message: msg
       });
+    },
+    // 时间格式化
+    dateFormate(type: string, date: any) {
+      return (timeFormate as any)[type](date);
     }
   }
 });

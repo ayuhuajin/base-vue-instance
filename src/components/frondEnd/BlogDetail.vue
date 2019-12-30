@@ -3,7 +3,7 @@
     <section class="head">
       <h4>{{ blog[0].title }}</h4>
       <div>
-        <p>时间:{{ blog[0].time }}</p>
+        <p>时间:{{ formate(blog[0].time) }}</p>
         <p>作者:{{ blog[0].author }}</p>
         <p>分类:{{ blog[0].category }}</p>
       </div>
@@ -18,8 +18,10 @@
 <script>
 import Vue from 'vue';
 import blog from '@/store/modules/blog';
+import minxin from '@/assets/js/mixin';
 export default Vue.extend({
   name: 'FBlogDetail',
+  mixins: [minxin],
   data() {
     return {
       id: this.$route.query.id,
@@ -41,6 +43,10 @@ export default Vue.extend({
     }, 0);
   },
   methods: {
+    // 格式化时间
+    formate(date) {
+      return this.dateFormate('timeformatDay', date);
+    },
     //html_decode
     html_decode(str) {
       var s = '';
