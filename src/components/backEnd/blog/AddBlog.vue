@@ -105,6 +105,7 @@ export default Vue.extend({
     },
     // 发布
     submitForm() {
+      console.log(this.editor.txt.html());
       this.ruleForm.content = this.editor.txt.html();
       if (this.$route.query.id) {
         blog.dispatch('updateBlog', this.ruleForm).then(() => {

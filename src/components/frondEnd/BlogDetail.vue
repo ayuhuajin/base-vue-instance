@@ -8,8 +8,9 @@
         <p>分类:{{ blog[0].category }}</p>
       </div>
     </section>
+
     <section class="content">
-      <p v-html="html_decode(blog[0].content)"></p>
+      <div v-highlight v-html="html_decode(blog[0].content)"></div>
     </section>
   </div>
 </template>
@@ -35,8 +36,9 @@ export default Vue.extend({
     };
   },
   async mounted() {
-    this.blog = await blog.dispatch('getBlogView', this.id);
-    console.log(this.blog);
+    setTimeout(async () => {
+      this.blog = await blog.dispatch('getBlogView', this.id);
+    }, 0);
   },
   methods: {
     //html_decode
@@ -46,7 +48,7 @@ export default Vue.extend({
       s = str.replace(/&amp;/g, '&');
       s = s.replace(/&lt;/g, '<');
       s = s.replace(/&gt;/g, '>');
-      s = s.replace(/&nbsp;/g, ' ');
+      // s = s.replace(/&nbsp;/g, ' ');
       s = s.replace(/&#39;/g, "'");
       s = s.replace(/&quot;/g, '"');
       s = s.replace(/<br\/>/g, '\n');

@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="(item, index) in list" :class="{ active: index == 1 }" :key="index">
+      <li v-for="(item, index) in list" :class="{ active: index == num }" @click="tabView(item, index)" :key="index">
         <a>{{ item.name }}</a>
       </li>
     </ul>
@@ -14,32 +14,40 @@ export default Vue.extend({
   name: 'BlogHeader',
   data() {
     return {
-      index: 1,
+      num: 0,
       list: [
         {
+          id: 0,
           name: '首页'
         },
         {
+          id: 1,
           name: '技能'
         },
         {
+          id: 2,
           name: '项目'
         },
         {
+          id: 3,
           name: '项目'
         },
         {
-          name: '项目'
-        },
-        {
+          id: 4,
           name: '框架'
         },
         {
+          id: 5,
           name: '工具'
         }
       ],
       msg: '头部'
     };
+  },
+  methods: {
+    tabView(item, index) {
+      this.num = index;
+    }
   }
 });
 </script>
