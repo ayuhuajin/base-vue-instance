@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="frond-end">
     <blog-header></blog-header>
-    <blog-list></blog-list>
+    <router-view class="kk"></router-view>
     <blog-footer></blog-footer>
   </div>
 </template>
@@ -9,13 +9,11 @@
 <script>
 import Vue from 'vue';
 import BlogHeader from '@/components/frondEnd/common/BlogHeader';
-import BlogList from '@/components/frondEnd/BlogList';
 import BlogFooter from '@/components/frondEnd/common/BlogFooter';
 export default Vue.extend({
   name: 'FrontEnd',
   components: {
     BlogHeader,
-    BlogList,
     BlogFooter
   },
   data() {
@@ -27,3 +25,10 @@ export default Vue.extend({
   methods: {}
 });
 </script>
+
+<style lang="scss">
+.kk {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+</style>

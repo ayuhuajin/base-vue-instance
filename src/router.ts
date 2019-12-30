@@ -18,7 +18,21 @@ let router = new Router({
           path: '/',
           name: 'UserHome',
           component: () => import('./components/frondEnd/FrontEnd.vue'),
-          meta: { title: '嗨前端' }
+          meta: { title: '嗨前端' },
+          children: [
+            {
+              path: '/',
+              name: 'UserList',
+              component: () => import('./components/frondEnd/BlogList.vue'),
+              meta: { title: '嗨前端' }
+            },
+            {
+              path: '/detail',
+              name: 'UserDetail',
+              component: () => import('./components/frondEnd/BlogDetail.vue'),
+              meta: { title: '嗨前端' }
+            }
+          ]
         }
       ]
     },

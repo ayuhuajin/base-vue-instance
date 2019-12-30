@@ -45,37 +45,42 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/css/common.scss';
 ul {
   display: flex;
   justify-content: center;
   line-height: 88px;
   font-size: 18px;
   font-weight: bold;
-  color: #ef7674;
+
   background: white;
   li {
-    position: relative;
-    width: 80px;
+    min-width: 60px;
+    margin: 0 10px;
     margin: 0 16px;
     text-align: center;
+    color: #666;
     cursor: pointer;
     &:hover {
-      // transform: scale(1.4);
       font-size: 22px;
       transition: all 0.4s;
-    }
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 2px;
-      width: 100%;
-      background: #ef7674;
     }
   }
   .active {
     font-size: 22px;
+    color: $mainColor;
+    a {
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+        height: 2px;
+        width: 100%;
+        background: $mainColor;
+      }
+    }
   }
 }
 </style>
