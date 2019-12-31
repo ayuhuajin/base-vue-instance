@@ -27,30 +27,37 @@ export default Vue.extend({
   data() {
     return {
       noData: false,
-      categoryId: this.$route.query.categoryId,
+      categoryId: '',
       blogList: []
     };
   },
-  async mounted() {
-    try {
-      console.log(11);
-      let blogObj = await blog.dispatch('getBlogList', {
-        pageNumber: 1,
-        pageSize: 100000,
-        categoryId: this.categoryId,
-        name: ''
-      });
-      if (blogObj.data !== null && blogObj.data.length > 0) {
-        this.blogList = blogObj.data;
-        this.noData = false;
-      } else {
-        this.noData = true;
-      }
-    } catch (err) {
-      this.showToast('error', err);
+  watch: {
+    $route() {
+      this.init();
     }
   },
+  async mounted() {
+    this.init();
+  },
   methods: {
+    async init() {
+      try {
+        let blogObj = await blog.dispatch('getBlogList', {
+          pageNumber: 1,
+          pageSize: 100000,
+          categoryId: this.$route.query.categoryId,
+          name: ''
+        });
+        if (blogObj.data !== null && blogObj.data.length > 0) {
+          this.blogList = blogObj.data;
+          this.noData = false;
+        } else {
+          this.noData = true;
+        }
+      } catch (err) {
+        this.showToast('error', err);
+      }
+    },
     // 格式化时间
     formate(date) {
       return this.dateFormate('timeformatDay', date);

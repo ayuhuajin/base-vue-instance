@@ -30,13 +30,13 @@ let router = new Router({
               path: '/detail',
               name: 'UserDetail',
               component: () => import('./components/frondEnd/BlogDetail.vue'),
-              meta: { title: '嗨前端' }
+              meta: { title: '嗨前端-详情' }
             },
             {
               path: '/categoryList',
               name: 'UserCategoryList',
               component: () => import('./components/frondEnd/CategoryList.vue'),
-              meta: { title: '嗨前端' }
+              meta: { title: '嗨前端-分类' }
             }
           ]
         }
