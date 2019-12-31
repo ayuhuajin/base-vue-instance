@@ -5,9 +5,7 @@ export default root.registerModule('blog', {
   actions: {
     //获取所有文章分类1
     async getAllCategory({ commit }, payload) {
-      let result = await http.get(
-        `/categoryList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}`
-      );
+      let result = await http.get(`/categoryList?${qs.stringify(payload)}`);
       return result.data;
     },
     //获取所有博客
