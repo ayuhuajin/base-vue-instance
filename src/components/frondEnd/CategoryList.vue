@@ -2,13 +2,14 @@
   <div class="fcategory-list">
     <ul>
       <li v-for="(item, index) in categoryList" :key="item._id" @click="toDetail(item)">
-        <img :src="require(`../../assets/images/${(index + 1) % 3}.jpg`)" alt="" />
+        <img :src="require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
         <div>
           <h4>{{ item.name }}</h4>
           <p>{{ item.date }}</p>
         </div>
       </li>
     </ul>
+    <page-change :pageInfo="pageInfo" :layout="layout"></page-change>
     <no-data :haveData="noData"></no-data>
   </div>
 </template>
@@ -16,6 +17,7 @@
 <script>
 import Vue from 'vue';
 import NoData from '@/components/frondEnd/common/NoData';
+import PageChange from '@/components/common/PageChange';
 import blog from '@/store/modules/blog';
 import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
@@ -23,11 +25,21 @@ import dateFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
   name: 'UserCategoryList',
   mixins: [minxin],
-  components: { NoData },
+  components: { NoData, PageChange },
   data() {
     return {
       noData: false,
-      categoryList: []
+      categoryList: [],
+      // 分页设置
+      pageInfo: {
+        pageNumber: 1, // 当前页数
+        totalPages: 1, // 总页数
+        pageFunc: this.init, // 当前页数需要调用的函数
+        pageSize: 10, // 一页几条数据
+        class: 'pageClass',
+        background: false
+      },
+      layout: 'prev, pager, next'
     };
   },
   async mounted() {
@@ -40,6 +52,7 @@ export default Vue.extend({
       });
       if (categoryObj.data !== null && categoryObj.data.length > 0) {
         this.categoryList = categoryObj.data;
+        this.pageInfo.totalPages = categoryObj.total;
         this.noData = false;
       } else {
         this.noData = true;

@@ -23,6 +23,7 @@ export default Vue.extend({
   position: fixed;
   bottom: 0;
   width: 100%;
+  border-top: 1px solid #eee;
   line-height: 40px;
   color: #666;
   font-size: 14px;

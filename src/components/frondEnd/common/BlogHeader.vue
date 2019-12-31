@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header">
     <ul>
       <li v-for="(item, index) in list" :class="{ active: index == num }" @click="tabView(item, index)" :key="index">
         <a>{{ item.name }}</a>
@@ -68,14 +68,21 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 @import '@/assets/css/common.scss';
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
 ul {
   display: flex;
-  justify-content: center;
-  line-height: 88px;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 64px;
+  text-align: left;
   font-size: 18px;
   font-weight: bold;
-
-  background: white;
   li {
     min-width: 60px;
     margin: 0 10px;

@@ -25,3 +25,10 @@ export default Vue.extend({
   methods: {}
 });
 </script>
+
+<style lang="scss">
+.frond-end {
+  height: 100%;
+  padding-top: 64px;
+}
+</style>
