@@ -33,20 +33,21 @@ export default Vue.extend({
   },
   async mounted() {
     try {
-      this.blogList = await blog.dispatch('getBlogList', {
+      console.log(11);
+      let blogObj = await blog.dispatch('getBlogList', {
         pageNumber: 1,
         pageSize: 100000,
         categoryId: this.categoryId,
         name: ''
       });
-      this.blogList = this.blogList.data;
-      if (this.blogList.length > 0) {
+      if (blogObj.data !== null && blogObj.data.length > 0) {
+        this.blogList = blogObj.data;
         this.noData = false;
       } else {
         this.noData = true;
       }
     } catch (err) {
-      this.showToast('error', err.response.data);
+      this.showToast('error', err);
     }
   },
   methods: {

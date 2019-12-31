@@ -40,7 +40,9 @@ export default Vue.extend({
       });
       if (categoryObj.data !== null && categoryObj.data.length > 0) {
         this.categoryList = categoryObj.data;
-        console.log(this.categoryList);
+        this.noData = false;
+      } else {
+        this.noData = true;
       }
     } catch (err) {
       this.showToast('error', err.response.data);
