@@ -55,6 +55,7 @@ export default Vue.extend({
         this.pageInfo.totalPages = categoryObj.total;
         this.noData = false;
       } else {
+        this.categoryList = [];
         this.noData = true;
       }
     } catch (err) {

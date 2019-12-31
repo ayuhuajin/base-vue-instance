@@ -1,17 +1,22 @@
 <template>
   <div class="header">
-    <ul>
-      <li v-for="(item, index) in list" :class="{ active: index == num }" @click="tabView(item, index)" :key="index">
-        <a>{{ item.name }}</a>
-      </li>
-    </ul>
+    <div>
+      <ul>
+        <li v-for="(item, index) in list" :class="{ active: index == num }" @click="tabView(item, index)" :key="index">
+          <a>{{ item.name }}</a>
+        </li>
+      </ul>
+      <base-search></base-search>
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import BaseSearch from '@/components/common/BaseSearch';
 export default Vue.extend({
   name: 'BlogHeader',
+  components: { BaseSearch },
   data() {
     return {
       num: 0,
@@ -74,11 +79,16 @@ export default Vue.extend({
   width: 100%;
   border-bottom: 1px solid #eee;
   background: white;
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 ul {
   display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
   line-height: 64px;
   text-align: left;
   font-size: 18px;

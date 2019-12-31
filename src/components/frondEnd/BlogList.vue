@@ -21,6 +21,7 @@ import PageChange from '@/components/common/PageChange';
 import blog from '@/store/modules/blog';
 import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
+import Bus from '@/assets/js/bus';
 import dateFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
   name: 'FBlogList',
@@ -30,6 +31,7 @@ export default Vue.extend({
     return {
       noData: false,
       categoryId: '',
+      blogName: '',
       blogList: [],
       // 分页设置
       pageInfo: {
@@ -50,6 +52,10 @@ export default Vue.extend({
   },
   async mounted() {
     this.init();
+    Bus.$on('search', val => {
+      this.blogName = val;
+      this.init();
+    });
   },
   methods: {
     async init() {
@@ -58,7 +64,7 @@ export default Vue.extend({
           pageNumber: 1,
           pageSize: 100000,
           categoryId: this.$route.query.categoryId,
-          name: ''
+          name: this.blogName
         });
         if (blogObj.data !== null && blogObj.data.length > 0) {
           this.blogList = blogObj.data;
@@ -66,6 +72,7 @@ export default Vue.extend({
           this.noData = false;
         } else {
           this.noData = true;
+          this.blogList = [];
         }
       } catch (err) {
         this.showToast('error', err);
