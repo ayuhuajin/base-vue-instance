@@ -4,11 +4,10 @@
       <h4>{{ blog[0].title }}</h4>
       <div>
         <p>时间:{{ formate(blog[0].time) }}</p>
-        <p>作者:{{ blog[0].author }}</p>
-        <p>分类:{{ blog[0].category }}</p>
+        <p v-if="blog[0].author">作者:{{ blog[0].author }}</p>
+        <p v-if="blog[0].category">分类:{{ blog[0].category }}</p>
       </div>
     </section>
-
     <section class="content">
       <div v-highlight v-html="html_decode(blog[0].content)"></div>
     </section>
@@ -18,6 +17,7 @@
 <script>
 import Vue from 'vue';
 import blog from '@/store/modules/blog';
+import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
 export default Vue.extend({
   name: 'FBlogDetail',
@@ -34,13 +34,26 @@ export default Vue.extend({
           category: '',
           __v: 0
         }
-      ]
+      ],
+      categoryList: []
     };
   },
   async mounted() {
-    setTimeout(async () => {
-      this.blog = await blog.dispatch('getBlogView', this.id);
-    }, 0);
+    this.blog = await blog.dispatch('getBlogView', this.id);
+    this.categoryList = await index.dispatch('getCategoryList', {
+      pageNumber: 1,
+      pageSize: 999,
+      name: ''
+    });
+    if (this.categoryList.data.length > 0) {
+      let obj = this.categoryList.data.find(item => {
+        return item._id === this.blog[0].categoryId;
+      });
+      if (obj) {
+        this.$set(this.blog[0], 'category', obj.name);
+        this.$set(this.blog[0], 'author', obj.author);
+      }
+    }
   },
   methods: {
     // 格式化时间

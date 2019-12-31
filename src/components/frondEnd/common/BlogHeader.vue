@@ -33,7 +33,7 @@ export default Vue.extend({
         },
         {
           id: 3,
-          name: '项目',
+          name: '分类',
           routerName: 'UserList'
         },
         {
