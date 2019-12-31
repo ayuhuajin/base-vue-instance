@@ -9,6 +9,7 @@
         </div>
       </li>
     </ul>
+    <page-change :pageInfo="pageInfo" :layout="layout"></page-change>
     <no-data :haveData="noData"></no-data>
   </div>
 </template>
@@ -16,6 +17,7 @@
 <script>
 import Vue from 'vue';
 import NoData from '@/components/frondEnd/common/NoData';
+import PageChange from '@/components/common/PageChange';
 import blog from '@/store/modules/blog';
 import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
@@ -23,12 +25,22 @@ import dateFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
   name: 'FBlogList',
   mixins: [minxin],
-  components: { NoData },
+  components: { NoData, PageChange },
   data() {
     return {
       noData: false,
       categoryId: '',
-      blogList: []
+      blogList: [],
+      // 分页设置
+      pageInfo: {
+        pageNumber: 1, // 当前页数
+        totalPages: 1, // 总页数
+        pageFunc: this.init, // 当前页数需要调用的函数
+        pageSize: 10, // 一页几条数据
+        class: 'pageClass',
+        background: false
+      },
+      layout: 'prev, pager, next'
     };
   },
   watch: {
@@ -50,6 +62,7 @@ export default Vue.extend({
         });
         if (blogObj.data !== null && blogObj.data.length > 0) {
           this.blogList = blogObj.data;
+          this.pageInfo.totalPages = blogObj.total;
           this.noData = false;
         } else {
           this.noData = true;
@@ -74,6 +87,31 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss">
+@import '@/assets/css/common.scss';
+.fblog-list {
+  .pageClass {
+    .el-pager {
+      .number {
+        color: #666;
+      }
+      li.active {
+        color: $mainColor;
+      }
+      li:hover {
+        color: $mainColor;
+      }
+      .el-icon-arrow-left:before,
+      .el-icon-arrow-right:before {
+        color: #666;
+      }
+    }
+  }
+  .el-paginationbutton:hover {
+    color: $mainColor !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 @import '@/assets/css/common.scss';

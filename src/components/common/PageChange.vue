@@ -5,9 +5,10 @@
       @current-change="pageChange"
       :current-page="pageInfo.pageNumber"
       :page-size="pageInfo.pageSize"
-      background
-      layout="total, sizes, prev, pager, next, jumper"
+      :background="pageInfo.background"
+      :layout="layout"
       :total="pageInfo.totalPages"
+      hide-on-single-page
     >
     </el-pagination>
   </div>
@@ -21,6 +22,10 @@ export default Vue.extend({
     pageInfo: {
       type: Object,
       required: true
+    },
+    layout: {
+      type: String,
+      default: 'total, sizes, prev, pager, next, jumper'
     }
   },
   data() {
