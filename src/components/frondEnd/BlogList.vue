@@ -2,7 +2,7 @@
   <div class="fblog-list">
     <ul v-if="blogList.length > 0">
       <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
-        <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 3}.jpg`)" alt="" />
+        <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
         <div>
           <h4>{{ item.title }}</h4>
           <p>{{ formate(item.time) }}</p>
