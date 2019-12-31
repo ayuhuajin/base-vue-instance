@@ -34,7 +34,7 @@ export default Vue.extend({
         {
           id: 3,
           name: '分类',
-          routerName: 'UserList'
+          routerName: 'UserCategoryList'
         },
         {
           id: 4,

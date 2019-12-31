@@ -1,5 +1,6 @@
 import root from '@/store/root.ts';
 import http from '@/services/http.ts';
+import qs from 'qs';
 export default root.registerModule('blog', {
   actions: {
     //获取所有文章分类1
@@ -11,20 +12,12 @@ export default root.registerModule('blog', {
     },
     //获取所有博客
     async getAllBlog({ commit }, payload) {
-      let result = await http.get(
-        `/blogList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}&categoryId=${
-          payload.categoryId
-        }`
-      );
+      let result = await http.get(`/blogList?${qs.stringify(payload)}`);
       return result.data;
     },
     //界面展示获取所有博客
     async getBlogList({ commit }, payload) {
-      let result = await http.get(
-        `/getBlogList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}&categoryId=${
-          payload.categoryId
-        }`
-      );
+      let result = await http.get(`/getBlogList?${qs.stringify(payload)}`);
       return result.data;
     },
     // 添加博客

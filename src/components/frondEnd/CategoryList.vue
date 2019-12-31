@@ -1,11 +1,11 @@
 <template>
-  <div class="fblog-list">
-    <ul v-if="blogList.length > 0">
-      <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
-        <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 3}.jpg`)" alt="" />
+  <div class="fcategory-list">
+    <ul>
+      <li v-for="(item, index) in categoryList" :key="item._id" @click="toDetail(item)">
+        <img :src="require(`../../assets/images/${(index + 1) % 3}.jpg`)" alt="" />
         <div>
-          <h4>{{ item.title }}</h4>
-          <p>{{ formate(item.time) }}</p>
+          <h4>{{ item.name }}</h4>
+          <p>{{ item.date }}</p>
         </div>
       </li>
     </ul>
@@ -21,29 +21,26 @@ import index from '@/store/modules/index';
 import minxin from '@/assets/js/mixin';
 import dateFormate from '@/assets/js/utils/timeFormate';
 export default Vue.extend({
-  name: 'FBlogList',
+  name: 'UserCategoryList',
   mixins: [minxin],
   components: { NoData },
   data() {
     return {
       noData: false,
-      categoryId: this.$route.query.categoryId,
-      blogList: []
+      categoryList: []
     };
   },
   async mounted() {
     try {
-      this.blogList = await blog.dispatch('getBlogList', {
+      let categoryObj = await index.dispatch('getCategoryList', {
         pageNumber: 1,
         pageSize: 100000,
-        categoryId: this.categoryId,
+        categoryId: '',
         name: ''
       });
-      this.blogList = this.blogList.data;
-      if (this.blogList.length > 0) {
-        this.noData = false;
-      } else {
-        this.noData = true;
+      if (categoryObj.data !== null && categoryObj.data.length > 0) {
+        this.categoryList = categoryObj.data;
+        console.log(this.categoryList);
       }
     } catch (err) {
       this.showToast('error', err.response.data);
@@ -54,12 +51,12 @@ export default Vue.extend({
     formate(date) {
       return this.dateFormate('timeformatDay', date);
     },
-    // 跳转详情
+    // 跳转列表详情
     toDetail(item) {
       this.$router.push({
-        name: 'UserDetail',
+        name: 'UserList',
         query: {
-          id: item._id
+          categoryId: item._id
         }
       });
     }
@@ -69,7 +66,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 @import '@/assets/css/common.scss';
-.fblog-list {
+.fcategory-list {
   max-width: 1200px;
   margin: 0 auto;
   ul {
