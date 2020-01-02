@@ -32,6 +32,7 @@
 
     <!-- 节流函数测试 -->
     <div @click="throttle">点击节流</div>
+    <hai-button></hai-button>
   </div>
 </template>
 

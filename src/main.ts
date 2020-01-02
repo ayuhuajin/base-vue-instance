@@ -7,6 +7,7 @@ import '@/assets/js/errorMonitoring.js'; // 错误监控
 // import '@/services/mock/mock.ts'; // 模拟数据
 import './plugins/element.js';
 import './plugins/echarts.js';
+import './plugins/singhai.js';
 import './plugins/video.js';
 
 Vue.directive('highlight', function(el) {

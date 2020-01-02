@@ -1,12 +1,12 @@
 <template>
   <div class="buttom">
-    按钮45611331
+    选择4144444
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HaiButton',
+  name: 'HaiSelect',
   data() {
     return {
       message: '暂无数据'
@@ -16,4 +16,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.no-data {
+  color: #999;
+  font-size: 16px;
+}
+</style>
