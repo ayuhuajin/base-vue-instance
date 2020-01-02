@@ -127,9 +127,9 @@ ul {
     text-align: center;
     color: #666;
     cursor: pointer;
+    transition: all 0.4s;
     &:hover {
       font-size: 22px;
-      transition: all 0.4s;
     }
   }
   .active {
