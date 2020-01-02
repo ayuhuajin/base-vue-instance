@@ -2,7 +2,7 @@
   <div class="f-no-data">
     <div v-if="haveData">
       <img src="../../../assets/images/nodata.png" alt="" />
-      <p>暂无数据</p>
+      <p>{{ messages }}</p>
     </div>
   </div>
 </template>
@@ -15,6 +15,10 @@ export default Vue.extend({
     haveData: {
       type: Boolean,
       require: true
+    },
+    messages: {
+      type: String,
+      default: '暂无数据'
     }
   },
   data() {
