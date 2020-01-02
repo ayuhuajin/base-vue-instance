@@ -7,6 +7,7 @@
 
 <script>
 import Bus from '@/assets/js/bus';
+import { throttle } from '@/assets/js/utils/util';
 export default {
   name: 'BaseSearch',
   props: {
@@ -25,9 +26,11 @@ export default {
   },
   watch: {},
   methods: {
-    search(event) {
+    // 节流函数
+    search: throttle(function() {
+      console.log(this.value);
       Bus.$emit('search', this.value);
-    }
+    }, 1000)
   }
 };
 </script>

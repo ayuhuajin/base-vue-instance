@@ -1,15 +1,17 @@
 <template>
   <div class="fcategory-list">
-    <ul>
-      <li v-for="(item, index) in categoryList" :key="item._id" @click="toDetail(item)">
-        <img :src="require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
-        <div>
-          <h4>{{ item.name }}</h4>
-          <p>{{ item.date }}</p>
-        </div>
-      </li>
-    </ul>
-    <page-change :pageInfo="pageInfo" :layout="layout"></page-change>
+    <template v-if="categoryList.length > 0">
+      <ul>
+        <li v-for="(item, index) in categoryList" :key="item._id" @click="toDetail(item)">
+          <img :src="require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
+          <div>
+            <h4>{{ item.name }}</h4>
+            <p>{{ item.date }}</p>
+          </div>
+        </li>
+      </ul>
+      <page-change :pageInfo="pageInfo" :layout="layout"></page-change>
+    </template>
     <no-data :haveData="noData"></no-data>
   </div>
 </template>

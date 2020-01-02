@@ -1,15 +1,17 @@
 <template>
   <div class="fblog-list">
-    <ul v-if="blogList.length > 0">
-      <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
-        <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
-        <div>
-          <h4>{{ item.title }}</h4>
-          <p>{{ formate(item.time) }}</p>
-        </div>
-      </li>
-    </ul>
-    <page-change :pageInfo="pageInfo" :layout="layout"></page-change>
+    <template v-if="blogList.length > 0">
+      <ul>
+        <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
+          <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
+          <div>
+            <h4>{{ item.title }}</h4>
+            <p>{{ formate(item.time) }}</p>
+          </div>
+        </li>
+      </ul>
+      <page-change :pageInfo="pageInfo" :layout="layout"></page-change>
+    </template>
     <no-data :haveData="noData"></no-data>
   </div>
 </template>
