@@ -54,7 +54,9 @@ export default Vue.extend({
   },
   async mounted() {
     this.init();
+    console.log(56);
     Bus.$on('search', val => {
+      console.log(123);
       this.blogName = val;
       this.init();
     });
@@ -93,6 +95,9 @@ export default Vue.extend({
         }
       });
     }
+  },
+  beforeDestroy() {
+    Bus.$off('search');
   }
 });
 </script>

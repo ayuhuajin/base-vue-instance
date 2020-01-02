@@ -1,13 +1,13 @@
 <template>
   <div class="base-search">
-    <input type="text" v-model="value" placeholder="请输入搜索内容" />
+    <input type="text" v-model="value" @input="search()" placeholder="请输入搜索内容" />
     <span class="input-img" @click="search($event)"></span>
   </div>
 </template>
 
 <script>
 import Bus from '@/assets/js/bus';
-import { throttle } from '@/assets/js/utils/util';
+import { throttle, debounce } from '@/assets/js/utils/util';
 export default {
   name: 'BaseSearch',
   props: {
@@ -27,10 +27,15 @@ export default {
   watch: {},
   methods: {
     // 节流函数
-    search: throttle(function() {
+    // search: throttle(function() {
+    //   console.log(this.value);
+    //   Bus.$emit('search', this.value);
+    // }, 1000),
+    // 防抖函数
+    search: debounce(function() {
       console.log(this.value);
       Bus.$emit('search', this.value);
-    }, 1000)
+    }, 500)
   }
 };
 </script>

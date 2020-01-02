@@ -3,9 +3,9 @@
     <section class="head">
       <h4>{{ blog[0].title }}</h4>
       <div>
-        <p>时间:{{ formate(blog[0].time) }}</p>
-        <p v-if="blog[0].author">作者:{{ blog[0].author }}</p>
-        <p v-if="blog[0].category">分类:{{ blog[0].category }}</p>
+        <p>时间：{{ formate(blog[0].time) }}</p>
+        <p v-if="blog[0].author">作者：{{ blog[0].author }}</p>
+        <p v-if="blog[0].category">分类：{{ blog[0].category }}</p>
       </div>
     </section>
     <section class="content">
@@ -88,7 +88,7 @@ export default Vue.extend({
   .head {
     text-align: center;
     h4 {
-      font-size: 20px;
+      font-size: 24px;
       color: $mainColor;
     }
     > div {
@@ -99,6 +99,7 @@ export default Vue.extend({
       color: #999;
       p {
         padding: 0 10px;
+        font-size: 14px;
       }
     }
   }

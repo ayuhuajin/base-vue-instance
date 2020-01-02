@@ -30,11 +30,13 @@ export default Vue.extend({
         {
           id: 1,
           name: '技能',
+          path: 'skill',
           routerName: 'UserList'
         },
         {
           id: 2,
           name: '项目',
+          path: 'project',
           routerName: 'UserList'
         },
         {
@@ -46,16 +48,19 @@ export default Vue.extend({
         {
           id: 4,
           name: '框架',
+          path: 'ui',
           routerName: 'UserList'
         },
         {
           id: 5,
           name: '工具',
+          path: 'tools',
           routerName: 'UserList'
         },
         {
           id: 6,
           name: '友情链接',
+          path: 'friendLinks',
           routerName: 'UserList'
         }
       ],
@@ -69,6 +74,11 @@ export default Vue.extend({
       // 检索当前路径
       this.checkRouterLocal(path);
     }
+  },
+  mounted() {
+    let path = this.$route.path;
+    // 检索当前路径
+    this.checkRouterLocal(path);
   },
   methods: {
     tabView(item, index) {
