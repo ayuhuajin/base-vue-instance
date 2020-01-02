@@ -29,7 +29,6 @@ export class pp {
  *
  */
 export function throttle(fn, delay) {
-  console.log(fn, delay);
   var last = 0;
   return function() {
     var now = Date.now();

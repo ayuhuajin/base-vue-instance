@@ -66,7 +66,6 @@ export default Vue.extend({
     $route() {
       // 获取当前路径
       let path = this.$route.path;
-      console.log(path);
       // 检索当前路径
       this.checkRouterLocal(path);
     }

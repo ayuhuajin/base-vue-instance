@@ -39,7 +39,6 @@ export default Vue.extend({
       this.pageInfo.pageFunc(this.pageInfo.pageNumber, this.pageInfo.pageSize);
     },
     pageChange(newIndex: number) {
-      console.log(newIndex);
       // 控制页码
       this.pageInfo.pageNumber = newIndex;
       this.pageInfo.pageFunc(this.pageInfo.pageNumber);
