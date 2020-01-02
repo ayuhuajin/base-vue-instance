@@ -24,6 +24,7 @@ export default Vue.extend({
         {
           id: 0,
           name: '首页',
+          path: '/',
           routerName: 'UserList'
         },
         {
@@ -39,6 +40,7 @@ export default Vue.extend({
         {
           id: 3,
           name: '分类',
+          path: '/categoryList',
           routerName: 'UserCategoryList'
         },
         {
@@ -60,12 +62,28 @@ export default Vue.extend({
       msg: '头部'
     };
   },
+  watch: {
+    $route() {
+      // 获取当前路径
+      let path = this.$route.path;
+      console.log(path);
+      // 检索当前路径
+      this.checkRouterLocal(path);
+    }
+  },
   methods: {
     tabView(item, index) {
       this.num = index;
       this.$router.push({
         name: item.routerName
       });
+    },
+    checkRouterLocal(path) {
+      // 查找当前路由下标高亮
+      let obj = this.list.find(item => item.path === path);
+      if (obj) {
+        this.num = obj.id;
+      }
     }
   }
 });
