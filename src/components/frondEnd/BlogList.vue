@@ -61,8 +61,8 @@ export default Vue.extend({
     async init() {
       try {
         let blogObj = await blog.dispatch('getBlogList', {
-          pageNumber: 1,
-          pageSize: 100000,
+          pageNumber: this.pageInfo.pageNumber,
+          pageSize: 10,
           categoryId: this.$route.query.categoryId,
           name: this.blogName
         });
