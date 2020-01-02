@@ -21,6 +21,7 @@ export default Vue.extend({
 @import '@/assets/css/base.scss';
 .user-home {
   @include scrollbar;
+  min-height: calc(100vh - 40px);
   padding-bottom: 65px;
   overflow: auto;
 }

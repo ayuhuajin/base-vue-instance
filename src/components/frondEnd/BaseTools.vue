@@ -33,9 +33,9 @@
           <li>
             <div>
               <img src="../../assets/images/icon-search.png" alt="" />
-              <span>TinyPng</span>
+              <span>草料二维码</span>
             </div>
-            <p>超完美PNG压缩工具</p>
+            <p>国内创建二维码在线应用</p>
           </li>
           <li>
             <div>

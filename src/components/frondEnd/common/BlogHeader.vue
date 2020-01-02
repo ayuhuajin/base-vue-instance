@@ -30,13 +30,13 @@ export default Vue.extend({
         {
           id: 1,
           name: '技能',
-          path: 'skill',
+          path: '/baseSkill',
           routerName: 'baseSkill'
         },
         {
           id: 2,
           name: '项目',
-          path: 'project',
+          path: '/myProject',
           routerName: 'myProject'
         },
         {
@@ -48,19 +48,19 @@ export default Vue.extend({
         {
           id: 4,
           name: '框架',
-          path: 'ui',
+          path: '/uiFrame',
           routerName: 'uiFrame'
         },
         {
           id: 5,
           name: '工具',
-          path: 'tools',
+          path: '/tools',
           routerName: 'tools'
         },
         {
           id: 6,
           name: '友情链接',
-          path: 'friendLinks',
+          path: '/friendLinks',
           routerName: 'friendLinks'
         }
       ],
@@ -71,6 +71,7 @@ export default Vue.extend({
     $route() {
       // 获取当前路径
       let path = this.$route.path;
+      console.log(path);
       // 检索当前路径
       this.checkRouterLocal(path);
     }

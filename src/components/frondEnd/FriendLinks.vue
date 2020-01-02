@@ -1,16 +1,21 @@
 <template>
   <div>
-    <div class="tools">友情链接</div>
+    <div class="friend-links">
+      <no-data :haveData="noData" :messages="noMsg"></no-data>
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import NoData from '@/components/frondEnd/common/NoData';
 export default Vue.extend({
   name: 'FriendLinks',
+  components: { NoData },
   data() {
     return {
-      tit: '友情链接'
+      noData: true,
+      noMsg: '暂未添加友情链接'
     };
   },
   mounted() {},
