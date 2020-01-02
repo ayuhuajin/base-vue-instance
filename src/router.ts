@@ -16,13 +16,12 @@ let router = new Router({
       children: [
         {
           path: '/',
-          name: 'UserHome',
           component: () => import('./components/frondEnd/FrontEnd.vue'),
           meta: { title: '嗨前端' },
           children: [
             {
               path: '/',
-              name: 'UserList',
+              name: 'FuserList',
               component: () => import('./components/frondEnd/BlogList.vue'),
               meta: { title: '嗨前端' }
             },
@@ -37,6 +36,36 @@ let router = new Router({
               name: 'UserCategoryList',
               component: () => import('./components/frondEnd/CategoryList.vue'),
               meta: { title: '嗨前端-分类' }
+            },
+            {
+              path: '/uiFrame',
+              name: 'uiFrame',
+              component: () => import('./components/frondEnd/UiFrame.vue'),
+              meta: { title: '嗨前端-UI框架' }
+            },
+            {
+              path: '/friendLinks',
+              name: 'friendLinks',
+              component: () => import('./components/frondEnd/FriendLinks.vue'),
+              meta: { title: '嗨前端-友情链接' }
+            },
+            {
+              path: '/tools',
+              name: 'tools',
+              component: () => import('./components/frondEnd/BaseTools.vue'),
+              meta: { title: '嗨前端-工具' }
+            },
+            {
+              path: '/myProject',
+              name: 'myProject',
+              component: () => import('./components/frondEnd/MyProject.vue'),
+              meta: { title: '嗨前端-项目' }
+            },
+            {
+              path: '/baseSkill',
+              name: 'baseSkill',
+              component: () => import('./components/frondEnd/BaseSkill.vue'),
+              meta: { title: '嗨前端-技能' }
             }
           ]
         }

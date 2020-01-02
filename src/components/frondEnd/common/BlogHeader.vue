@@ -6,7 +6,7 @@
           <a>{{ item.name }}</a>
         </li>
       </ul>
-      <base-search></base-search>
+      <base-search v-if="$route.path === '/'"></base-search>
     </div>
   </div>
 </template>
@@ -25,19 +25,19 @@ export default Vue.extend({
           id: 0,
           name: '首页',
           path: '/',
-          routerName: 'UserList'
+          routerName: 'FuserList'
         },
         {
           id: 1,
           name: '技能',
           path: 'skill',
-          routerName: 'UserList'
+          routerName: 'baseSkill'
         },
         {
           id: 2,
           name: '项目',
           path: 'project',
-          routerName: 'UserList'
+          routerName: 'myProject'
         },
         {
           id: 3,
@@ -49,19 +49,19 @@ export default Vue.extend({
           id: 4,
           name: '框架',
           path: 'ui',
-          routerName: 'UserList'
+          routerName: 'uiFrame'
         },
         {
           id: 5,
           name: '工具',
           path: 'tools',
-          routerName: 'UserList'
+          routerName: 'tools'
         },
         {
           id: 6,
           name: '友情链接',
           path: 'friendLinks',
-          routerName: 'UserList'
+          routerName: 'friendLinks'
         }
       ],
       msg: '头部'
