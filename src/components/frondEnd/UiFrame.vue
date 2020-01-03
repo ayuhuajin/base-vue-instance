@@ -1,24 +1,28 @@
 <template>
-  <div>
-    <div class="ui-frame">
-      <no-data :haveData="noData" :messages="noMsg"></no-data>
-    </div>
+  <div class="ui-frame">
+    <base-demo></base-demo>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import NoData from '@/components/frondEnd/common/NoData';
+import BaseDemo from '@/components/singhai-ui/Demo/BaseDemo';
 export default Vue.extend({
   name: 'UiFrame',
-  components: { NoData },
+  components: { BaseDemo },
   data() {
-    return {
-      noData: true,
-      noMsg: '框架暂未开放，敬请期待'
-    };
+    return {};
   },
   mounted() {},
   methods: {}
 });
 </script>
+
+<style lang="scss" scoped>
+.ui-frame {
+  max-width: 1200px;
+  min-height: calc(100vh - 150px);
+  margin: 20px auto;
+  background: #fff;
+}
+</style>
