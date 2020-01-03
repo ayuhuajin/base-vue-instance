@@ -1,6 +1,6 @@
 <template>
   <div class="buttom">
-    按钮45611331
+    按钮
   </div>
 </template>
 

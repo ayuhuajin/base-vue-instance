@@ -1,6 +1,6 @@
 <template>
   <div class="buttom">
-    选择4144444
+    选择
   </div>
 </template>
 
