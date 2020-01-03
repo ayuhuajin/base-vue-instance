@@ -1,6 +1,10 @@
 <template>
   <demo-item>
-    <hai-button></hai-button>
+    <template v-slot:desc>
+      按钮有四种颜色，两种状态 <br />
+      按钮有四种颜色，两种状态
+    </template>
+    <hai-input></hai-input>
   </demo-item>
 </template>
 

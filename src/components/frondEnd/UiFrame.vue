@@ -23,6 +23,7 @@ export default Vue.extend({
   max-width: 1200px;
   min-height: calc(100vh - 150px);
   margin: 20px auto;
+  border-radius: 4px;
   background: #fff;
 }
 </style>
