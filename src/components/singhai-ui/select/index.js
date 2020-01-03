@@ -1,4 +1,4 @@
-import HaiSelect from '@/components/uiFrame/select/HaiSelect';
+import HaiSelect from '@/components/singhai-ui/select/HaiSelect';
 HaiSelect.install = Vue => {
   Vue.component(HaiSelect.name, HaiSelect);
 };
