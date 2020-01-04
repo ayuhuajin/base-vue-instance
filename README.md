@@ -11,5 +11,34 @@
 > * npm run tests  //测试（暂无）
 > * npm run lint  //格式化
 
+
+## 技术栈
+
+- Vue-Cli（Vue 脚手架工具）
+- Vue（核心框架）
+- Vue-Router（页面路由）
+- Vuex（状态管理）
+- ES 6 / 7 （JavaScript 语言的下一代标准）
+- Scss（CSS预处理器）
+- Axios（网络请求）
+  
+
+## 项目布局
+component 
+  backEnd:后端界面
+  frondEnd:前端界面
+  common:基础组件
+plugins:插件
+service：接口相关
+
+## 功能
+
+
+## 更新说明
+
+## 其他说明
+
+
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

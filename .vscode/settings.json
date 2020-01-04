@@ -19,5 +19,8 @@
       "autoFix": true
     },
     "typescriptreact"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

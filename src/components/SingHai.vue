@@ -10,6 +10,14 @@
     <section>
       <el-button>按钮</el-button>
     </section>
+    <section class="switch">
+      开关
+    </section>
+    <div :class="$style['module-test']">
+      module 样式测试
+    </div>
+
+    <div class="compass">引入compass模块</div>
     <!-- echart 曲线图 -->
     <section ref="parameterLine" class="line" style="height: 200px;width:400px"></section>
     <!-- 高德地图 -->
@@ -21,6 +29,12 @@
     <section>
       <div id="editor" style="min-width:700px;max-width:1200px;margin: 0 auto;"></div>
     </section>
+
+    <!-- 节流函数测试 -->
+    <div @click="throttle">点击节流</div>
+    <hai-button></hai-button>
+    <hai-input></hai-input>
+    <hai-select></hai-select>
   </div>
 </template>
 
@@ -32,7 +46,7 @@ import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules/index.ts';
 import gdMap from '@/plugins/gdMaps.ts';
 import wangeditor from 'wangeditor';
-
+import _ from 'lodash';
 export default Vue.extend({
   name: 'SingHai',
   mixins: [mixin],
@@ -46,6 +60,7 @@ export default Vue.extend({
     };
   },
   mounted() {
+    console.log((this as any).$style);
     this.init();
     this.parameterLine();
     // 加载地图
@@ -53,6 +68,13 @@ export default Vue.extend({
     this.createEditor();
   },
   methods: {
+    // 节流
+    throttle: _.throttle(function() {
+      console.log('ceshi');
+    }, 1000),
+    kk() {
+      console.log('ceshi');
+    },
     async init() {
       await index.dispatch('getAllCategory');
     },
@@ -176,11 +198,38 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" module>
+// 通过module作用的style将会重新命名为：文件名_原style名_不定后缀。
+.module-test {
+  color: blue;
+}
+.test {
+  color: red;
+}
+</style>
 <style lang="scss" scoped>
 @import '@/assets/css/base.scss';
 .name {
   @include ellipsis;
   width: 40px;
+}
+.compass {
+  width: 200px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ff4e00;
+  @include border-radius(4px);
+  @include opacity(0.5);
+  @include clearfix;
+  @include table-scaffolding;
+  @include link-colors(#00c, #0cc, #c0c, #ccc, #cc0);
+  // @include stretch;
+  // @include sticky-footer(54px);
+}
+
+.switch {
+  @include switch;
+  // background: url('../assets/images/icon_back.png')
 }
 .border-1px {
   // width: 100px;

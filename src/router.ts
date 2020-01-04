@@ -16,9 +16,58 @@ let router = new Router({
       children: [
         {
           path: '/',
-          name: 'UserHome',
-          component: () => import('./components/frondEnd/BHeader.vue'),
-          meta: { title: 'UserHome' }
+          component: () => import('./components/frondEnd/FrontEnd.vue'),
+          meta: { title: '嗨前端' },
+          children: [
+            {
+              path: '/',
+              name: 'FuserList',
+              component: () => import('./components/frondEnd/BlogList.vue'),
+              meta: { title: '嗨前端' }
+            },
+            {
+              path: '/detail',
+              name: 'UserDetail',
+              component: () => import('./components/frondEnd/BlogDetail.vue'),
+              meta: { title: '嗨前端-详情' }
+            },
+            {
+              path: '/categoryList',
+              name: 'UserCategoryList',
+              component: () => import('./components/frondEnd/CategoryList.vue'),
+              meta: { title: '嗨前端-分类' }
+            },
+            {
+              path: '/uiFrame',
+              name: 'uiFrame',
+              component: () => import('./components/frondEnd/UiFrame.vue'),
+              meta: { title: '嗨前端-UI框架' }
+            },
+            {
+              path: '/friendLinks',
+              name: 'friendLinks',
+              component: () => import('./components/frondEnd/FriendLinks.vue'),
+              meta: { title: '嗨前端-友情链接' }
+            },
+            {
+              path: '/tools',
+              name: 'tools',
+              component: () => import('./components/frondEnd/BaseTools.vue'),
+              meta: { title: '嗨前端-工具' }
+            },
+            {
+              path: '/myProject',
+              name: 'myProject',
+              component: () => import('./components/frondEnd/MyProject.vue'),
+              meta: { title: '嗨前端-项目' }
+            },
+            {
+              path: '/baseSkill',
+              name: 'baseSkill',
+              component: () => import('./components/frondEnd/BaseSkill.vue'),
+              meta: { title: '嗨前端-技能' }
+            }
+          ]
         }
       ]
     },
@@ -98,14 +147,19 @@ let router = new Router({
       path: '/test',
       name: 'Test',
       component: () => import('./views/Test.vue'),
-      meta: { title: '嗨前端-test', requireAuth: true }
+      meta: { title: '嗨前端-test' }
     }
   ]
 });
 router.beforeEach((to, from, next) => {
+  // 记住当前url
+  if (to.fullPath.indexOf('login') == -1) {
+    localStorage.setItem('currentUrl', window.location.href);
+  }
+
   if (to.meta.requireAuth) {
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (token) {
       next();
     } else {
       console.log(to.fullPath);

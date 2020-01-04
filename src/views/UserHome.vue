@@ -17,3 +17,12 @@ export default Vue.extend({
   methods: {}
 });
 </script>
+<style lang="scss">
+@import '@/assets/css/base.scss';
+.user-home {
+  @include scrollbar;
+  min-height: calc(100vh - 40px);
+  padding-bottom: 65px;
+  overflow: auto;
+}
+</style>

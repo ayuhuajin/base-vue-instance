@@ -171,7 +171,7 @@ export default Vue.extend({
           .then(() => {
             this.init();
           })
-          .catch(err => {
+          .catch((err: any) => {
             console.log('编辑失败');
           });
       }

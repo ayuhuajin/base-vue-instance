@@ -1,3 +1,27 @@
+$mainColor:#ef7674;
+::-webkit-scrollbar
+  {
+    width: 5px;
+    height: 5px;
+    border-radius:4px;
+    background-color: #ddd;
+  }
+  /*定义滚动条轨道 内阴影+圆角*/
+  ::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  /*定义滑块 内阴影+圆角*/
+  ::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #ddd;
+  }
 /* 圆形盒子 */
 @mixin circle($size: 11px,$bg: #fff) {
   border-radius: 50%;
@@ -6,6 +30,18 @@
   line-height: $size;
   text-align: center;
   background: $bg;
+}
+
+// 浮动、清除浮动
+@mixin clearFix {
+  &:after {
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    content: "";
+  }
 }
 
 /* 超出省略号 */
@@ -35,30 +71,10 @@
   }
 }
 
+// 滚动条样式
 @mixin scrollbar(){
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-  ::-webkit-scrollbar
-  {
-    width: 5px;
-    height: 5px;
-    background-color: #ddd;
-  }
-  /*定义滚动条轨道 内阴影+圆角*/
-  ::-webkit-scrollbar-track
-  {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-    background-color: #fff;
-  }
-  /*定义滑块 内阴影+圆角*/
-  ::-webkit-scrollbar-thumb
-  {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #ddd;
-  }
+  
 }
 // 1像素边框
 @mixin border-1px($PX, $style, $color, $direction ) {
@@ -70,31 +86,13 @@
     height: 100%;
     top: 0;
     left: 0;
+    border-#{$direction}: $PX $style $color;
     transform-origin: left top;
     -webkit-transform-origin: left top;
     box-sizing: border-box;
     pointer-events: none;
   }
-  @if $direction == top{
-    &:before {
-      border-top: $PX $style $color;
-    }
-  }
-  @if $direction == bottom{
-    &:before {
-      border-bottom: $PX $style $color;
-    }
-  }
-  @if $direction == left{
-    &:before {
-      border-left: $PX $style $color;
-    }
-  }
-  @if $direction == right{
-    &:before {
-      border-right: $PX $style $color;
-    }
-  }
+  
   @if $direction == all{
     &:before {
       border: $PX $style $color;
@@ -102,7 +100,6 @@
   }
   @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
     &:before {
-      content: "123";
       width: 200%;
       height: 200%;
       transform: scale(0.5);
@@ -110,7 +107,6 @@
   }
   @media (-webkit-min-device-pixel-ratio: 2.5), (min-device-pixel-ratio: 2.5) {
     &:before {
-      content: "456";
       width: 275%;
       height: 275%;
       transform: scale(0.4);
@@ -118,11 +114,35 @@
   }
   @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
     &:before {
-      content: "789";
       width: 300%;
       height: 300%;
       transform: scale(0.33);
       -webkit-transform: scale(0.33);
     }
+  }
+}
+// 水平垂直居中、
+@mixin  center-vertical{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+@mixin switch {
+  position: relative;
+  margin-left: 20px;
+  font-size: 16px;
+  color: #ff4e00;
+  padding-left: 5px;
+  &:after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left:-5px;
+    transform:translate(0,-50%);
+    width: 10px;
+    height: 6px;
+    background: url('../assets/images/icon_back.png') no-repeat 97%;
+    background-size: 10px 6px;
   }
 }

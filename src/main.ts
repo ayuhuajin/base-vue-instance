@@ -7,6 +7,7 @@ import '@/assets/js/errorMonitoring.js'; // 错误监控
 // import '@/services/mock/mock.ts'; // 模拟数据
 import './plugins/element.js';
 import './plugins/echarts.js';
+import './plugins/singhai.js';
 import './plugins/video.js';
 
 Vue.directive('highlight', function(el) {
@@ -15,6 +16,12 @@ Vue.directive('highlight', function(el) {
     (window as any).hljs.highlightBlock(block);
   });
 });
+// 移动端console 调试(测试环境)
+// if (process.env.NODE_ENV !== 'production') {
+//   const Vconsole = require('vconsole'); // vue分析工具
+//   const vConsole = new Vconsole();
+//   Vue.use(vConsole);
+// }
 
 Vue.config.productionTip = false;
 new Vue({

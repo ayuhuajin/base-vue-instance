@@ -1,0 +1,136 @@
+<template>
+  <div>
+    <div class="tools">
+      <section>
+        <h4>在线工具</h4>
+        <ul>
+          <li>
+            <div>
+              <img src="../../assets/images/icon-search.png" alt="" />
+              <span>TinyPng</span>
+            </div>
+            <p>超完美PNG压缩工具</p>
+          </li>
+          <li>
+            <div>
+              <img src="../../assets/images/icon-search.png" alt="" />
+              <span>TinyPng</span>
+            </div>
+            <p>超完美PNG压缩工具</p>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h4>在线工具</h4>
+        <ul>
+          <li>
+            <div>
+              <img src="../../assets/images/icon-search.png" alt="" />
+              <span>TinyPng</span>
+            </div>
+            <p>超完美PNG压缩工具</p>
+          </li>
+          <li>
+            <div>
+              <img src="../../assets/images/icon-search.png" alt="" />
+              <span>草料二维码</span>
+            </div>
+            <p>国内创建二维码在线应用</p>
+          </li>
+          <li>
+            <div>
+              <img src="../../assets/images/icon-search.png" alt="" />
+              <span>TinyPng</span>
+            </div>
+            <p>超完美PNG压缩工具</p>
+          </li>
+          <li>
+            <div>
+              <img src="../../assets/images/icon-search.png" alt="" />
+              <span>TinyPng</span>
+            </div>
+            <p>超完美PNG压缩工具</p>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue';
+export default Vue.extend({
+  name: 'BaseTools',
+  data() {
+    return {
+      tit: '工具'
+    };
+  },
+  mounted() {},
+  methods: {}
+});
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/css/common.scss';
+.tools {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 0 30px;
+}
+section {
+  margin-top: 40px;
+  h4 {
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    &:after {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      height: 20px;
+      width: 4px;
+      margin-top: -10px;
+      border-radius: 1px;
+      background: $mainColor;
+    }
+  }
+  ul {
+    display: flex;
+    margin-top: 10px;
+    li {
+      flex: 0 0 25%;
+      margin-right: 10px;
+      padding: 15px 15px;
+      border: 1px solid #eee;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.3s;
+      &:hover {
+        color: $mainColor;
+        box-shadow: 0 30px 28px -16px rgba(0, 0, 0, 0.26);
+        transform: translate(0, -4px);
+        span {
+          color: $mainColor;
+        }
+      }
+      span {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+      }
+      img {
+        width: 20px;
+        margin-right: 15px;
+      }
+      p {
+        margin-top: 5px;
+        font-size: 14px;
+        color: #999;
+      }
+    }
+  }
+}
+</style>

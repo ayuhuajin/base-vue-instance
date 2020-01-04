@@ -9,9 +9,12 @@ export default root.registerModule('index', {
     },
     //获取所有文章分类
     async getAllCategory({ commit }, payload) {
-      let result = await http.get(
-        `/categoryList?pageSize=${payload.pageSize}&pageNum=${payload.pageNumber}&name=${payload.name}`
-      );
+      let result = await http.get(`/categoryList?${qs.stringify(payload)}`);
+      return result.data;
+    },
+    //界面展示获取所有文章分类
+    async getCategoryList({ commit }, payload) {
+      let result = await http.get(`/getCategoryList?${qs.stringify(payload)}`);
       return result.data;
     },
     // 添加分类
