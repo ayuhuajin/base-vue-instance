@@ -6,17 +6,66 @@
         <ul>
           <li>
             <div>
-              <img src="../../assets/images/icon-search.png" alt="" />
-              <span>TinyPng</span>
+              <a href="http://www.baidu.com" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>TinyPng</span>
+              </a>
             </div>
             <p>超完美PNG压缩工具</p>
           </li>
           <li>
             <div>
-              <img src="../../assets/images/icon-search.png" alt="" />
-              <span>TinyPng</span>
+              <a href="http://www.bitbug.net" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>比特虫</span>
+              </a>
             </div>
-            <p>超完美PNG压缩工具</p>
+            <p>在线制作ico图标</p>
+          </li>
+          <li>
+            <div>
+              <a href="https://browsehappy.com/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>浏览器</span>
+              </a>
+            </div>
+            <p>在线。无忧。快升级您的浏览器吧</p>
+          </li>
+          <li>
+            <div>
+              <a href="https://compass.umeng.com/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>友盟指数</span>
+              </a>
+            </div>
+            <p>手机</p>
+          </li>
+          <li>
+            <div>
+              <a href="http://www.browsersync.cn/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>browsersync</span>
+              </a>
+            </div>
+            <p>浏览器同步测试工具</p>
+          </li>
+          <li>
+            <div>
+              <a href="https://github.com/imochen/hotcss" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span> 移动端解决方案</span>
+              </a>
+            </div>
+            <p>移动端布局终极解决方案</p>
+          </li>
+          <li>
+            <div>
+              <a href="https://www.processon.com/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span> UML类图</span>
+              </a>
+            </div>
+            <p>免费在线作图、实时协作</p>
           </li>
         </ul>
       </section>
@@ -79,7 +128,7 @@ export default Vue.extend({
   padding: 10px 0 30px;
 }
 section {
-  margin-top: 40px;
+  margin-top: 30px;
   h4 {
     position: relative;
     font-size: 16px;
@@ -99,15 +148,20 @@ section {
   }
   ul {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 10px;
     li {
-      flex: 0 0 25%;
+      flex: 0 0 calc(25% - 7.5px);
       margin-right: 10px;
+      margin-bottom: 10px;
       padding: 15px 15px;
       border: 1px solid #eee;
       cursor: pointer;
       background: #fff;
       transition: all 0.3s;
+      &:nth-child(4n){
+          margin-right: 0px;
+      }
       &:hover {
         color: $mainColor;
         box-shadow: 0 30px 28px -16px rgba(0, 0, 0, 0.26);
