@@ -30,13 +30,15 @@ export default {
           name: 'cname',
           desc: '自定义class名称',
           type: 'String',
-          default: "''",
+          options: '--',
+          default: 'normal',
           isMust: false
         },
         {
           name: 'type',
-          desc: '按钮类型 normal/success/warning/danger',
+          desc: '按钮类型 ',
           type: 'String',
+          options: 'normal/success/warning/danger',
           default: "''",
           isMust: false
         }

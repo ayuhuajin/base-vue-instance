@@ -14,15 +14,17 @@
           <th>属性</th>
           <th>说明</th>
           <th>类型</th>
+          <th>可选值</th>
           <th>默认值</th>
           <th>是否必传</th>
         </tr>
       </thead>
-      <tbody v-if="params.length != 0">
+      <tbody>
         <tr v-for="(item, index) in params" :key="index">
           <td>{{ item.name }}</td>
           <td>{{ item.desc }}</td>
           <td>{{ item.type }}</td>
+          <td>{{ item.options }}</td>
           <td>{{ item.default }}</td>
           <td>{{ item.isMust }}</td>
         </tr>
