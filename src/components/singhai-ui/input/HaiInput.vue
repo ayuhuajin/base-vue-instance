@@ -1,6 +1,13 @@
 <template>
   <div class="input" :class="cname">
-    <input :type="type" :maxlength="maxlength" :disabled="disabled" :readonly="readonly" v-model="value" :placeholder="placeholder"/>
+    <input
+      :type="type"
+      :maxlength="maxlength"
+      :disabled="disabled"
+      :readonly="readonly"
+      v-model="value"
+      :placeholder="placeholder"
+    />
   </div>
 </template>
 
@@ -11,6 +18,26 @@ export default {
     cname: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: 'text'
+    },
+    maxlength: {
+      type: Number,
+      default: 3000
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: '请输入内容'
     }
   },
   data() {
