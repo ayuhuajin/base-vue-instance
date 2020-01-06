@@ -8,14 +8,9 @@
 export default {
   name: 'HaiButton',
   props: {
-    inputItem: {
-      type: Object,
-      default() {
-        return {};
-      }
-    },
     cname: {
-      type: String
+      type: String,
+      default: ''
     },
     type: {
       type: String,

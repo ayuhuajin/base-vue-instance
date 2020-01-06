@@ -1,10 +1,11 @@
 <template>
-  <demo-item>
+  <demo-item :title="title" :params="params">
     <template v-slot:desc>
-      按钮有四种颜色，两种状态 <br />
-      按钮有四种颜色，两种状态
+      输入框
     </template>
-    <hai-input></hai-input>
+    <template v-slot:example>
+      <hai-input></hai-input>
+    </template>
   </demo-item>
 </template>
 
@@ -16,7 +17,19 @@ export default {
     DemoItem
   },
   data() {
-    return {};
+    return {
+      title: 'Input 输入框',
+      params: [
+        {
+          name: 'cname',
+          desc: '自定义class名称',
+          type: 'String',
+          options: '---',
+          default: 'normal',
+          isMust: false
+        }
+      ]
+    };
   },
   methods: {}
 };

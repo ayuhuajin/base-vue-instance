@@ -1,6 +1,6 @@
 <template>
   <div class="demo-item">
-    <h3>Button 按钮</h3>
+    <h3>{{ title }}</h3>
     <blockquote class="desc">
       <slot name="desc"></slot>
     </blockquote>
@@ -37,8 +37,23 @@
 export default {
   name: 'DemoItem',
   props: {
+    title: {
+      type: String,
+      default: '组件名 描述'
+    },
     params: {
-      type: Array
+      type: Array,
+      default() {
+        [
+          {
+            name: '参数名',
+            explain: '参数说明',
+            type: '参数类型',
+            default: '参数的默认值',
+            isMust: '是否必传'
+          }
+        ];
+      }
     }
   },
   data() {
