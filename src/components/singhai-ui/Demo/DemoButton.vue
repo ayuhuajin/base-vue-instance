@@ -1,5 +1,5 @@
 <template>
-  <demo-item>
+  <demo-item :params="params">
     <template v-slot:desc>
       按钮有四种颜色，两种状态 <br />
       按钮有四种颜色，两种状态
@@ -24,7 +24,23 @@ export default {
     return {
       inputItem: {
         color: '#67C23A'
-      }
+      },
+      params: [
+        {
+          name: 'cname',
+          desc: '自定义class名称',
+          type: 'String',
+          default: "''",
+          isMust: false
+        },
+        {
+          name: 'type',
+          desc: '按钮类型 normal/success/warning/danger',
+          type: 'String',
+          default: "''",
+          isMust: false
+        }
+      ]
     };
   },
   methods: {}

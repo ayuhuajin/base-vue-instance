@@ -18,13 +18,13 @@
           <th>是否必传</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>11111</td>
-          <td>2222</td>
-          <td>33333</td>
-          <td>33333</td>
-          <td>33333</td>
+      <tbody v-if="params.length != 0">
+        <tr v-for="(item, index) in params" :key="index">
+          <td>{{ item.name }}</td>
+          <td>{{ item.desc }}</td>
+          <td>{{ item.type }}</td>
+          <td>{{ item.default }}</td>
+          <td>{{ item.isMust }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,6 +34,11 @@
 <script>
 export default {
   name: 'DemoItem',
+  props: {
+    params: {
+      type: Array
+    }
+  },
   data() {
     return {};
   },
@@ -72,7 +77,6 @@ export default {
   table {
     margin-top: 20px;
     width: 100%;
-    border-collapse: separate;
     border: 1px solid #eee;
     border-radius: 4px;
     text-align: left;
@@ -81,12 +85,14 @@ export default {
       border-right: 1px solid #eee;
       line-height: 36px;
       color: #333;
+      font-weight: bold;
       background: #c5e8ff;
     }
     td {
       padding-left: 20px;
       border: 1px solid #e9e9e9;
       line-height: 40px;
+      color: #333;
     }
   }
 }
