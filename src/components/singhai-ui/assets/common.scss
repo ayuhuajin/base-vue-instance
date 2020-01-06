@@ -5,3 +5,20 @@ $normalColor:#fff;
 $success:#67C23A;
 $warning:#E6A23C;
 $lineHeight:40px;
+
+@mixin btn($borderColor:#dcdfe6,$color:#666,$bgColor:$normalColor,$hoverBorder:$mainColor,$hoverColor:$mainColor,$hoverBg:#fff) {
+  padding: 0 25px;
+  border: 1px solid $borderColor;
+  border-radius: 4px;
+  line-height: $lineHeight;
+  font-size: 16px;
+  color: $color;
+  background: $bgColor;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    border: 1px solid $hoverBorder;
+    color: $hoverColor;
+    background: $hoverBg;
+  }
+}
