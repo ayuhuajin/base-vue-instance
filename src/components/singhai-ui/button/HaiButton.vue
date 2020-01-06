@@ -1,6 +1,6 @@
 <template>
   <div class="button-item" :class="[cname]">
-    <span :class="type"><slot></slot></span>
+    <span :class="[type, { disabled: disabled }]"><slot></slot></span>
   </div>
 </template>
 
@@ -20,6 +20,10 @@ export default {
     type: {
       type: String,
       default: 'normal'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -44,6 +48,10 @@ export default {
   }
   span.danger {
     @include btn(#dcdfe6, #fff, $mainColor, $secondaryColor, #fff, $secondaryColor);
+  }
+  span.disabled {
+    @include btn(#999, #999, #f5f5f5, #999, #999, #f5f5f5);
+    cursor: not-allowed;
   }
 }
 </style>
