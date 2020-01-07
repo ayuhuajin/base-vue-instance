@@ -1,6 +1,6 @@
 <template>
   <div class="button-item" :class="[cname]">
-    <span :class="[type, { disabled: disabled }]"><slot></slot></span>
+    <span :class="[type, { disabled: disabled }]" @click="onClick"><slot></slot></span>
   </div>
 </template>
 
@@ -24,7 +24,11 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    onClick() {
+      this.$emit('onClick');
+    }
+  }
 };
 </script>
 
