@@ -3,8 +3,9 @@
     <h2>组件说明文档</h2>
     <demo-button></demo-button>
     <demo-input></demo-input>
-    <!-- <demo-select></demo-select> -->
     <demo-loading></demo-loading>
+    <demo-select></demo-select>
+    <demo-switch></demo-switch>
   </div>
 </template>
 
@@ -13,13 +14,15 @@ import DemoButton from './DemoButton';
 import DemoInput from './DemoInput';
 import DemoSelect from './DemoSelect';
 import DemoLoading from './DemoLoading';
+import DemoSwitch from './DemoSwitch';
 export default {
   name: 'BaseDemo',
   components: {
     DemoButton,
     DemoInput,
     DemoSelect,
-    DemoLoading
+    DemoLoading,
+    DemoSwitch
   },
   data() {
     return {};

@@ -36,6 +36,7 @@
     <hai-input></hai-input>
     <hai-select></hai-select>
     <hai-loading></hai-loading>
+    <hai-switch></hai-switch>
   </div>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
   <demo-item :title="title" :params="params">
     <template v-slot:desc>
-      选择器
+      开关
     </template>
     <template v-slot:example>
-      <hai-switch></hai-switch>
+      <hai-switch v-model="testSwitch"></hai-switch>
     </template>
   </demo-item>
 </template>
@@ -12,13 +12,14 @@
 <script>
 import DemoItem from './DemoItem';
 export default {
-  name: 'DemoSelect',
+  name: 'DemoSwitch',
   components: {
     DemoItem
   },
   data() {
     return {
-      title: 'Select 选择器',
+      title: 'Switch 开关',
+      testSwitch: true,
       params: [
         {
           name: 'cname',
