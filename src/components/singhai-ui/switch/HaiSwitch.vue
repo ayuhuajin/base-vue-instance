@@ -1,6 +1,6 @@
 <template>
   <div class="switch-item">
-    <input v-model="isChecked" type="checkbox" @change="onChange" />
+    <input v-model="isChecked" type="checkbox" :disabled="disabled" @change="onChange" />
     <span class="inner-text">{{ this.value ? this.text[0] : this.text[1] }}</span>
   </div>
 </template>
@@ -12,6 +12,10 @@ export default {
     value: {
       type: Boolean,
       require: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
     text: {
       type: Array,
@@ -26,7 +30,7 @@ export default {
         return this.value;
       },
       set(value) {
-        this.value = value;
+        this.$emit('input', value);
       }
     }
   },
@@ -66,6 +70,11 @@ input[type='checkbox'] {
       &:after {
         left: calc(100% - 31px);
       }
+    }
+  }
+  &:disabled {
+    & ~ .inner-text {
+      opacity: 0.5;
     }
   }
 }

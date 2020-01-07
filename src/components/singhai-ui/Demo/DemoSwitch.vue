@@ -4,7 +4,8 @@
       开关
     </template>
     <template v-slot:example>
-      <hai-switch v-model="testSwitch"></hai-switch>
+      <hai-switch v-model="Switch1"></hai-switch>
+      <hai-switch v-model="Switch2"></hai-switch>
     </template>
   </demo-item>
 </template>
