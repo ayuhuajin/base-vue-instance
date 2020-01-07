@@ -92,17 +92,17 @@ export default {
         },
         {
           name: 'on-focus',
-          desc: '在 Input 获得焦点时触发回调，(event: Event)',
+          desc: '在 Input 获得焦点时触发回调',
           type: '---',
-          options: '---',
+          options: '(event: Event)',
           default: '---',
           isMust: '---'
         },
         {
           name: 'on-blur',
-          desc: '在 Input 失去焦点时触发回调，(event: Event)',
+          desc: '在 Input 失去焦点时触发回调',
           type: '---',
-          options: '---',
+          options: '(event: Event)',
           default: '---',
           isMust: '---'
         }

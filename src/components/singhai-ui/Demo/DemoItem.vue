@@ -11,10 +11,10 @@
     <table>
       <thead>
         <tr>
-          <th>属性</th>
+          <th>属性 /事件</th>
           <th>说明</th>
           <th>类型</th>
-          <th>可选值</th>
+          <th>可选值 /回调函数</th>
           <th>默认值</th>
           <th>是否必传</th>
         </tr>
