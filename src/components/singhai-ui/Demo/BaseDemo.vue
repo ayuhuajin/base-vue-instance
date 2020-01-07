@@ -5,6 +5,7 @@
     <demo-input></demo-input>
     <demo-loading></demo-loading>
     <demo-switch></demo-switch>
+    <demo-alert></demo-alert>
     <demo-select></demo-select>
   </div>
 </template>
@@ -15,6 +16,7 @@ import DemoInput from './DemoInput';
 import DemoSelect from './DemoSelect';
 import DemoLoading from './DemoLoading';
 import DemoSwitch from './DemoSwitch';
+import DemoAlert from './DemoAlert';
 export default {
   name: 'BaseDemo',
   components: {
@@ -22,6 +24,7 @@ export default {
     DemoInput,
     DemoSelect,
     DemoLoading,
+    DemoAlert,
     DemoSwitch
   },
   data() {
