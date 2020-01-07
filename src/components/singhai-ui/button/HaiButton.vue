@@ -45,7 +45,7 @@ export default {
     @include btn(#dcdfe6, #fff, $mainColor, $secondaryColor, #fff, $secondaryColor);
   }
   span.disabled {
-    @include btn(#999, #999, #f5f5f5, #999, #999, #f5f5f5);
+    @include btn(#dcdfe6, #999, #f3f3f3, #dcdfe6, #999, #f3f3f3);
     cursor: not-allowed;
   }
 }

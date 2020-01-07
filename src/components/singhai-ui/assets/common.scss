@@ -9,6 +9,9 @@ $lineHeight:40px;
 $placeColor:#999;
 $placeSize:14px;
 
+.disabled {
+  cursor:not-allowed !important;
+}
 
 /* 超出省略号 */
 @mixin ellipsis() {

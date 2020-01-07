@@ -4,8 +4,20 @@
       输入框
     </template>
     <template v-slot:example>
-      <hai-input :cname="cname" :maxlength="maxlength" :placeholder="placeholder"></hai-input>
-      <hai-input :type="type" :placeholder="placeholder"></hai-input>
+      <ul class="example">
+        <li>
+          <p>普通文本框：{{ inputValue }}</p>
+          <hai-input v-model="inputValue" :cname="cname" :maxlength="maxlength" :placeholder="placeholder"></hai-input>
+        </li>
+        <li>
+          <p>密码框：{{ inputValue2 }}</p>
+          <hai-input v-model="inputValue2" :type="type" :placeholder="placeholder"></hai-input>
+        </li>
+        <li>
+          <p>禁用：</p>
+          <hai-input v-model="inputValue3" :placeholder="placeholder" :disabled="true"></hai-input>
+        </li>
+      </ul>
     </template>
   </demo-item>
 </template>
@@ -20,6 +32,9 @@ export default {
   data() {
     return {
       title: 'Input 输入框',
+      inputValue: '嗨前端',
+      inputValue2: '看不见我',
+      inputValue3: '禁用状态',
       type: 'password',
       placeholder: '请输入',
       maxlength: 10,
@@ -66,6 +81,30 @@ export default {
           options: '---',
           default: 'false',
           isMust: false
+        },
+        {
+          name: 'on-change',
+          desc: '当输入框的值发生改变，并且失去焦点的时候触发的回调函数，参数(event)',
+          type: '---',
+          options: '---',
+          default: '---',
+          isMust: '---'
+        },
+        {
+          name: 'on-focus',
+          desc: '在 Input 获得焦点时触发回调，(event: Event)',
+          type: '---',
+          options: '---',
+          default: '---',
+          isMust: '---'
+        },
+        {
+          name: 'on-blur',
+          desc: '在 Input 失去焦点时触发回调，(event: Event)',
+          type: '---',
+          options: '---',
+          default: '---',
+          isMust: '---'
         }
       ]
     };
@@ -75,6 +114,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .button-input {
+  display: inline-block;
   margin-right: 15px;
+}
+.example {
+  display: flex;
+  align-items: center;
+  li {
+    p {
+      color: #999;
+      font-size: 12px;
+      margin-left: 5px;
+      margin-bottom: 4px;
+    }
+  }
 }
 </style>
