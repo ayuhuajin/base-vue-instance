@@ -4,7 +4,7 @@
       Alert
     </template>
     <template v-slot:example>
-      <hai-alert></hai-alert>
+      <hai-button @onClick="onClick(1)">提示</hai-button>
     </template>
   </demo-item>
 </template>
@@ -31,6 +31,13 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    onClick() {
+      this.$Alert.info({
+        duration: '3000',
+        content: 'test'
+      });
+    }
+  }
 };
 </script>
