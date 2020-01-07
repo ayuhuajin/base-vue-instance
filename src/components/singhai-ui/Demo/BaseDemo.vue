@@ -4,8 +4,8 @@
     <demo-button></demo-button>
     <demo-input></demo-input>
     <demo-loading></demo-loading>
-    <demo-select></demo-select>
     <demo-switch></demo-switch>
+    <demo-select></demo-select>
   </div>
 </template>
 
