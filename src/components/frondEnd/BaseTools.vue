@@ -67,6 +67,15 @@
             </div>
             <p>免费在线作图、实时协作</p>
           </li>
+          <li>
+            <div>
+              <a href="https://md.aclickall.com/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span> markdown</span>
+              </a>
+            </div>
+            <p>markdown排版</p>
+          </li>
         </ul>
       </section>
       <section>
@@ -159,8 +168,8 @@ section {
       cursor: pointer;
       background: #fff;
       transition: all 0.3s;
-      &:nth-child(4n){
-          margin-right: 0px;
+      &:nth-child(4n) {
+        margin-right: 0px;
       }
       &:hover {
         color: $mainColor;
