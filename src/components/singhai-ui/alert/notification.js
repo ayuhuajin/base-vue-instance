@@ -1,4 +1,3 @@
-// notification.js
 import Alert from './HaiAlert';
 import Vue from 'vue';
 
@@ -13,9 +12,9 @@ Alert.newInstance = properties => {
       });
     }
   });
-  console.log(Alert);
 
   const component = Instance.$mount();
+  console.log(component);
   document.body.appendChild(component.$el);
 
   const alert = Instance.$children[0];

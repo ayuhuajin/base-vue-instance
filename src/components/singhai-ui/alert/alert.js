@@ -1,4 +1,3 @@
-// alert.js
 import Notification from './notification.js';
 
 let messageInstance;
@@ -8,10 +7,11 @@ function getMessageInstance() {
   return messageInstance;
 }
 
-function notice({ duration = 1.5, content = '' }) {
+function notice({ type = 'success', duration = 1500, content = '' }) {
   let instance = getMessageInstance();
 
   instance.add({
+    type: type,
     content: content,
     duration: duration
   });
