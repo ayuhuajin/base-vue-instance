@@ -38,6 +38,7 @@
     <hai-loading></hai-loading>
     <hai-switch></hai-switch>
     <hai-alert></hai-alert>
+    <hai-tree></hai-tree>
   </div>
 </template>
 

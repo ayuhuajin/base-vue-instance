@@ -7,6 +7,7 @@
     <demo-switch></demo-switch>
     <demo-alert></demo-alert>
     <demo-select></demo-select>
+    <demo-tree></demo-tree>
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import DemoSelect from './DemoSelect';
 import DemoLoading from './DemoLoading';
 import DemoSwitch from './DemoSwitch';
 import DemoAlert from './DemoAlert';
+import DemoTree from './DemoTree';
 export default {
   name: 'BaseDemo',
   components: {
@@ -25,7 +27,8 @@ export default {
     DemoSelect,
     DemoLoading,
     DemoAlert,
-    DemoSwitch
+    DemoSwitch,
+    DemoTree
   },
   data() {
     return {};
