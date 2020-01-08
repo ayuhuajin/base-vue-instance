@@ -102,6 +102,7 @@ export default Vue.extend({
 @import '@/assets/css/common.scss';
 .header {
   position: fixed;
+  z-index: 10;
   top: 0;
   width: 100%;
   border-bottom: 1px solid #eee;

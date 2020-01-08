@@ -36,6 +36,7 @@ export default {
 @import '../assets/common';
 .button-item {
   display: inline-block;
+  @include userSelectNone;
   span.normal {
     @include btn(#dcdfe6, #666, $normalColor, $mainColor, $mainColor);
   }

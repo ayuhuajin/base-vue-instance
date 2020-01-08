@@ -63,6 +63,7 @@ export default {
 }
 .hai-alert {
   position: fixed;
+  z-index: 11;
   width: 100%;
   top: 20px;
   left: 0;
