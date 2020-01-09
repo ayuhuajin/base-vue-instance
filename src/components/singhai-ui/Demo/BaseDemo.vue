@@ -8,6 +8,8 @@
     <demo-alert></demo-alert>
     <demo-select></demo-select>
     <demo-tree></demo-tree>
+    <demo-radio></demo-radio>
+    <demo-check-box></demo-check-box>
   </div>
 </template>
 
@@ -19,6 +21,8 @@ import DemoLoading from './DemoLoading';
 import DemoSwitch from './DemoSwitch';
 import DemoAlert from './DemoAlert';
 import DemoTree from './DemoTree';
+import DemoRadio from './DemoRadio';
+import DemoCheckBox from './DemoCheckBox';
 export default {
   name: 'BaseDemo',
   components: {
@@ -28,7 +32,9 @@ export default {
     DemoLoading,
     DemoAlert,
     DemoSwitch,
-    DemoTree
+    DemoTree,
+    DemoRadio,
+    DemoCheckBox
   },
   data() {
     return {};

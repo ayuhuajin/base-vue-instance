@@ -6,6 +6,8 @@ import HaiLoading from '@/components/singhai-ui/loading/index';
 import HaiAlert from '@/components/singhai-ui/alert/index';
 import HaiSwitch from '@/components/singhai-ui/switch/index';
 import HaiTree from '@/components/singhai-ui/tree/index';
+import HaiRadio from '@/components/singhai-ui/radio/index';
+import HaiCheckBox from '@/components/singhai-ui/checkbox/index';
 
 import Alert from '@/components/singhai-ui/alert/alert';
 Vue.prototype.$Alert = Alert;
@@ -16,3 +18,5 @@ Vue.use(HaiLoading);
 Vue.use(HaiAlert);
 Vue.use(HaiSwitch);
 Vue.use(HaiTree);
+Vue.use(HaiRadio);
+Vue.use(HaiCheckBox);

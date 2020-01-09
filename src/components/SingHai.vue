@@ -39,6 +39,8 @@
     <hai-switch></hai-switch>
     <hai-alert></hai-alert>
     <hai-tree></hai-tree>
+    <hai-radio></hai-radio>
+    <hai-check-box></hai-check-box>
   </div>
 </template>
 
