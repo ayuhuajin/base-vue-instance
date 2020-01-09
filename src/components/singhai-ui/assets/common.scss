@@ -64,4 +64,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background: $hoverBg;
   }
 }
+.example {
+  display: flex;
+  align-items: center;
+  li {
+    p {
+      color: #999;
+      font-size: 12px;
+      margin-left: 5px;
+      margin-bottom: 8px;
+    }
+  }
+}
 

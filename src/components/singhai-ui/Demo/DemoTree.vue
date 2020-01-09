@@ -25,7 +25,7 @@ export default {
           desc: '自定义class名称',
           type: 'String',
           options: '---',
-          default: 'normal',
+          default: '---',
           isMust: false
         }
       ]
