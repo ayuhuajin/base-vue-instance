@@ -1,6 +1,6 @@
 <template>
   <label class="ckeckBox-item">
-    <input type="checkbox" v-model="checked" :value="label" :name="name" :disabled="disabled" />
+    <input type="checkbox" v-model="checked" :value="label" :name="name" :disabled="disabled" @change="onChange" />
     <i></i>
     <span><slot>多选框</slot></span>
   </label>
@@ -11,7 +11,7 @@ export default {
   name: 'HaiCheckBox',
   props: {
     value: {
-      type: Array,
+      type: [Array, Boolean],
       default() {
         return [];
       }
@@ -49,7 +49,12 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    onChange(event) {
+      console.log(event);
+      this.$emit('onChange', event);
+    }
+  }
 };
 </script>
 
@@ -57,6 +62,8 @@ export default {
 @import '../assets/common';
 .ckeckBox-item {
   position: relative;
+  display: inline-flex;
+  align-items: center;
   &:hover {
     i {
       border: 1px solid #bcbcbc;
@@ -109,9 +116,6 @@ export default {
     border: 1px solid #eee;
     border-radius: 4px;
     transition: all 0.3s;
-    vertical-align: middle;
-  }
-  span {
     vertical-align: middle;
   }
 }

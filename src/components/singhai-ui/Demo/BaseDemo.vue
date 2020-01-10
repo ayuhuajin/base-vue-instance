@@ -6,10 +6,10 @@
     <demo-loading></demo-loading>
     <demo-switch></demo-switch>
     <demo-alert></demo-alert>
-    <demo-select></demo-select>
-    <demo-tree></demo-tree>
     <demo-radio></demo-radio>
     <demo-check-box></demo-check-box>
+    <demo-select></demo-select>
+    <demo-tree></demo-tree>
   </div>
 </template>
 
