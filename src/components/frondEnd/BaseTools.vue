@@ -76,6 +76,15 @@
             </div>
             <p>markdown排版</p>
           </li>
+          <li>
+            <div>
+              <a href="https://u.tools/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span> Utools</span>
+              </a>
+            </div>
+            <p>你的生产力工具集</p>
+          </li>
         </ul>
       </section>
       <section>
