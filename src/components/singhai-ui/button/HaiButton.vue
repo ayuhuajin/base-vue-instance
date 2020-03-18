@@ -1,6 +1,6 @@
 <template>
-  <div class="button-item">
-    <span :style="{ color: inputItem.color, width: inputItem.width }">{{ inputItem.msg }}</span>
+  <div class="button-item" :class="[cname]">
+    <span :class="[type, { disabled: disabled }]" @click="onClick"><slot></slot></span>
   </div>
 </template>
 
@@ -8,19 +8,27 @@
 export default {
   name: 'HaiButton',
   props: {
-    inputItem: {
-      type: Object,
-      default: function() {
-        return {
-          msg: '默认按钮'
-        };
-      }
+    cname: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: 'normal'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    onClick() {
+      this.$emit('onClick');
+    }
+  }
 };
 </script>
 
@@ -28,20 +36,22 @@ export default {
 @import '../assets/common';
 .button-item {
   display: inline-block;
-  span {
-    padding: 0 25px;
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
-    line-height: $lineHeight;
-    font-size: 16px;
-    color: #666;
-    background: $normalColor;
-    cursor: pointer;
-    transition: all 0.2s;
-    &:hover {
-      border: 1px solid $mainColor;
-      color: $mainColor;
-    }
+  @include userSelectNone;
+  span.normal {
+    @include btn(#dcdfe6, #666, $normalColor, $mainColor, $mainColor);
+  }
+  span.success {
+    @include btn(#dcdfe6, #fff, #67c23a, #79e643, #fff, #79e643);
+  }
+  span.warning {
+    @include btn(#dcdfe6, #fff, #e6a23c, #e6b76f, #fff, #e6b76f);
+  }
+  span.danger {
+    @include btn(#dcdfe6, #fff, $mainColor, $secondaryColor, #fff, $secondaryColor);
+  }
+  span.disabled {
+    @include btn(#dcdfe6, #999, #f3f3f3, #dcdfe6, #999, #f3f3f3);
+    cursor: not-allowed;
   }
 }
 </style>

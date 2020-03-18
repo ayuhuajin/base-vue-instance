@@ -1,4 +1,4 @@
-import HaiInput from '@/components/singhai-ui/input/HaiInput';
+import HaiInput from './HaiInput';
 HaiInput.install = Vue => {
   Vue.component(HaiInput.name, HaiInput);
 };

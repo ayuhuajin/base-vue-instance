@@ -1,4 +1,4 @@
-import HaiButton from '@/components/singhai-ui/button/HaiButton';
+import HaiButton from './HaiButton';
 HaiButton.install = Vue => {
   Vue.component(HaiButton.name, HaiButton);
 };

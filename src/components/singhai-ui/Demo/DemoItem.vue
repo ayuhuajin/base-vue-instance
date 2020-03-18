@@ -1,6 +1,6 @@
 <template>
   <div class="demo-item">
-    <h3>Button 按钮</h3>
+    <h3>{{ title }}</h3>
     <blockquote class="desc">
       <slot name="desc"></slot>
     </blockquote>
@@ -11,20 +11,22 @@
     <table>
       <thead>
         <tr>
-          <th>属性</th>
+          <th>属性 /事件</th>
           <th>说明</th>
           <th>类型</th>
+          <th>可选值 /回调函数</th>
           <th>默认值</th>
           <th>是否必传</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>11111</td>
-          <td>2222</td>
-          <td>33333</td>
-          <td>33333</td>
-          <td>33333</td>
+        <tr v-for="(item, index) in params" :key="index">
+          <td>{{ item.name }}</td>
+          <td>{{ item.desc }}</td>
+          <td>{{ item.type }}</td>
+          <td>{{ item.options }}</td>
+          <td>{{ item.default }}</td>
+          <td>{{ item.isMust }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,6 +36,26 @@
 <script>
 export default {
   name: 'DemoItem',
+  props: {
+    title: {
+      type: String,
+      default: '组件名 描述'
+    },
+    params: {
+      type: Array,
+      default() {
+        [
+          {
+            name: '参数名',
+            explain: '参数说明',
+            type: '参数类型',
+            default: '参数的默认值',
+            isMust: '是否必传'
+          }
+        ];
+      }
+    }
+  },
   data() {
     return {};
   },
@@ -72,7 +94,6 @@ export default {
   table {
     margin-top: 20px;
     width: 100%;
-    border-collapse: separate;
     border: 1px solid #eee;
     border-radius: 4px;
     text-align: left;
@@ -81,12 +102,14 @@ export default {
       border-right: 1px solid #eee;
       line-height: 36px;
       color: #333;
+      font-weight: bold;
       background: #c5e8ff;
     }
     td {
       padding-left: 20px;
       border: 1px solid #e9e9e9;
       line-height: 40px;
+      color: #333;
     }
   }
 }

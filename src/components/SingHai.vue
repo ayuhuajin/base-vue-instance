@@ -32,9 +32,15 @@
 
     <!-- 节流函数测试 -->
     <div @click="throttle">点击节流</div>
-    <hai-button></hai-button>
+    <hai-button>默认按钮</hai-button>
     <hai-input></hai-input>
     <hai-select></hai-select>
+    <hai-loading></hai-loading>
+    <hai-switch></hai-switch>
+    <hai-alert></hai-alert>
+    <hai-tree></hai-tree>
+    <hai-radio></hai-radio>
+    <hai-check-box></hai-check-box>
   </div>
 </template>
 
