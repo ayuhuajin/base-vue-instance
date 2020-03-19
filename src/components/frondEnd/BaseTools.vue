@@ -85,6 +85,24 @@
             </div>
             <p>你的生产力工具集</p>
           </li>
+          <li>
+            <div>
+              <a href="http://jsrun.pro/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>JSRUN</span>
+              </a>
+            </div>
+            <p>JSRUN在线编辑器</p>
+          </li>
+          <li>
+            <div>
+              <a href="http://www.dooccn.com/nodejs/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>代码测试</span>
+              </a>
+            </div>
+            <p>在线代码测试</p>
+          </li>
         </ul>
       </section>
       <section>
@@ -117,6 +135,29 @@
               <span>TinyPng</span>
             </div>
             <p>超完美PNG压缩工具</p>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h4>框架</h4>
+        <ul>
+          <li>
+            <div>
+              <a href="https://www.createjs.com/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>CreateJs</span>
+              </a>
+            </div>
+            <p>CreateJS是基于HTML5开发的一套模块化的库和工具。</p>
+          </li>
+          <li>
+            <div>
+              <a href="https://www.fundebug.com/" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>FunDebug</span>
+              </a>
+            </div>
+            <p>专业的应用错误监控平台</p>
           </li>
         </ul>
       </section>
