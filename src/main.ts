@@ -9,6 +9,9 @@ import './plugins/element.js';
 import './plugins/echarts.js';
 import './plugins/singhai.js';
 import './plugins/video.js';
+import mavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
+Vue.use(mavonEditor);
 
 Vue.directive('highlight', function(el) {
   let blocks = el.querySelectorAll('pre code');

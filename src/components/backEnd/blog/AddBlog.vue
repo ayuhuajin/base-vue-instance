@@ -36,14 +36,12 @@ import BaseUpload from '@/components/common/BaseUpload.vue';
 import wangeditor from 'wangeditor';
 import index from '@/store/modules/index.ts';
 import blog from '@/store/modules/blog.ts';
-import { mavonEditor } from 'mavon-editor';
-import 'mavon-editor/dist/css/index.css';
+
 export default Vue.extend({
   name: 'AddBlog',
   components: {
     BaseForm,
-    BaseUpload,
-    mavonEditor
+    BaseUpload
   },
   data() {
     return {

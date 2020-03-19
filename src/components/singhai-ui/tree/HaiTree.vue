@@ -13,12 +13,12 @@
 
 <script>
 import TreeItem from './TreeItem';
-import OptiTree from './OptiTree';
+// import OptiTree from './OptiTree';
 export default {
   name: 'HaiTree',
   components: {
-    TreeItem,
-    OptiTree
+    TreeItem
+    // OptiTree
   },
   data() {
     return {
