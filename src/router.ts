@@ -80,43 +80,45 @@ let router = new Router({
         {
           path: '/',
           component: () => import('./components/backEnd/blog/BlogView.vue'),
-          meta: { title: '嗨前端' },
+          meta: { title: '嗨前端', requireAuth: true },
           children: [
             {
               path: '/',
               name: 'BlogList',
               component: () => import('./components/backEnd/blog/BlogList.vue'),
-              meta: { title: '嗨前端-列表' }
+              meta: { title: '嗨前端-列表', requireAuth: true }
             },
             {
               path: '/backEnd/addBlog',
               name: 'AddBlog',
               component: () => import('./components/backEnd/blog/AddBlog.vue'),
-              meta: { title: '嗨前端-列表' }
+              meta: { title: '嗨前端-列表', requireAuth: true }
             }
           ]
         },
         {
           path: '/backEnd/category',
           component: () => import('./components/backEnd/category/CategoryView.vue'),
-          meta: { title: '嗨前端-分类' },
+          meta: { title: '嗨前端-分类', requireAuth: true },
           children: [
             {
               path: '/',
               name: 'CateGoryList',
-              component: () => import('./components/backEnd/category/CategoryList.vue')
+              component: () => import('./components/backEnd/category/CategoryList.vue'),
+              meta: { title: '嗨前端-分类', requireAuth: true }
             }
           ]
         },
         {
           path: '/backEnd/user',
           component: () => import('./components/backEnd/user/UserView.vue'),
-          meta: { title: '嗨前端-用户' },
+          meta: { title: '嗨前端-用户', requireAuth: true },
           children: [
             {
               path: '/',
               name: 'UserList',
-              component: () => import('./components/backEnd/user/UserList.vue')
+              component: () => import('./components/backEnd/user/UserList.vue'),
+              meta: { title: '嗨前端-用户', requireAuth: true }
             }
           ]
         },
