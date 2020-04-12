@@ -43,12 +43,9 @@ export default Vue.extend({
             localStorage.setItem('token', data.data.data);
             localStorage.setItem('token_exp', (new Date() as any).getTime());
             console.log((this as any).$route.query.redirect);
-            // this.$router.replace({
-            //   path: (this as any).$route.query.redirect
-            // });
-            let currentUrl = localStorage.getItem('currentUrl');
-            if (!currentUrl) currentUrl = '/';
-            parent.location.href = currentUrl;
+            this.$router.replace({
+              path: (this as any).$route.query.redirect
+            });
           } else {
             (this as any).$message({
               type: 'error',

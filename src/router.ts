@@ -75,7 +75,7 @@ let router = new Router({
     {
       path: '/backEnd',
       component: AdminHome,
-      meta: { title: '嗨前端-后台' },
+      meta: { title: '嗨前端-后台', requireAuth: true },
       children: [
         {
           path: '/',
@@ -154,17 +154,11 @@ let router = new Router({
   ]
 });
 router.beforeEach((to, from, next) => {
-  // 记住当前url
-  if (to.fullPath.indexOf('login') == -1) {
-    localStorage.setItem('currentUrl', window.location.href);
-  }
-
   if (to.meta.requireAuth) {
     const token = localStorage.getItem('token');
     if (token) {
       next();
     } else {
-      console.log(to.fullPath);
       next({
         path: '/login',
         query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
