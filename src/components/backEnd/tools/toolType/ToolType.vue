@@ -45,7 +45,7 @@ import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import PageChange from '@/components/common/PageChange.vue';
-import index from '@/store/modules/index.ts';
+import toolType from '@/store/modules/toolType.ts';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 export default Vue.extend({
   name: 'ToolType',
@@ -89,7 +89,7 @@ export default Vue.extend({
   methods: {
     async init() {
       try {
-        let result = await index.dispatch('getAllCategory', {
+        let result = await toolType.dispatch('getAllCategory', {
           pageNumber: this.pageInfo.pageNumber,
           pageSize: this.pageInfo.pageSize,
           name: this.searchName
@@ -110,7 +110,7 @@ export default Vue.extend({
       this.id = id;
       this.showDialog = true;
       try {
-        let obj = await index.dispatch('categoryView', { id: id });
+        let obj = await toolType.dispatch('categoryView', { id: id });
         if (obj) {
           this.categoryName = obj[0].name;
           this.date = obj[0].date;
@@ -121,7 +121,7 @@ export default Vue.extend({
     },
     // 编辑
     async handleEdit(id: any, name: any) {
-      let obj = await index
+      let obj = await toolType
         .dispatch('updateCategory', {
           id: id,
           name: name,
@@ -137,7 +137,7 @@ export default Vue.extend({
     // 删除
     async handleDelete(id: any, num: number) {
       console.log(num);
-      index
+      toolType
         .dispatch('delCategory', { id: id })
         .then(() => {
           // this.categoryList.splice(num, 1);
@@ -157,7 +157,7 @@ export default Vue.extend({
     // 点击保存
     async handleSave() {
       if (!this.id) {
-        index
+        toolType
           .dispatch('addCategory', { name: this.categoryName, date: this.date })
           .then(() => {
             this.init();

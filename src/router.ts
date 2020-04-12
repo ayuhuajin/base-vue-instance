@@ -145,6 +145,12 @@ let router = new Router({
               name: 'toolList',
               component: () => import('./components/backEnd/tools/tools/ToolList.vue'),
               meta: { title: '嗨前端-工具', requireAuth: true }
+            },
+            {
+              path: '/backEnd/addTool',
+              name: 'AddTool',
+              component: () => import('./components/backEnd/tools/tools/AddTool.vue'),
+              meta: { title: '嗨前端-添加工具', requireAuth: true }
             }
           ]
         },

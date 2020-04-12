@@ -45,8 +45,8 @@ import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import PageChange from '@/components/common/PageChange.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
-import index from '@/store/modules/index.ts';
-import blog from '@/store/modules/blog';
+import toolType from '@/store/modules/toolType.ts';
+import tools from '@/store/modules/tools';
 export default Vue.extend({
   name: 'ToolList',
   components: {
@@ -81,7 +81,7 @@ export default Vue.extend({
   methods: {
     // 初始化表单
     async initData() {
-      let result = await blog.dispatch('getAllBlog', {
+      let result = await tools.dispatch('getAllBlog', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
         categoryId: this.categoryId,
@@ -93,7 +93,7 @@ export default Vue.extend({
     },
     // 获取分类下拉列表
     async getCategoryList() {
-      let result = await index.dispatch('getAllCategory', {
+      let result = await toolType.dispatch('getAllCategory', {
         pageNumber: 1,
         pageSize: 999,
         name: ''
@@ -122,14 +122,14 @@ export default Vue.extend({
     },
     handleEdit(id: any) {
       this.$router.push({
-        name: 'AddBlog',
+        name: 'AddTool',
         query: {
           id: id
         }
       });
     },
     handleDelete(id: string) {
-      blog
+      tools
         .dispatch('delBlog', {
           id: id
         })
@@ -143,7 +143,7 @@ export default Vue.extend({
     // 添加数据
     handleAdd() {
       this.$router.push({
-        name: 'AddBlog'
+        name: 'AddTool'
       });
     },
     search() {
