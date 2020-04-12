@@ -19,8 +19,13 @@
           <el-menu-item index="/backEnd">文章管理</el-menu-item>
           <el-menu-item index="/backEnd/category">分类管理</el-menu-item>
           <el-menu-item index="/backEnd/user">用户管理</el-menu-item>
-          <el-menu-item index="/backEnd/git">Git</el-menu-item>
         </el-menu-item-group>
+        <el-submenu index="tools">
+          <span slot="title">在线工具</span>
+          <el-menu-item index="/backEnd/tools">在线工具</el-menu-item>
+          <el-menu-item index="/backEnd/toolType">工具分类</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/backEnd/git">Git</el-menu-item>
         <el-submenu index="es5">
           <span slot="title">算法</span>
           <el-menu-item index="algorithm">排序算法</el-menu-item>

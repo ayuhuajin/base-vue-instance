@@ -123,6 +123,32 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/toolType',
+          component: () => import('./components/backEnd/tools/toolType/TypeView.vue'),
+          meta: { title: '嗨前端-工具', requireAuth: true },
+          children: [
+            {
+              path: '/',
+              name: 'toolTypeList',
+              component: () => import('./components/backEnd/tools/toolType/ToolType.vue'),
+              meta: { title: '嗨前端-工具类型', requireAuth: true }
+            }
+          ]
+        },
+        {
+          path: '/backEnd/tools',
+          component: () => import('./components/backEnd/tools/tools/ToolView.vue'),
+          meta: { title: '嗨前端-工具', requireAuth: true },
+          children: [
+            {
+              path: '/',
+              name: 'toolList',
+              component: () => import('./components/backEnd/tools/tools/ToolList.vue'),
+              meta: { title: '嗨前端-工具', requireAuth: true }
+            }
+          ]
+        },
+        {
           path: '/backEnd/typeScript',
           name: 'TypeScript',
           component: () => import('./components/backEnd/TypeScript.vue'),
