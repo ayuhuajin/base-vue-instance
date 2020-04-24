@@ -189,7 +189,7 @@ let router = new Router({
           path: '/testBank/testHistory',
           name: 'testHistory',
           component: () => import('./components/frondEnd/testBank/TestHistory.vue'),
-          meta: { title: '题库' }
+          meta: { title: '历史记录' }
         },
         {
           path: '/testBank/testResult',
