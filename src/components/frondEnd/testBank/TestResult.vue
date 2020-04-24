@@ -1,6 +1,6 @@
 <template>
   <div class="test-result">
-    结果页
+    1.结果页，正确 错误答案对比， 答案：详细解析 答案有可能是图片之类的 2.题目 ，选项都有可能是是图片
   </div>
 </template>
 
