@@ -2,6 +2,7 @@
 node_modules
 /dist
 /cms
+/devdist
 
 # local env files
 .env.local

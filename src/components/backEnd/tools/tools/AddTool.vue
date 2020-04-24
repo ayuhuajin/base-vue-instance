@@ -1,6 +1,6 @@
 <template>
   <div class="add-blog">
-    <div class="title"><img @click="back" class="back" src="../../../assets/images/icon_back.png" />增加文章</div>
+    <div class="title"><img @click="back" class="back" src="../../../../assets/images/icon_back.png" />增加文章</div>
     <base-form :rules="rules" :ruleForm="ruleForm" :refObj="'form'" :formClass="'formClass'" @submitForm="submitForm">
       <el-form-item label="标题" prop="title">
         <el-input v-model="ruleForm.title"></el-input>
@@ -34,11 +34,11 @@ import Vue from 'vue';
 import BaseForm from '@/components/common/BaseForm.vue';
 import BaseUpload from '@/components/common/BaseUpload.vue';
 import wangeditor from 'wangeditor';
-import index from '@/store/modules/index.ts';
-import blog from '@/store/modules/blog.ts';
+import toolType from '@/store/modules/toolType.ts';
+import tools from '@/store/modules/tools.ts';
 
 export default Vue.extend({
-  name: 'AddBlog',
+  name: 'AddTool',
   components: {
     BaseForm,
     BaseUpload
@@ -108,7 +108,7 @@ export default Vue.extend({
     };
   },
   async mounted() {
-    let result = await index.dispatch('getAllCategory', {
+    let result = await toolType.dispatch('getAllCategory', {
       pageNumber: 1,
       pageSize: 999,
       name: ''
@@ -116,7 +116,7 @@ export default Vue.extend({
     this.categoryList = result.data;
     this.createEditor();
     if (this.$route.query.id) {
-      blog.dispatch('blogView', this.$route.query.id).then(data => {
+      tools.dispatch('blogView', this.$route.query.id).then(data => {
         this.ruleForm.title = data[0].title;
         this.ruleForm.categoryId = data[0].categoryId;
         this.value = data[0].content;
@@ -137,7 +137,7 @@ export default Vue.extend({
     },
     back() {
       this.$router.push({
-        name: 'BlogList'
+        name: 'toolList'
       });
     },
     // 预览
@@ -151,15 +151,15 @@ export default Vue.extend({
       this.ruleForm.content = this.value;
       console.log(this.value);
       if (this.$route.query.id) {
-        blog.dispatch('updateBlog', this.ruleForm).then(() => {
+        tools.dispatch('updateBlog', this.ruleForm).then(() => {
           this.$router.push({
-            name: 'BlogList'
+            name: 'toolList'
           });
         });
       } else {
-        blog.dispatch('addBlog', this.ruleForm).then(() => {
+        tools.dispatch('addBlog', this.ruleForm).then(() => {
           this.$router.push({
-            name: 'BlogList'
+            name: 'toolList'
           });
         });
       }
