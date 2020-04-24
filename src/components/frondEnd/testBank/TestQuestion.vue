@@ -42,29 +42,49 @@ export default Vue.extend({
   components: { BaseQuestion },
   data() {
     return {
+      qsNum: 0,
       isEnd: true,
       examData: {},
-      examList: [],
+      examList: [{ questionNumber: 111 }],
       qsTopic: {},
       isAllAnswer: false
     };
   },
   mounted() {},
   methods: {
-    qsNum() {
-      console.log('qs');
+    qsNumber(num) {
+      this.qsNum = num;
+      this.qsTopic = this.examList[this.qsNum];
+      this.isEnd = true;
     },
     question() {
-      console.log('qs');
+      this.isEnd = false;
+      this.judgeAllAnswer();
     },
+    previousQs() {
+      if (this.qsNum <= 0) {
+        this.qsNum = 0;
+        return;
+      }
+      this.qsNum--;
+      this.qsTopic = this.examList[this.qsNum];
+    },
+    nextQs() {
+      if (this.qsNum >= this.examList.length - 1) {
+        this.isEnd = false;
+        this.qsNum = this.examList.length - 1;
+        this.judgeAllAnswer();
+        return;
+      }
+      this.qsNum++;
+      this.qsTopic = this.examList[this.qsNum];
+    },
+    judgeAllAnswer() {},
     changeAnswer() {
       console.log('qs');
     },
-    previousQs() {
-      console.log('qs');
-    },
-    nextQs() {
-      console.log('qs');
+    handlerSubmit() {
+      console.log('提交试卷');
     }
   }
 });
@@ -110,6 +130,56 @@ export default Vue.extend({
     .deactivated {
       background: #cfcfcf;
     }
+  }
+}
+.submit-wrap {
+  .total-numer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 9.3333vw 8.5vw;
+    > div {
+      margin-top: 5.3333vw;
+      margin-right: 5.3333vw;
+      width: 10.6667vw;
+      height: 10.6667vw;
+      padding: 2px;
+      line-height: 10.6667vw;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 20px;
+      color: #fff;
+      background: #3ca3f8;
+      &:nth-child(5n) {
+        margin-right: 0;
+      }
+    }
+    .deactivated {
+      color: #cfcfcf !important;
+    }
+    .disable {
+      color: #fff;
+      background: #cfcfcf;
+    }
+    .isHolder {
+      color: #666;
+      background: none;
+    }
+  }
+  .submit {
+    position: fixed;
+    bottom: 15px;
+    width: 94%;
+    margin-left: 2%;
+    border-radius: 16px;
+    line-height: 36px;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    background: #3ca3f8;
+  }
+  .isDisAble {
+    background: #cfcfcf;
+    color: #fff;
   }
 }
 </style>
