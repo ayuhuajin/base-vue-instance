@@ -1,5 +1,5 @@
 <template>
-  <div class="test-result">
+  <div class="test-bank-manage">
     <router-view></router-view>
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 import Vue from 'vue';
 export default Vue.extend({
-  name: 'TestBank',
+  name: 'TestBankManage',
   data() {
     return {};
   },
@@ -16,7 +16,7 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
-.test-result {
+.test-manage {
   padding-top: 150px;
   background: #fff;
 }

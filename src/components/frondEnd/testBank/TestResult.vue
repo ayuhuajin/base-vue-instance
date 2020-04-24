@@ -7,7 +7,7 @@
 <script>
 import Vue from 'vue';
 export default Vue.extend({
-  name: 'TestBank',
+  name: 'TestResult',
   data() {
     return {};
   },
