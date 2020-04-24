@@ -9,17 +9,11 @@
     <div class="single-choice" v-if="questionType == 1">
       <el-radio-group v-model="radio">
         <el-radio v-for="(item, index) in chooseArr" :key="index" :label="item.id">{{ item.name }}</el-radio>
-        <!-- <el-radio :label="3">备选项</el-radio>
-        <el-radio :label="6">备选项</el-radio>
-        <el-radio :label="9">备选项</el-radio> -->
       </el-radio-group>
     </div>
     <div class="multiple-choice" v-if="questionType == 2">
       <el-checkbox-group v-model="checkList">
         <el-checkbox v-for="(item, index) in chooseArr" :key="index" :label="item.name"></el-checkbox>
-        <!-- <el-checkbox label="复选框 A"></el-checkbox>
-        <el-checkbox label="复选框 B"></el-checkbox>
-        <el-checkbox label="复选框 C"></el-checkbox> -->
       </el-checkbox-group>
     </div>
   </div>
