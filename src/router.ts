@@ -169,6 +169,37 @@ let router = new Router({
       ]
     },
     {
+      path: '/testBank',
+      meta: { title: '题库' },
+      component: () => import('./components/frondEnd/testBank/index.vue'),
+      children: [
+        {
+          path: '/',
+          name: 'testBank',
+          component: () => import('./components/frondEnd/testBank/TestBank.vue'),
+          meta: { title: '题库' }
+        },
+        {
+          path: '/testBank/question',
+          name: 'testQuestion',
+          component: () => import('./components/frondEnd/testBank/TestQuestion.vue'),
+          meta: { title: '题库' }
+        },
+        {
+          path: '/testBank/testHistory',
+          name: 'testHistory',
+          component: () => import('./components/frondEnd/testBank/TestHistory.vue'),
+          meta: { title: '题库' }
+        },
+        {
+          path: '/testBank/testResult',
+          name: 'testResult',
+          component: () => import('./components/frondEnd/testBank/TestResult.vue'),
+          meta: { title: '题库' }
+        }
+      ]
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('./views/Login.vue')
