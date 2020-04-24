@@ -15,9 +15,14 @@ export default Vue.extend({
   methods: {}
 });
 </script>
+<style>
+body {
+  background: #fff !important;
+}
+</style>
 <style lang="scss" scoped>
-.test-manage {
-  padding-top: 150px;
+.test-bank-manage {
+  min-height: 100vh;
   background: #fff;
 }
 </style>

@@ -17,7 +17,6 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .test-question {
-  padding-top: 150px;
   background: #fff;
 }
 </style>
