@@ -46,7 +46,9 @@ export default Vue.extend({
       isEnd: true,
       examData: {},
       examList: [{ questionNumber: 111 }],
-      qsTopic: {},
+      qsTopic: {
+        questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树'
+      },
       isAllAnswer: false
     };
   },
