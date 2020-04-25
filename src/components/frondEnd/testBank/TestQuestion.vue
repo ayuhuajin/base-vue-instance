@@ -29,7 +29,7 @@
           {{ item.questionNumber }}
         </div>
       </div>
-      <div @click="handlerSubmit" class="submit" :class="{ isDisAble: !isAllAnswer }">交卷并查看结果</div>
+      <div @click="handlerSubmit" class="submit" :class="{ isDisAble: !isAllAnswer }">提交并查看结果</div>
     </div>
   </div>
 </template>
@@ -50,13 +50,20 @@ export default Vue.extend({
           questionNumber: 1,
           questionType: 1,
           questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-          options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
+          options: [{ answer: 'A', answerId: '1' }, { answer: 'B', answerId: '2' }],
           answer: null
         },
         {
           questionNumber: 2,
           questionType: 2,
           questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
+          options: [{ answer: 'A', answerId: '1' }, { answer: 'B', answerId: '2' }],
+          answer: null
+        },
+        {
+          questionNumber: 3,
+          questionType: 3,
+          questionTitle: '说出栈和队列的区别?',
           options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
           answer: null
         }
@@ -65,7 +72,7 @@ export default Vue.extend({
         questionNumber: 1,
         questionType: 1,
         questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-        options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
+        options: [{ answer: 'A', answerId: '1' }, { answer: 'B', answerId: '2' }],
         answer: null
       },
       isAllAnswer: false

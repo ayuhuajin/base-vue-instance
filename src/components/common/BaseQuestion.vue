@@ -23,6 +23,9 @@
         <el-checkbox v-for="(item, index) in answerOptions" :key="index" :label="item.answer"></el-checkbox>
       </el-checkbox-group>
     </div>
+    <div class="reply" v-if="questionType == 3">
+      <textarea name="" id="" cols="30" rows="10" placeholder="请输入答案"></textarea>
+    </div>
   </div>
 </template>
 
@@ -63,6 +66,8 @@ export default {
         type = '单选题';
       } else if (this.questionType == '2') {
         type = '多选题';
+      } else if (this.questionType == '3') {
+        type = '问答题';
       } else if (this.questionType == '3') {
         type = '填空题';
       }
@@ -128,14 +133,16 @@ export default {
   color: #333;
   .qs-number {
     float: left;
+    display: flex;
+    align-items: center;
     margin-right: 4px;
     .number {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
   .chooseType {
     line-height: 24px;
-    padding: 2px 4px;
+    padding: 0 4px;
     border-radius: 4px;
     color: #fff;
     background: #3ca3f8;
@@ -143,6 +150,15 @@ export default {
   .topic-wrap {
     > div {
       font-size: 16px;
+    }
+  }
+  .reply {
+    margin-top: 10px;
+    textarea {
+      width: 100%;
+      padding: 5px 10px;
+      font-size: 16px;
+      border-radius: 5px;
     }
   }
 }
