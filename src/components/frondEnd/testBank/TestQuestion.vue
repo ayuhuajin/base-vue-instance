@@ -123,13 +123,11 @@ export default Vue.extend({
     },
     putAnswer(answer, index) {
       if (this.examList[index].questionType == '3') {
-        // if (this.examList[index].answer == null) {
-        //   this.examList[index].answer = { answer: answer };
-        //   this.examList[index].options = answer;
-        // } else {
-        //   this.examList[index].answer.answer = answer;
-        //   this.examList[index].options = answer;
-        // }
+        if (this.examList[index].answer == null) {
+          this.examList[index].answer = { answer: answer };
+        } else {
+          this.examList[index].answer.answer = answer;
+        }
       } else {
         if (this.examList[index].answer == null) {
           this.examList[index].answer = { answer: answer };

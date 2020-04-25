@@ -38,7 +38,7 @@
       <textarea
         id=""
         name=""
-        v-model="answerOptions"
+        v-model="textareaStr"
         cols="30"
         rows="10"
         placeholder="请输入答案"
@@ -107,6 +107,17 @@ export default {
         type = '填空题';
       }
       return type;
+    },
+    // textareaStr() {
+    //   return this.answerOptions;
+    // }
+    textareaStr: {
+      get() {
+        return this.answerOptions;
+      },
+      set(val) {
+        this.answerOptions = val;
+      }
     }
   },
   mounted() {
