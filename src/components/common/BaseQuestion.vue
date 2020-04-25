@@ -6,18 +6,21 @@
         <span class="chooseType">{{ getType }}</span>
       </p>
       <div class="topic-wrap">
-        <img v-if="isImg(topic)" class="holder_question" :src="topic" alt />
+        <img v-if="isImg(topic)" :src="topic" alt />
         <div v-else style="white-space: pre-wrap;" v-html="topic">{{ topic }}</div>
       </div>
     </div>
     <div class="single-choice" v-if="questionType == 1">
       <el-radio-group v-model="radio">
-        <el-radio v-for="(item, index) in chooseArr" :key="index" :label="item.id">{{ item.name }}</el-radio>
+        <el-radio v-for="(item, index) in answerOptions" :key="index" :label="item.answerId">
+          <img v-if="isImg(item.answer)" :src="item.answer" alt />
+          <div v-else v-html="item.answer">{{ item.answer }}</div>
+        </el-radio>
       </el-radio-group>
     </div>
     <div class="multiple-choice" v-if="questionType == 2">
       <el-checkbox-group v-model="checkList">
-        <el-checkbox v-for="(item, index) in chooseArr" :key="index" :label="item.name"></el-checkbox>
+        <el-checkbox v-for="(item, index) in answerOptions" :key="index" :label="item.answer"></el-checkbox>
       </el-checkbox-group>
     </div>
   </div>
@@ -38,7 +41,7 @@ export default {
     topic: {
       type: String
     },
-    chooseArr: {
+    answerOptions: {
       type: Array
     },
     answer: {
@@ -60,13 +63,14 @@ export default {
         type = '单选题';
       } else if (this.questionType == '2') {
         type = '多选题';
-      } else if (this.questionType == 'holder_question') {
-        type = '组合题';
+      } else if (this.questionType == '3') {
+        type = '填空题';
       }
       return type;
     }
   },
   methods: {
+    // 判断是否为图片
     isImg(str) {
       if (str) {
         let isImg = str.match(/.*(.png|.jpg|.jpeg|.gif)$/);
@@ -77,6 +81,7 @@ export default {
         }
       }
     },
+    // 提交
     handlerChange(e, item) {
       if (e == 'single') {
         this.$emit('changeAnswer', this.radio, item[0].questionId);
