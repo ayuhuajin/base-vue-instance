@@ -2,9 +2,13 @@
   <div class="base-question">
     <div class="topic">
       <p class="qs-number">
-        {{ index }}.<span>{{ questionType == 1 ? '单选题' : '多选题' }}</span>
+        <span class="number"> {{ index }}.</span>
+        <span class="chooseType">{{ getType }}</span>
       </p>
-      <div>Every night, he would hand mehis ____ and say," Good girl, help Daddy clean it, ok?"</div>
+      <div class="topic-wrap">
+        <img v-if="isImg(topic)" class="holder_question" :src="topic" alt />
+        <div v-else style="white-space: pre-wrap;" v-html="topic">{{ topic }}</div>
+      </div>
     </div>
     <div class="single-choice" v-if="questionType == 1">
       <el-radio-group v-model="radio">
@@ -36,8 +40,12 @@ export default {
     },
     chooseArr: {
       type: Array
+    },
+    answer: {
+      type: Object
     }
   },
+
   data() {
     return {
       checkList: [],
@@ -45,15 +53,92 @@ export default {
       activeIndex: 1
     };
   },
-  methods: {}
+  computed: {
+    getType() {
+      let type = '';
+      if (this.questionType == '1') {
+        type = '单选题';
+      } else if (this.questionType == '2') {
+        type = '多选题';
+      } else if (this.questionType == 'holder_question') {
+        type = '组合题';
+      }
+      return type;
+    }
+  },
+  methods: {
+    isImg(str) {
+      if (str) {
+        let isImg = str.match(/.*(.png|.jpg|.jpeg|.gif)$/);
+        if (isImg) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    handlerChange(e, item) {
+      if (e == 'single') {
+        this.$emit('changeAnswer', this.radio, item[0].questionId);
+      } else if (e == 'multi') {
+        this.$emit('changeAnswer', this.checkList.toString(), item[0].questionId);
+      }
+    }
+  }
 };
 </script>
+<style lang="scss">
+.base-question {
+  /deep/.el-radio {
+    display: flex;
+    margin-top: 35px;
+    margin-right: 0px;
+    white-space: normal;
+    color: #333;
+  }
+  /deep/.el-radio__label {
+    white-space: normal;
+    margin-top: -2px;
+    line-height: 1.4;
+  }
+  /deep/.el-checkbox {
+    display: flex;
+    margin-top: 35px;
+    margin-right: 0px;
+    white-space: normal;
+  }
+  /deep/.el-checkbox__label {
+    margin-top: -2px;
+    white-space: normal;
+    color: #333;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .base-question {
-  font-size: 12px;
+  padding: 12px;
+  padding-bottom: 60px;
+  font-size: 2vw;
+  color: #333;
   .qs-number {
     float: left;
+    margin-right: 4px;
+    .number {
+      font-size: 14px;
+    }
+  }
+  .chooseType {
+    line-height: 24px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #fff;
+    background: #3ca3f8;
+  }
+  .topic-wrap {
+    > div {
+      font-size: 16px;
+    }
   }
 }
 </style>
