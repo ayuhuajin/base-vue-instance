@@ -12,7 +12,12 @@
     </div>
     <div class="single-choice" v-if="questionType == 1">
       <el-radio-group v-model="radio">
-        <el-radio v-for="(item, index) in answerOptions" :key="index" :label="item.answerId">
+        <el-radio
+          v-for="(item, index) in answerOptions"
+          :key="index"
+          :label="item.answerId"
+          @change="handlerChange('single')"
+        >
           <img v-if="isImg(item.answer)" :src="item.answer" alt />
           <div v-else v-html="item.answer">{{ item.answer }}</div>
         </el-radio>
@@ -20,11 +25,25 @@
     </div>
     <div class="multiple-choice" v-if="questionType == 2">
       <el-checkbox-group v-model="checkList">
-        <el-checkbox v-for="(item, index) in answerOptions" :key="index" :label="item.answer"></el-checkbox>
+        <el-checkbox
+          v-for="(item, index) in answerOptions"
+          :key="index"
+          :label="item.answerId"
+          @change="handlerChange('multiple')"
+          >{{ item.answer }}</el-checkbox
+        >
       </el-checkbox-group>
     </div>
     <div class="reply" v-if="questionType == 3">
-      <textarea name="" id="" cols="30" rows="10" placeholder="请输入答案"></textarea>
+      <textarea
+        id=""
+        name=""
+        v-model="answerOptions"
+        cols="30"
+        rows="10"
+        placeholder="请输入答案"
+        @input="changeAnswer($event)"
+      ></textarea>
     </div>
   </div>
 </template>
@@ -45,7 +64,7 @@ export default {
       type: String
     },
     answerOptions: {
-      type: Array
+      type: [Array, String]
     },
     answer: {
       type: Object
@@ -54,11 +73,27 @@ export default {
 
   data() {
     return {
-      checkList: [],
-      radio: 3,
-      activeIndex: 1
+      checkList: [], //多选
+      radio: '', // 单选
+      reply: '' //问答
     };
   },
+  watch: {
+    'answer.answer': {
+      handler(newName, oldName) {
+        if (this.answer) {
+          this.checkList = [];
+          if (this.questionType == '1') {
+            this.radio = parseInt(this.answer.answer);
+          } else if (this.questionType == '2') {
+            this.checkList = this.answer.answer;
+          }
+        }
+      },
+      deep: true
+    }
+  },
+
   computed: {
     getType() {
       let type = '';
@@ -68,10 +103,20 @@ export default {
         type = '多选题';
       } else if (this.questionType == '3') {
         type = '问答题';
-      } else if (this.questionType == '3') {
+      } else if (this.questionType == '4') {
         type = '填空题';
       }
       return type;
+    }
+  },
+  mounted() {
+    if (this.answer) {
+      this.checkList = [];
+      if (this.questionType == '1') {
+        this.radio = parseInt(this.answer.answer);
+      } else if (this.questionType == '2') {
+        this.checkList = this.answer.answer;
+      }
     }
   },
   methods: {
@@ -86,13 +131,18 @@ export default {
         }
       }
     },
-    // 提交
+    // 改变选项
     handlerChange(e, item) {
+      console.log(this.checkList);
       if (e == 'single') {
-        this.$emit('changeAnswer', this.radio, item[0].questionId);
-      } else if (e == 'multi') {
-        this.$emit('changeAnswer', this.checkList.toString(), item[0].questionId);
+        this.$emit('changeAnswer', this.radio);
+      } else if (e == 'multiple') {
+        this.$emit('changeAnswer', this.checkList);
       }
+    },
+    // 改变textarea内容
+    changeAnswer(e) {
+      this.$emit('changeAnswer', e.target.value);
     }
   }
 };

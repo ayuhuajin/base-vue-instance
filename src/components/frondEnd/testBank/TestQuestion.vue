@@ -44,42 +44,41 @@ export default Vue.extend({
     return {
       currentNum: 0,
       isEnd: true,
-      examData: {},
       examList: [
         {
           questionNumber: 1,
           questionType: 1,
           questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-          options: [{ answer: 'A', answerId: '1' }, { answer: 'B', answerId: '2' }],
+          options: [{ answer: 'A', answerId: 1 }, { answer: 'B', answerId: 2 }],
           answer: null
         },
         {
           questionNumber: 2,
           questionType: 2,
           questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-          options: [{ answer: 'A', answerId: '1' }, { answer: 'B', answerId: '2' }],
+          options: [{ answer: 'A', answerId: 1 }, { answer: 'B', answerId: 2 }],
           answer: null
         },
         {
           questionNumber: 3,
           questionType: 3,
           questionTitle: '说出栈和队列的区别?',
-          options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
+          options: '',
           answer: null
         }
       ],
-      currentQuestion: {
-        questionNumber: 1,
-        questionType: 1,
-        questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-        options: [{ answer: 'A', answerId: '1' }, { answer: 'B', answerId: '2' }],
-        answer: null
-      },
+      currentQuestion: {},
       isAllAnswer: false
     };
   },
-  mounted() {},
+  created() {
+    this.init();
+  },
   methods: {
+    init() {
+      this.currentQuestion = this.examList[0];
+    },
+    // 点击题号
     currentNumber(num) {
       this.currentNum = num;
       this.currentQuestion = this.examList[this.currentNum];
@@ -107,9 +106,38 @@ export default Vue.extend({
       this.currentNum++;
       this.currentQuestion = this.examList[this.currentNum];
     },
-    judgeAllAnswer() {},
-    changeAnswer() {
-      console.log('qs');
+    // 判断是否已全部做完
+    judgeAllAnswer() {
+      let obj = this.examList.find(item => {
+        return item.answer == null;
+      });
+      if (obj) {
+        this.isAllAnswer = false;
+      } else {
+        this.isAllAnswer = true;
+      }
+    },
+    changeAnswer(answer) {
+      console.log('qs', answer);
+      this.putAnswer(answer, this.currentNum);
+    },
+    putAnswer(answer, index) {
+      if (this.examList[index].questionType == '3') {
+        // if (this.examList[index].answer == null) {
+        //   this.examList[index].answer = { answer: answer };
+        //   this.examList[index].options = answer;
+        // } else {
+        //   this.examList[index].answer.answer = answer;
+        //   this.examList[index].options = answer;
+        // }
+      } else {
+        if (this.examList[index].answer == null) {
+          this.examList[index].answer = { answer: answer };
+        } else {
+          this.examList[index].answer.answer = answer;
+        }
+      }
+      console.log(this.examList, 99);
     },
     handlerSubmit() {
       console.log('提交试卷');
