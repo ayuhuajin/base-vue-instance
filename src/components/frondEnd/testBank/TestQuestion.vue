@@ -2,11 +2,11 @@
   <div>
     <div v-if="isEnd" class="test-question">
       <base-question
-        :index="qsTopic.questionNumber"
-        :questionType="qsTopic.questionType"
-        :topic="qsTopic.questionTitle"
-        :chooseArr="qsTopic.options"
-        :answer="qsTopic.answer"
+        :index="currentQuestion.questionNumber"
+        :questionType="currentQuestion.questionType"
+        :topic="currentQuestion.questionTitle"
+        :answerOptions="currentQuestion.options"
+        :answer="currentQuestion.answer"
         @changeAnswer="changeAnswer"
       ></base-question>
       <div class="qs-footer">
@@ -14,16 +14,16 @@
           <img src="../../../assets/images/icon_answer.png" alt />
           <span>题目</span>
         </div>
-        <div :class="{ deactivated: qsNum == 0 }" class="previous operation" @click="previousQs">上一题</div>
-        <div :class="{ deactivated: qsNum == examList.length }" class="next operation" @click="nextQs">下一题</div>
+        <div :class="{ deactivated: currentNum == 0 }" class="previous operation" @click="previousQs">上一题</div>
+        <div :class="{ deactivated: currentNum == examList.length }" class="next operation" @click="nextQs">下一题</div>
       </div>
     </div>
     <div v-if="!isEnd" class="submit-wrap">
       <div class="total-numer">
         <div
-          @click="qsNumber(index)"
+          @click="currentNumber(index)"
           v-for="(item, index) in examList"
-          :class="[{ disable: !item.answer }, { isHolder: item.questionType == 'holder_question' }]"
+          :class="[{ disable: !item.answer }]"
           :key="index"
         >
           {{ item.questionNumber }}
@@ -42,21 +42,40 @@ export default Vue.extend({
   components: { BaseQuestion },
   data() {
     return {
-      qsNum: 0,
+      currentNum: 0,
       isEnd: true,
       examData: {},
-      examList: [{ questionNumber: 111 }],
-      qsTopic: {
-        questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树'
+      examList: [
+        {
+          questionNumber: 1,
+          questionType: 1,
+          questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
+          options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
+          answer: null
+        },
+        {
+          questionNumber: 2,
+          questionType: 2,
+          questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
+          options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
+          answer: null
+        }
+      ],
+      currentQuestion: {
+        questionNumber: 1,
+        questionType: 1,
+        questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
+        options: [{ answer: 'A', answerId: '1' }, { answer: 'b', answerId: '2' }],
+        answer: null
       },
       isAllAnswer: false
     };
   },
   mounted() {},
   methods: {
-    qsNumber(num) {
-      this.qsNum = num;
-      this.qsTopic = this.examList[this.qsNum];
+    currentNumber(num) {
+      this.currentNum = num;
+      this.currentQuestion = this.examList[this.currentNum];
       this.isEnd = true;
     },
     question() {
@@ -64,22 +83,22 @@ export default Vue.extend({
       this.judgeAllAnswer();
     },
     previousQs() {
-      if (this.qsNum <= 0) {
-        this.qsNum = 0;
+      if (this.currentNum <= 0) {
+        this.currentNum = 0;
         return;
       }
-      this.qsNum--;
-      this.qsTopic = this.examList[this.qsNum];
+      this.currentNum--;
+      this.currentQuestion = this.examList[this.currentNum];
     },
     nextQs() {
-      if (this.qsNum >= this.examList.length - 1) {
+      if (this.currentNum >= this.examList.length - 1) {
         this.isEnd = false;
-        this.qsNum = this.examList.length - 1;
+        this.currentNum = this.examList.length - 1;
         this.judgeAllAnswer();
         return;
       }
-      this.qsNum++;
-      this.qsTopic = this.examList[this.qsNum];
+      this.currentNum++;
+      this.currentQuestion = this.examList[this.currentNum];
     },
     judgeAllAnswer() {},
     changeAnswer() {
@@ -161,10 +180,6 @@ export default Vue.extend({
     .disable {
       color: #fff;
       background: #cfcfcf;
-    }
-    .isHolder {
-      color: #666;
-      background: none;
     }
   }
   .submit {
