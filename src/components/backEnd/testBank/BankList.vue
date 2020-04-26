@@ -3,8 +3,8 @@
     <!-- 头部 -->
     <main-header :titleName="title">
       <div>
-        <span>分类</span>
-        <el-select v-model="categoryId" placeholder="请选择">
+        <span>学科</span>
+        <el-select v-model="subject" placeholder="请选择">
           <el-option v-for="(item, index) in subjectList" :key="index" :label="item.name" :value="item._id"></el-option>
         </el-select>
       </div>
@@ -83,14 +83,12 @@ export default Vue.extend({
   },
   data() {
     return {
-      examTitle: '',
       title: '试卷',
-      category: '',
-      categoryId: '',
+      examTitle: '',
       subjectList: [{ name: '前端', _id: 1 }],
-      subject: 1,
+      subject: '',
       levelList: [{ name: '入门', _id: 1 }, { name: '一般', _id: 2 }, { name: '困难', _id: 3 }],
-      level: 1,
+      level: '',
       name: '',
       // 分页设置
       pageInfo: {
@@ -109,8 +107,7 @@ export default Vue.extend({
       },
       showDialog: false,
       // 表格列表
-      examData: [],
-      value: ''
+      examData: []
     };
   },
   async mounted() {
@@ -122,7 +119,8 @@ export default Vue.extend({
       let result = await exam.dispatch('getAllExam', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
-        name: this.name
+        title: this.name,
+        subject: this.subject
       });
       this.examData = result.data;
       this.pageInfo.totalPages = result.total;
