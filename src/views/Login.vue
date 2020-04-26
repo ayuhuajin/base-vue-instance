@@ -44,7 +44,7 @@ export default Vue.extend({
             localStorage.setItem('token_exp', (new Date() as any).getTime());
             console.log((this as any).$route.query.redirect);
             this.$router.replace({
-              path: (this as any).$route.query.redirect
+              path: (this as any).$route.query.redirect ? (this as any).$route.query.redirect : '/backEnd'
             });
           } else {
             (this as any).$message({

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import url from '@/services/url.ts';
-// import router from 'vue-router';
 
 axios.defaults.timeout = 30000;
 axios.defaults.baseURL = url.baseApi; //定义基础baseURl
@@ -22,12 +21,9 @@ axios.interceptors.response.use(
   },
   (error: any) => {
     if (error.response.status == 401) {
-      // window.location.href = '/login';
-      // router.replace({
-      //   //跳转到登录页面
-      //   path: 'login',
-      //   query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
-      // });
+      let redirect = window.location.pathname + window.location.search;
+      let url = '/login?redirect=' + redirect;
+      window.location.href = url;
       return Promise.reject(error);
     }
   }
