@@ -155,6 +155,19 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/testBank',
+          component: () => import('./components/backEnd/testBank/BankView.vue'),
+          meta: { title: '嗨前端-题库', requireAuth: true },
+          children: [
+            {
+              path: '/',
+              name: 'Banklist',
+              component: () => import('./components/backEnd/testBank/BankList.vue'),
+              meta: { title: '嗨前端-题库列表', requireAuth: true }
+            }
+          ]
+        },
+        {
           path: '/backEnd/typeScript',
           name: 'TypeScript',
           component: () => import('./components/backEnd/TypeScript.vue'),

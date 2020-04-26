@@ -25,6 +25,7 @@
           <el-menu-item index="/backEnd/tools">在线工具</el-menu-item>
           <el-menu-item index="/backEnd/toolType">工具分类</el-menu-item>
         </el-submenu>
+        <el-menu-item index="/backEnd/testBank">题库</el-menu-item>
         <el-menu-item index="/backEnd/git">Git</el-menu-item>
         <el-submenu index="es5">
           <span slot="title">算法</span>
