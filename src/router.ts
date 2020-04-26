@@ -163,7 +163,13 @@ let router = new Router({
               path: '/',
               name: 'Banklist',
               component: () => import('./components/backEnd/testBank/BankList.vue'),
-              meta: { title: '嗨前端-题库列表', requireAuth: true }
+              meta: { title: '嗨前端-试卷列表', requireAuth: true }
+            },
+            {
+              path: '/backEnd/addBank',
+              name: 'AddBank',
+              component: () => import('./components/backEnd/testBank/AddBank.vue'),
+              meta: { title: '嗨前端-添加试卷', requireAuth: true }
             }
           ]
         },

@@ -24,12 +24,14 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="blogData">
-      <el-table-column prop="title" label="文章标题" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="title" label="试卷标题" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="time" label="发布日期"> </el-table-column>
-      <el-table-column prop="categoryId" label="类型"></el-table-column>
-      <el-table-column label="操作" align="center" width="170">
+      <el-table-column prop="categoryId" label="科目"></el-table-column>
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
+          <span class="content-detail" @click="examDetail(scope.row._id)">详情</span>
+          <span class="content-import" @click="importExam(scope.row._id)">导入试卷</span>
           <span class="content-delete" @click="handleDelete(scope.row._id)">删除</span>
         </template>
       </el-table-column>
@@ -39,7 +41,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
@@ -56,26 +58,31 @@ export default Vue.extend({
   },
   data() {
     return {
-      title: '题库',
+      title: '试卷',
       category: '',
       categoryId: '',
-      categoryList: [] as any,
+      categoryList: [{ name: '前端', _id: '1' }],
       name: '',
       // 分页设置
       pageInfo: {
         pageNumber: 1, // 当前页数
         totalPages: 0, // 总页数
-        pageFunc: (this as any).initData, // 当前页数需要调用的函数
+        pageFunc: this.initData, // 当前页数需要调用的函数
         pageSize: 10, // 当前页数
         class: 'pageClass'
       },
       // 表格列表
-      blogData: [] as any,
+      blogData: [
+        {
+          title: '试卷',
+          category: '',
+          categoryId: ''
+        }
+      ],
       value: ''
     };
   },
   async mounted() {
-    await this.getCategoryList();
     this.initData();
   },
   methods: {
@@ -87,48 +94,17 @@ export default Vue.extend({
         categoryId: this.categoryId,
         name: this.name
       });
-
-      this.blogData = this.getNameById(result.data);
       this.pageInfo.totalPages = result.total;
     },
-    // 获取分类下拉列表
-    async getCategoryList() {
-      let result = await index.dispatch('getAllCategory', {
-        pageNumber: 1,
-        pageSize: 999,
-        name: ''
-      });
-      this.categoryList = result.data;
-      this.categoryList.unshift({
-        name: '全部',
-        _id: ''
-      });
-    },
-    getNameById(arr: any) {
-      return arr.map((item: any) => {
-        item.time = timeFormate.timeformat(item.time);
-        item.categoryId = this.findName(item.categoryId);
-        return item;
-      });
-    },
-    // 寻找分类名称
-    findName(id: any) {
-      let obj: any = this.categoryList.find((item: any) => {
-        return item._id == id;
-      });
-      if (obj) {
-        return obj.name;
-      }
-    },
-    handleEdit(id: any) {
+    handleEdit(id) {
       this.$router.push({
-        name: 'AddBlog',
+        name: 'AddBank',
         query: {
           id: id
         }
       });
     },
-    handleDelete(id: string) {
+    handleDelete(id) {
       blog
         .dispatch('delBlog', {
           id: id
@@ -140,6 +116,13 @@ export default Vue.extend({
           console.log('删除失败');
         });
     },
+    // 试卷详情
+    examDetail() {
+      console.log('试卷详情');
+    },
+    importExam() {
+      console.log('导入试卷');
+    },
     // 添加数据
     handleAdd() {
       this.$router.push({
@@ -150,7 +133,7 @@ export default Vue.extend({
       this.pageInfo.pageNumber = 1;
       this.initData();
     },
-    changeCategory(e: string) {
+    changeCategory(e) {
       this.pageInfo.pageNumber = 1;
       this.initData();
     }
@@ -161,6 +144,18 @@ export default Vue.extend({
 .bank-list {
   > div:not(:first-child) {
     margin-top: 15px;
+  }
+  .content-detail {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #ff812d;
+    cursor: pointer;
+  }
+  .content-import {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #24e4c1;
+    cursor: pointer;
   }
 }
 </style>
