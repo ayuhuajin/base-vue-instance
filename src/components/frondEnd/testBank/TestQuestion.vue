@@ -118,15 +118,26 @@ export default Vue.extend({
       }
     },
     changeAnswer(answer) {
-      console.log('qs', answer);
       this.putAnswer(answer, this.currentNum);
     },
     putAnswer(answer, index) {
       if (this.examList[index].questionType == '3') {
-        if (this.examList[index].answer == null) {
-          this.examList[index].answer = { answer: answer };
+        if (answer == '') {
+          if (this.examList[index].answer == null) {
+            this.examList[index].answer = null;
+            this.examList[index].options = answer;
+          } else {
+            this.examList[index].answer = null;
+            this.examList[index].options = answer;
+          }
         } else {
-          this.examList[index].answer.answer = answer;
+          if (this.examList[index].answer == null) {
+            this.examList[index].answer = { answer: answer };
+            this.examList[index].options = answer;
+          } else {
+            this.examList[index].answer.answer = answer;
+            this.examList[index].options = answer;
+          }
         }
       } else {
         if (this.examList[index].answer == null) {
@@ -135,7 +146,6 @@ export default Vue.extend({
           this.examList[index].answer.answer = answer;
         }
       }
-      console.log(this.examList, 99);
     },
     handlerSubmit() {
       console.log('提交试卷');

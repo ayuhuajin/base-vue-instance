@@ -38,7 +38,7 @@
       <textarea
         id=""
         name=""
-        v-model="textareaStr"
+        :value="textareaStr"
         cols="30"
         rows="10"
         placeholder="请输入答案"
@@ -64,7 +64,7 @@ export default {
       type: String
     },
     answerOptions: {
-      type: [Array, String]
+      type: [Array, String, Number]
     },
     answer: {
       type: Object
@@ -108,9 +108,6 @@ export default {
       }
       return type;
     },
-    // textareaStr() {
-    //   return this.answerOptions;
-    // }
     textareaStr: {
       get() {
         return this.answerOptions;
@@ -144,7 +141,6 @@ export default {
     },
     // 改变选项
     handlerChange(e, item) {
-      console.log(this.checkList);
       if (e == 'single') {
         this.$emit('changeAnswer', this.radio);
       } else if (e == 'multiple') {
