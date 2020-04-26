@@ -18,10 +18,11 @@
       </div>
     </main-header>
     <!-- 表格 -->
-    <base-table :tableData="blogData">
+    <base-table :tableData="examData">
       <el-table-column prop="title" label="试卷标题" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="time" label="发布日期"> </el-table-column>
-      <el-table-column prop="categoryId" label="科目"></el-table-column>
+      <el-table-column prop="subject" label="科目"></el-table-column>
+      <el-table-column prop="level" label="难度"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
@@ -71,8 +72,7 @@ import BaseTable from '@/components/common/BaseTable.vue';
 import PageChange from '@/components/common/PageChange.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
-import index from '@/store/modules/index.ts';
-import blog from '@/store/modules/blog';
+import exam from '@/store/modules/exam';
 export default Vue.extend({
   name: 'BankList',
   components: {
@@ -109,13 +109,7 @@ export default Vue.extend({
       },
       showDialog: false,
       // 表格列表
-      blogData: [
-        {
-          title: '试卷',
-          category: '',
-          categoryId: ''
-        }
-      ],
+      examData: [],
       value: ''
     };
   },
@@ -125,20 +119,32 @@ export default Vue.extend({
   methods: {
     // 初始化表单
     async initData() {
-      let result = await blog.dispatch('getAllBlog', {
+      let result = await exam.dispatch('getAllExam', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
-        categoryId: this.categoryId,
         name: this.name
       });
+      this.examData = result.data;
       this.pageInfo.totalPages = result.total;
     },
-    handleEdit(id) {
+    async handleEdit(id, num) {
+      this.id = id;
       this.showDialog = true;
+
+      try {
+        let obj = await exam.dispatch('examView', { id: id });
+        if (obj) {
+          this.examTitle = obj[0].title;
+          this.level = obj[0].level;
+          this.subject = obj[0].subject;
+        }
+      } catch (err) {
+        console.log('报错');
+      }
     },
     handleDelete(id) {
-      blog
-        .dispatch('delBlog', {
+      exam
+        .dispatch('delExam', {
           id: id
         })
         .then(() => {
@@ -158,7 +164,35 @@ export default Vue.extend({
       console.log('导入试卷');
     },
     handleSave() {
-      console.log('保存');
+      if (!this.id) {
+        exam
+          .dispatch('addExam', {
+            title: this.examTitle,
+            subject: this.subject,
+            level: this.level,
+            date: timeFormate.timeformatDay(new Date())
+          })
+          .then(() => {
+            this.initData();
+            this.closeDialog();
+          })
+          .catch(err => {
+            console.log('失败');
+          });
+      } else {
+        exam
+          .dispatch('updateBlog', {
+            id: this.id,
+            title: this.examTitle,
+            subject: this.subject,
+            level: this.level,
+            date: timeFormate.timeformatDay(new Date())
+          })
+          .then(() => {
+            this.initData();
+            this.showDialog = false;
+          });
+      }
     },
     // 关闭弹窗
     closeDialog() {
