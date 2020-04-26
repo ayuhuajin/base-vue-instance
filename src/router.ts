@@ -166,9 +166,9 @@ let router = new Router({
               meta: { title: '嗨前端-试卷列表', requireAuth: true }
             },
             {
-              path: '/backEnd/addBank',
-              name: 'AddBank',
-              component: () => import('./components/backEnd/testBank/AddBank.vue'),
+              path: '/backEnd/bankDetail',
+              name: 'BankDetail',
+              component: () => import('./components/backEnd/testBank/BankDetail.vue'),
               meta: { title: '嗨前端-添加试卷', requireAuth: true }
             }
           ]

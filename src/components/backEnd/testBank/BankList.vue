@@ -4,13 +4,8 @@
     <main-header :titleName="title">
       <div>
         <span>分类</span>
-        <el-select v-model="categoryId" placeholder="请选择" @change="changeCategory($event)">
-          <el-option
-            v-for="(item, index) in categoryList"
-            :key="index"
-            :label="item.name"
-            :value="item._id"
-          ></el-option>
+        <el-select v-model="categoryId" placeholder="请选择">
+          <el-option v-for="(item, index) in subjectList" :key="index" :label="item.name" :value="item._id"></el-option>
         </el-select>
       </div>
       <div>
@@ -30,12 +25,40 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
+          <span class="content-delete" @click="handleDelete(scope.row._id)">删除</span>
           <span class="content-detail" @click="examDetail(scope.row._id)">详情</span>
           <span class="content-import" @click="importExam(scope.row._id)">导入试卷</span>
-          <span class="content-delete" @click="handleDelete(scope.row._id)">删除</span>
         </template>
       </el-table-column>
     </base-table>
+    <!-- 弹窗 -->
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
+      <div class="bank">
+        <span>试卷名称</span>
+        <el-input v-model="examTitle" placeholder="请输入用户名称"></el-input>
+        <span>科目</span>
+        <div>
+          <el-select v-model="subject" placeholder="请选择">
+            <el-option
+              v-for="(item, index) in subjectList"
+              :key="index"
+              :label="item.name"
+              :value="item._id"
+            ></el-option>
+          </el-select>
+        </div>
+        <span>难度</span>
+        <div>
+          <el-select v-model="level" placeholder="请选择">
+            <el-option v-for="(item, index) in levelList" :key="index" :label="item.name" :value="item._id"></el-option>
+          </el-select>
+        </div>
+      </div>
+      <div>
+        <span class="save" @click="handleSave">保存</span>
+        <span class="cancel" @click="closeDialog">取消</span>
+      </div>
+    </base-dialog>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
   </div>
@@ -46,6 +69,7 @@ import Vue from 'vue';
 import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import PageChange from '@/components/common/PageChange.vue';
+import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import index from '@/store/modules/index.ts';
 import blog from '@/store/modules/blog';
@@ -54,14 +78,19 @@ export default Vue.extend({
   components: {
     MainHeader,
     BaseTable,
-    PageChange
+    PageChange,
+    BaseDialog
   },
   data() {
     return {
+      examTitle: '',
       title: '试卷',
       category: '',
       categoryId: '',
-      categoryList: [{ name: '前端', _id: '1' }],
+      subjectList: [{ name: '前端', _id: 1 }],
+      subject: 1,
+      levelList: [{ name: '入门', _id: 1 }, { name: '一般', _id: 2 }, { name: '困难', _id: 3 }],
+      level: 1,
       name: '',
       // 分页设置
       pageInfo: {
@@ -71,6 +100,14 @@ export default Vue.extend({
         pageSize: 10, // 当前页数
         class: 'pageClass'
       },
+      // 弹窗设置
+      dialogInfo: {
+        visible: true,
+        titleName: '添加试卷',
+        dialogWidth: '800px',
+        activeClass: 'user-dialog'
+      },
+      showDialog: false,
       // 表格列表
       blogData: [
         {
@@ -97,12 +134,7 @@ export default Vue.extend({
       this.pageInfo.totalPages = result.total;
     },
     handleEdit(id) {
-      this.$router.push({
-        name: 'AddBank',
-        query: {
-          id: id
-        }
-      });
+      this.showDialog = true;
     },
     handleDelete(id) {
       blog
@@ -118,16 +150,23 @@ export default Vue.extend({
     },
     // 试卷详情
     examDetail() {
-      console.log('试卷详情');
+      this.$router.push({
+        name: 'BankDetail'
+      });
     },
     importExam() {
       console.log('导入试卷');
     },
+    handleSave() {
+      console.log('保存');
+    },
+    // 关闭弹窗
+    closeDialog() {
+      this.showDialog = false;
+    },
     // 添加数据
     handleAdd() {
-      this.$router.push({
-        name: 'AddBlog'
-      });
+      this.showDialog = true;
     },
     search() {
       this.pageInfo.pageNumber = 1;
@@ -156,6 +195,34 @@ export default Vue.extend({
     font-size: 14px;
     color: #24e4c1;
     cursor: pointer;
+  }
+}
+.save,
+.cancel {
+  margin-top: 20px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid #409eff;
+  text-align: center;
+  line-height: 40px;
+  color: white;
+  cursor: pointer;
+  background: #66b1ff;
+}
+.cancel {
+  margin-left: 20px;
+  border: 1px solid #dcdfe6;
+  color: #333;
+  background: white;
+}
+.bank {
+  > span {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #666;
+  }
+  .el-input {
+    margin-top: 10px;
   }
 }
 </style>
