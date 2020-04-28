@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list">
+  <div class="tool-list">
     <!-- 头部 -->
     <main-header :titleName="title">
       <div>
@@ -24,7 +24,7 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="blogData">
-      <el-table-column prop="title" label="文章标题" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="title" label="工具名称" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="time" label="发布日期"> </el-table-column>
       <el-table-column prop="categoryId" label="类型"></el-table-column>
       <el-table-column label="操作" align="center" width="170">
@@ -81,13 +81,12 @@ export default Vue.extend({
   methods: {
     // 初始化表单
     async initData() {
-      let result = await tools.dispatch('getAllBlog', {
+      let result = await tools.dispatch('getAllTool', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
         categoryId: this.categoryId,
         name: this.name
       });
-
       this.blogData = this.getNameById(result.data);
       this.pageInfo.totalPages = result.total;
     },
@@ -130,7 +129,7 @@ export default Vue.extend({
     },
     handleDelete(id: string) {
       tools
-        .dispatch('delBlog', {
+        .dispatch('delTool', {
           id: id
         })
         .then(() => {
@@ -147,7 +146,6 @@ export default Vue.extend({
       });
     },
     search() {
-      console.log(444);
       this.pageInfo.pageNumber = 1;
       this.initData();
     },
@@ -159,7 +157,7 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
-.blog-list {
+.tool-list {
   > div:not(:first-child) {
     margin-top: 15px;
   }
