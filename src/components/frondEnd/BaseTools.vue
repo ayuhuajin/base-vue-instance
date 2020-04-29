@@ -139,7 +139,7 @@
         </ul>
       </section>
       <section>
-        <h4>框架</h4>
+        <h4>ui</h4>
         <ul>
           <li>
             <div>
@@ -161,21 +161,94 @@
           </li>
         </ul>
       </section>
+      <section v-for="(item, index) in toolData" :key="index">
+        <h4>{{ item.name }}</h4>
+        <ul>
+          <li v-for="(m, num) in item.item" :key="num">
+            <div>
+              <a :href="m.link" target="_blank">
+                <img src="../../assets/images/icon-search.png" alt="" />
+                <span>{{ m.title }}</span>
+              </a>
+            </div>
+            <p>{{ m.desc }}</p>
+          </li>
+        </ul>
+      </section>
     </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import tools from '@/store/modules/tools';
+import toolType from '@/store/modules/toolType.ts';
 export default Vue.extend({
   name: 'BaseTools',
   data() {
     return {
-      tit: '工具'
+      tit: '工具',
+      toolData: [],
+      categoryList: []
     };
   },
-  mounted() {},
-  methods: {}
+  async mounted() {
+    await this.getCategoryList();
+    this.init();
+  },
+  methods: {
+    async init() {
+      let result = await tools.dispatch('getAllTool', {
+        pageSize: 10000,
+        pageNumber: 1
+      });
+      this.toolData = result.data;
+      this.toolData = this.getNameById(result.data);
+      this.toolData = this.arrayReorganization(this.toolData, 'categoryId');
+    },
+    // 数组以distributionName为标识重新分组
+    arrayReorganization(array, distributionName) {
+      let arr = [];
+      let obj = {};
+      let index = 0;
+      array.forEach(element => {
+        if (obj.hasOwnProperty(element[distributionName])) {
+          arr[obj[element[distributionName]]].item.push(element);
+        } else {
+          obj[element[distributionName]] = index++;
+          arr.push({
+            name: element[distributionName],
+            item: [element]
+          });
+        }
+      });
+      return arr;
+    },
+    // 获取分类下拉列表
+    async getCategoryList() {
+      let result = await toolType.dispatch('getAllCategory', {
+        pageNumber: 1,
+        pageSize: 999,
+        name: ''
+      });
+      this.categoryList = result.data;
+    },
+    getNameById(arr) {
+      return arr.map(item => {
+        item.categoryId = this.findName(item.categoryId);
+        return item;
+      });
+    },
+    // 寻找分类名称
+    findName(id) {
+      let obj = this.categoryList.find(item => {
+        return item._id == id;
+      });
+      if (obj) {
+        return obj.name;
+      }
+    }
+  }
 });
 </script>
 
