@@ -174,6 +174,19 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/questionManage',
+          meta: { title: '试题' },
+          component: () => import('./components/backEnd/questionManage/QuestionView.vue'),
+          children: [
+            {
+              path: '/',
+              name: 'QuestionList',
+              component: () => import('./components/backEnd/questionManage/QuestionList.vue'),
+              meta: { title: '题库' }
+            }
+          ]
+        },
+        {
           path: '/backEnd/typeScript',
           name: 'TypeScript',
           component: () => import('./components/backEnd/TypeScript.vue'),
@@ -218,6 +231,7 @@ let router = new Router({
         }
       ]
     },
+
     {
       path: '/login',
       name: 'login',

@@ -28,6 +28,7 @@
         <el-submenu index="bank">
           <span slot="title">题库管理</span>
           <el-menu-item index="/backEnd/testBank">试卷管理</el-menu-item>
+          <el-menu-item index="/backEnd/questionManage">试题管理</el-menu-item>
           <!-- <el-menu-item index="/backEnd/toolType">科目</el-menu-item> -->
         </el-submenu>
         <el-menu-item index="/backEnd/git">Git</el-menu-item>
