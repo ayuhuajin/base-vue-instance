@@ -57,7 +57,7 @@ import PageChange from '@/components/common/PageChange.vue';
 import setQuestion from '@/components/common/SetQuestion';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
-import exam from '@/store/modules/exam';
+import question from '@/store/modules/question';
 export default Vue.extend({
   name: 'QuestionList',
   components: {
@@ -102,11 +102,9 @@ export default Vue.extend({
   methods: {
     // 初始化表单
     async initData() {
-      let result = await exam.dispatch('getAllExam', {
+      let result = await question.dispatch('getAllQuestion', {
         pageSize: this.pageInfo.pageSize,
-        pageNumber: this.pageInfo.pageNumber,
-        title: this.name,
-        subject: this.subject
+        pageNumber: this.pageInfo.pageNumber
       });
       this.examData = result.data;
       this.pageInfo.totalPages = result.total;
@@ -114,7 +112,6 @@ export default Vue.extend({
     async handleEdit(id, num) {
       this.id = id;
       this.showDialog = true;
-
       try {
         let obj = await exam.dispatch('examView', { id: id });
         if (obj) {
