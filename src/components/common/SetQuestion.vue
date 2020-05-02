@@ -33,7 +33,7 @@
           <el-option
             v-for="(item, index) in testPaperList"
             :key="index"
-            :label="item.name"
+            :label="item.title"
             :value="item._id"
           ></el-option>
         </el-select>
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import exam from '@/store/modules/exam';
 export default {
   name: 'SetQuestion',
   props: {
@@ -170,7 +171,17 @@ export default {
       }
     };
   },
+  created() {
+    this.init();
+  },
   methods: {
+    async init() {
+      let result = await exam.dispatch('getAllExam', {
+        pageSize: 1000000,
+        pageNumber: 1
+      });
+      this.testPaperList = result.data;
+    },
     // 添加选项
     addChooseItem() {
       let len = this.chooseList.length;

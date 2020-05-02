@@ -20,7 +20,7 @@
     <!-- 表格 -->
     <base-table :tableData="examData">
       <el-table-column prop="title" label="试卷标题" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="time" label="发布日期"> </el-table-column>
+      <el-table-column prop="time" :formatter="formateTime" label="发布日期"> </el-table-column>
       <el-table-column prop="subject" label="科目"></el-table-column>
       <el-table-column prop="level" label="难度"></el-table-column>
       <el-table-column label="操作" align="center">
@@ -122,8 +122,30 @@ export default Vue.extend({
         title: this.name,
         subject: this.subject
       });
-      this.examData = result.data;
+      this.examData = this.getNameById(result.data);
       this.pageInfo.totalPages = result.total;
+    },
+    getNameById(arr) {
+      return arr.map(item => {
+        item.time = timeFormate.timeformat(item.time);
+        item.subject = this.findName(item.subject, this.subjectList);
+        item.level = this.findName(item.level, this.levelList);
+        return item;
+      });
+    },
+    // 寻找分类名称
+    findName(id, list) {
+      let obj = list.find(item => {
+        return item._id == id;
+      });
+      if (obj) {
+        return obj.name;
+      }
+    },
+    formateTime(obj) {
+      if (obj.time) {
+        return timeFormate.timeformatDay(obj.time);
+      }
     },
     async handleEdit(id, num) {
       this.id = id;
