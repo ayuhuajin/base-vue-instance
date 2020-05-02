@@ -18,7 +18,7 @@
       </div>
     </main-header>
     <!-- 表格 -->
-    <base-table :tableData="examData">
+    <base-table :tableData="questionData">
       <el-table-column prop="index" label="序号" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="title" label="题目" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="subject" label="科目"></el-table-column>
@@ -38,7 +38,7 @@
 
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
-      <set-question></set-question>
+      <set-question @save="handleSave" @cancel="handleCancel"></set-question>
       <div>
         <span class="save" @click="handleSave">保存</span>
         <span class="cancel" @click="closeDialog">取消</span>
@@ -69,6 +69,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      id: '',
       title: '试题管理',
       examTitle: '',
       subjectList: [{ name: '前端', _id: 1 }],
@@ -93,7 +94,7 @@ export default Vue.extend({
       },
       showDialog: false,
       // 表格列表
-      examData: []
+      questionData: []
     };
   },
   async mounted() {
@@ -124,8 +125,8 @@ export default Vue.extend({
       }
     },
     handleDelete(id) {
-      exam
-        .dispatch('delExam', {
+      question
+        .dispatch('delQuestion', {
           id: id
         })
         .then(() => {
@@ -135,19 +136,10 @@ export default Vue.extend({
           console.log('删除失败');
         });
     },
-    // 试卷详情
-    examDetail() {
-      this.$router.push({
-        name: 'BankDetail'
-      });
-    },
-    importExam() {
-      console.log('导入试卷');
-    },
     handleSave() {
       if (!this.id) {
-        exam
-          .dispatch('addExam', {
+        question
+          .dispatch('addQuestion', {
             title: this.examTitle,
             subject: this.subject,
             level: this.level,

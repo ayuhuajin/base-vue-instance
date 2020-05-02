@@ -12,6 +12,11 @@ export default root.registerModule('question', {
     async addQuestion({ commit }, payload) {
       let result = await http.post(`/question/addQuestion`, payload);
       return result.data;
+    },
+    // 删除试题
+    async delQuestion({ commit }, payload) {
+      let result = await http.post(`/question/delQuestion`, payload);
+      return result.data;
     }
   }
 });

@@ -63,6 +63,10 @@
       <span>答案解析:</span>
       <textarea v-model="questionTitle" name="" id="" cols="30" rows="10"></textarea>
     </div>
+    <div>
+      <span class="save" @click="handleSave">保存</span>
+      <span class="cancel" @click="closeDialog">取消</span>
+    </div>
   </div>
 </template>
 
@@ -92,15 +96,15 @@ export default {
       level: '',
       options: [
         {
-          value: '选项1',
+          value: 1,
           label: '单选题'
         },
         {
-          value: '选项2',
+          value: 2,
           label: '多选题'
         },
         {
-          value: '选项3',
+          value: 3,
           label: '问答题'
         }
       ],
