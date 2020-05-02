@@ -38,11 +38,7 @@
 
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
-      <set-question @save="handleSave" @cancel="handleCancel"></set-question>
-      <div>
-        <span class="save" @click="handleSave">保存</span>
-        <span class="cancel" @click="closeDialog">取消</span>
-      </div>
+      <set-question @handleSave="handleSave" @handleCancel="handleCancel"></set-question>
     </base-dialog>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
@@ -107,7 +103,7 @@ export default Vue.extend({
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber
       });
-      this.examData = result.data;
+      this.questionData = result.data;
       this.pageInfo.totalPages = result.total;
     },
     async handleEdit(id, num) {
@@ -136,15 +132,10 @@ export default Vue.extend({
           console.log('删除失败');
         });
     },
-    handleSave() {
+    handleSave(obj) {
       if (!this.id) {
         question
-          .dispatch('addQuestion', {
-            title: this.examTitle,
-            subject: this.subject,
-            level: this.level,
-            date: timeFormate.timeformatDay(new Date())
-          })
+          .dispatch('addQuestion', obj)
           .then(() => {
             this.initData();
             this.closeDialog();
@@ -166,6 +157,9 @@ export default Vue.extend({
             this.showDialog = false;
           });
       }
+    },
+    handleCancel() {
+      this.showDialog = false;
     },
     // 关闭弹窗
     closeDialog() {

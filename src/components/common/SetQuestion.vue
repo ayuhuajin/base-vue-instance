@@ -1,14 +1,14 @@
 <template>
   <div class="set-question">
-    <div>
-      <span>题型:</span>
-      <el-select v-model="value" placeholder="请选择">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-    </div>
     <div class="question-num">
       <span>题号:</span>
       <el-input v-model="questionNum" placeholder="请输入内容"></el-input>
+    </div>
+    <div>
+      <span>题型:</span>
+      <el-select v-model="type" placeholder="请选择">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+      </el-select>
     </div>
     <div>
       <span>科目</span>
@@ -21,7 +21,7 @@
     <div>
       <span>难度</span>
       <div>
-        <el-select v-model="level" placeholder="请选择">
+        <el-select v-model="level" placeholder="请选择" @change="changeLevel">
           <el-option v-for="(item, index) in levelList" :key="index" :label="item.name" :value="item._id"></el-option>
         </el-select>
       </div>
@@ -29,8 +29,13 @@
     <div>
       <span>所属试卷</span>
       <div>
-        <el-select v-model="level" placeholder="请选择">
-          <el-option v-for="(item, index) in levelList" :key="index" :label="item.name" :value="item._id"></el-option>
+        <el-select v-model="testPaper" placeholder="请选择">
+          <el-option
+            v-for="(item, index) in testPaperList"
+            :key="index"
+            :label="item.name"
+            :value="item._id"
+          ></el-option>
         </el-select>
       </div>
     </div>
@@ -61,7 +66,7 @@
     </div>
     <div>
       <span>答案解析:</span>
-      <textarea v-model="questionTitle" name="" id="" cols="30" rows="10"></textarea>
+      <textarea v-model="questionDesc" name="" id="" cols="30" rows="10"></textarea>
     </div>
     <div>
       <span class="save" @click="handleSave">保存</span>
@@ -74,11 +79,11 @@
 export default {
   name: 'SetQuestion',
   props: {
-    questionType: {
+    questionNum: {
       type: Number,
       default: 1
     },
-    questionNum: {
+    questionType: {
       type: Number,
       default: 1
     },
@@ -108,10 +113,10 @@ export default {
           label: '问答题'
         }
       ],
-      value: '',
-      //questionType:'multi', //题型
-      // questionNum:1,// 题号
-      // questionTitle:'这是什么题目',
+      type: '',
+      testPaperList: [{ name: 12, _id: 1 }, { name: 'ddd', _id: 2 }],
+      testPaper: '',
+      questionDesc: '',
       // 选项
       chooseItem: [
         {
@@ -154,7 +159,17 @@ export default {
         { name: 'A', value: 1, isCheck: false },
         { name: 'B', value: 2, isCheck: false },
         { name: 'C', value: 3, isCheck: true }
-      ]
+      ],
+      questionObj: {
+        questionNum: this.questionNum,
+        questionType: this.questionType,
+        questionTitle: this.questionTitle,
+        level: this.level,
+        subject: this.subject,
+        type: this.type,
+        testPaper: this.testPaper,
+        questionDesc: this.questionDesc
+      }
     };
   },
   methods: {
@@ -178,8 +193,27 @@ export default {
         item.isCheck = !item.isCheck;
       }
     },
+    // 取消
+    closeDialog() {
+      this.$emit('handleCancel');
+      console.log('取消');
+    },
+    changeLevel(e) {
+      console.log(e, 9999, this.level);
+    },
     // 提交
-    handleSubmit() {
+    handleSave() {
+      let questionObj = {
+        questionNum: this.questionNum,
+        questionType: this.questionType,
+        questionTitle: this.questionTitle,
+        level: this.level,
+        subject: this.subject,
+        type: this.type,
+        testPaper: this.testPaper,
+        questionDesc: this.questionDesc
+      };
+      this.$emit('handleSave', questionObj);
       console.log('提交');
     }
   }
@@ -210,6 +244,7 @@ export default {
   margin-left: 8px;
   padding: 4px 8px;
   border-radius: 4px;
+  cursor: pointer;
   color: #fff;
   background: #d4cdcd;
 }
