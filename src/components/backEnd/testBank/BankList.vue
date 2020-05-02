@@ -73,8 +73,10 @@ import PageChange from '@/components/common/PageChange.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import exam from '@/store/modules/exam';
+import mixin from '@/assets/js/mixin.ts';
 export default Vue.extend({
   name: 'BankList',
+  mixins: [mixin],
   components: {
     MainHeader,
     BaseTable,
@@ -85,9 +87,7 @@ export default Vue.extend({
     return {
       title: '试卷',
       examTitle: '',
-      subjectList: [{ name: '前端', _id: 1 }],
       subject: '',
-      levelList: [{ name: '入门', _id: 1 }, { name: '一般', _id: 2 }, { name: '困难', _id: 3 }],
       level: '',
       name: '',
       // 分页设置

@@ -19,7 +19,7 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="questionData">
-      <el-table-column prop="index" label="序号" show-overflow-tooltip> </el-table-column>
+      <!-- <el-table-column prop="index" label="序号" show-overflow-tooltip> </el-table-column> -->
       <el-table-column prop="questionTitle" label="题目" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="subject" label="科目"></el-table-column>
       <el-table-column prop="questionType" label="题型"></el-table-column>
@@ -54,8 +54,10 @@ import setQuestion from '@/components/common/SetQuestion';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import question from '@/store/modules/question';
+import mixin from '@/assets/js/mixin.ts';
 export default Vue.extend({
   name: 'QuestionList',
+  mixins: [mixin],
   components: {
     MainHeader,
     BaseTable,
@@ -68,9 +70,7 @@ export default Vue.extend({
       id: '',
       title: '试题管理',
       examTitle: '',
-      subjectList: [{ name: '前端', _id: 1 }],
       subject: '',
-      levelList: [{ name: '入门', _id: 1 }, { name: '一般', _id: 2 }, { name: '困难', _id: 3 }],
       level: '',
       name: '',
       // 分页设置

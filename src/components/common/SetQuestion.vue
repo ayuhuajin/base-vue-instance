@@ -77,8 +77,10 @@
 
 <script>
 import exam from '@/store/modules/exam';
+import mixin from '@/assets/js/mixin.ts';
 export default {
   name: 'SetQuestion',
+  mixins: [mixin],
   props: {
     questionNum: {
       type: Number,
@@ -92,9 +94,7 @@ export default {
   data() {
     return {
       data: 'test',
-      subjectList: [{ name: '前端', _id: 1 }],
       subject: '',
-      levelList: [{ name: '入门', _id: 1 }, { name: '一般', _id: 2 }, { name: '困难', _id: 3 }],
       level: '',
       options: [
         {
@@ -111,7 +111,7 @@ export default {
         }
       ],
       questionType: '',
-      testPaperList: [{ name: 12, _id: 1 }, { name: 'ddd', _id: 2 }],
+      testPaperList: [],
       testPaper: '',
       questionDesc: '',
       answer: [],
