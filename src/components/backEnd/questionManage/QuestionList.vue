@@ -19,10 +19,15 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="examData">
-      <el-table-column prop="title" label="试题标题" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="time" label="发布日期"> </el-table-column>
+      <el-table-column prop="index" label="序号" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="title" label="题目" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="subject" label="科目"></el-table-column>
+      <el-table-column prop="questionType" label="题型"></el-table-column>
+      <el-table-column prop="testPaper" label="所属试卷"></el-table-column>
       <el-table-column prop="level" label="难度"></el-table-column>
+      <el-table-column prop="answer" label="答案"></el-table-column>
+      <el-table-column prop="answerAnalysis" label="答案解析"></el-table-column>
+      <el-table-column prop="time" label="发布日期"> </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
@@ -30,29 +35,10 @@
         </template>
       </el-table-column>
     </base-table>
+
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
-      <div class="bank">
-        <span>试卷名称</span>
-        <el-input v-model="examTitle" placeholder="请输入用户名称"></el-input>
-        <span>科目</span>
-        <div>
-          <el-select v-model="subject" placeholder="请选择">
-            <el-option
-              v-for="(item, index) in subjectList"
-              :key="index"
-              :label="item.name"
-              :value="item._id"
-            ></el-option>
-          </el-select>
-        </div>
-        <span>难度</span>
-        <div>
-          <el-select v-model="level" placeholder="请选择">
-            <el-option v-for="(item, index) in levelList" :key="index" :label="item.name" :value="item._id"></el-option>
-          </el-select>
-        </div>
-      </div>
+      <set-question></set-question>
       <div>
         <span class="save" @click="handleSave">保存</span>
         <span class="cancel" @click="closeDialog">取消</span>
@@ -68,6 +54,7 @@ import Vue from 'vue';
 import MainHeader from '@/components/common/MainHeader.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import PageChange from '@/components/common/PageChange.vue';
+import setQuestion from '@/components/common/SetQuestion';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import exam from '@/store/modules/exam';
@@ -77,7 +64,8 @@ export default Vue.extend({
     MainHeader,
     BaseTable,
     PageChange,
-    BaseDialog
+    BaseDialog,
+    setQuestion
   },
   data() {
     return {

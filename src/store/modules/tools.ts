@@ -32,16 +32,6 @@ export default root.registerModule('tools', {
     async toolView({ commit }, payload) {
       let result = await http.get(`/tools/toolView?id=${payload}`);
       return result.data;
-    },
-    //界面展示获取所有博客
-    async getBlogList({ commit }, payload) {
-      let result = await http.get(`/tools/getBlogList?${qs.stringify(payload)}`);
-      return result.data;
-    },
-    // 界面展示获取博客视图
-    async getBlogView({ commit }, payload) {
-      let result = await http.get(`/tools/getBlogView?id=${payload}`);
-      return result.data;
     }
   }
 });
