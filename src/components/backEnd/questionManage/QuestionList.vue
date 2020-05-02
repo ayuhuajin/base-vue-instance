@@ -20,13 +20,13 @@
     <!-- 表格 -->
     <base-table :tableData="questionData">
       <el-table-column prop="index" label="序号" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="title" label="题目" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="questionTitle" label="题目" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="subject" label="科目"></el-table-column>
       <el-table-column prop="questionType" label="题型"></el-table-column>
       <el-table-column prop="testPaper" label="所属试卷"></el-table-column>
       <el-table-column prop="level" label="难度"></el-table-column>
       <el-table-column prop="answer" label="答案"></el-table-column>
-      <el-table-column prop="answerAnalysis" label="答案解析"></el-table-column>
+      <el-table-column prop="questionDesc" label="答案解析"></el-table-column>
       <el-table-column prop="time" label="发布日期"> </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
@@ -104,6 +104,7 @@ export default Vue.extend({
         pageNumber: this.pageInfo.pageNumber
       });
       this.questionData = result.data;
+      console.log(result.data);
       this.pageInfo.totalPages = result.total;
     },
     async handleEdit(id, num) {

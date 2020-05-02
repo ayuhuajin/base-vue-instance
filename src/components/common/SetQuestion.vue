@@ -6,7 +6,7 @@
     </div>
     <div>
       <span>题型:</span>
-      <el-select v-model="type" placeholder="请选择">
+      <el-select v-model="questionType" placeholder="请选择">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
     </div>
@@ -83,10 +83,6 @@ export default {
       type: Number,
       default: 1
     },
-    questionType: {
-      type: Number,
-      default: 1
-    },
     questionTitle: {
       type: String,
       default: '这是什么题目'
@@ -113,10 +109,11 @@ export default {
           label: '问答题'
         }
       ],
-      type: '',
+      questionType: '',
       testPaperList: [{ name: 12, _id: 1 }, { name: 'ddd', _id: 2 }],
       testPaper: '',
       questionDesc: '',
+      answer: [],
       // 选项
       chooseItem: [
         {
@@ -168,7 +165,8 @@ export default {
         subject: this.subject,
         type: this.type,
         testPaper: this.testPaper,
-        questionDesc: this.questionDesc
+        questionDesc: this.questionDesc,
+        chooseList: this.chooseList
       }
     };
   },
@@ -183,14 +181,20 @@ export default {
     },
     // 选中选项
     chooseOption(item) {
+      this.answer = [];
       if (this.questionType == 'multi') {
-        console.log('最多选择3项');
         this.chooseList.forEach(item => {
           item.isCheck = false;
         });
         item.isCheck = !item.isCheck;
+        this.answer.push(item.name);
       } else {
         item.isCheck = !item.isCheck;
+        this.chooseList.forEach(item => {
+          if (item.isCheck == true) {
+            this.answer.push(item.name);
+          }
+        });
       }
     },
     // 取消
@@ -211,7 +215,9 @@ export default {
         subject: this.subject,
         type: this.type,
         testPaper: this.testPaper,
-        questionDesc: this.questionDesc
+        questionDesc: this.questionDesc,
+        options: this.chooseList,
+        answer: this.answer
       };
       this.$emit('handleSave', questionObj);
       console.log('提交');
