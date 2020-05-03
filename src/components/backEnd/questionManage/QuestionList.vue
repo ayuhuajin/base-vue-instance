@@ -54,6 +54,7 @@ import setQuestion from '@/components/common/SetQuestion';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import question from '@/store/modules/question';
+import exam from '@/store/modules/exam';
 import mixin from '@/assets/js/mixin.ts';
 export default Vue.extend({
   name: 'QuestionList',
@@ -90,7 +91,8 @@ export default Vue.extend({
       },
       showDialog: false,
       // 表格列表
-      questionData: []
+      questionData: [],
+      examList: []
     };
   },
   async mounted() {
@@ -99,13 +101,37 @@ export default Vue.extend({
   methods: {
     // 初始化表单
     async initData() {
+      let examList = await exam.dispatch('getAllExam', {
+        pageSize: 100000,
+        pageNumber: 1
+      });
+      this.examList = examList.data;
+
       let result = await question.dispatch('getAllQuestion', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber
       });
-      this.questionData = result.data;
-      console.log(result.data);
+      this.questionData = this.getNameById(result.data);
       this.pageInfo.totalPages = result.total;
+    },
+    getNameById(arr) {
+      return arr.map(item => {
+        item.time = timeFormate.timeformat(item.time);
+        item.subject = this.findName('_id', 'name', item.subject, this.subjectList);
+        item.level = this.findName('_id', 'name', item.level, this.levelList);
+        item.questionType = this.findName('value', 'label', item.questionType, this.options);
+        item.testPaper = this.findName('_id', 'title', item.testPaper, this.examList);
+        return item;
+      });
+    },
+    // 寻找分类名称
+    findName(key, value, id, list) {
+      let obj = list.find(item => {
+        return item[key] == id;
+      });
+      if (obj) {
+        return obj[value];
+      }
     },
     async handleEdit(id, num) {
       this.id = id;
