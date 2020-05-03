@@ -1,7 +1,15 @@
 <template>
   <div class="bank-detail">
     <div class="title"><img @click="back" class="back" src="../../../assets/images/icon_back.png" />试卷详情</div>
-    <div>dfssdfs</div>
+    <div class="question-list" v-for="(item, index) in data" :key="index">
+      <div class="question">
+        <p>{{ item.questionTitle }}</p>
+        <span @click="editQuestion">编辑</span>
+      </div>
+      <div v-for="(m, num) in item.opTions" :key="num">
+        {{ m.name }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -13,7 +21,8 @@ export default Vue.extend({
   data() {
     return {
       value: '',
-      id: this.$route.query.id
+      id: this.$route.query.id,
+      data: []
     };
   },
   async mounted() {
@@ -21,11 +30,16 @@ export default Vue.extend({
   },
   methods: {
     async init() {
-      await question.dispatch('examDetail', {
+      let result = await question.dispatch('examDetail', {
         pageSize: 100000,
         pageNumber: 1,
         examId: this.$route.query.id
       });
+      this.data = result.data;
+    },
+    // 编辑试题
+    editQuestion() {
+      console.log('编辑试题');
     },
     back() {
       this.$router.push({
@@ -40,6 +54,14 @@ export default Vue.extend({
 .bank-detail {
   border-radius: 5px;
   background: white;
+  .question-list {
+    padding: 15px 20px;
+    .question {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+  }
   .back {
     margin-right: 5px;
     cursor: pointer;
