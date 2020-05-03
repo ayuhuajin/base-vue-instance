@@ -7,15 +7,26 @@
 
 <script>
 import Vue from 'vue';
+import question from '@/store/modules/question.ts';
 export default Vue.extend({
   name: 'BankDetail',
   data() {
     return {
-      value: ''
+      value: '',
+      id: this.$route.query.id
     };
   },
-  async mounted() {},
+  async mounted() {
+    this.init();
+  },
   methods: {
+    async init() {
+      await question.dispatch('examDetail', {
+        pageSize: 100000,
+        pageNumber: 1,
+        examId: this.$route.query.id
+      });
+    },
     back() {
       this.$router.push({
         name: 'Banklist'

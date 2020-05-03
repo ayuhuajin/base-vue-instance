@@ -17,6 +17,11 @@ export default root.registerModule('question', {
     async delQuestion({ commit }, payload) {
       let result = await http.post(`/question/delQuestion`, payload);
       return result.data;
+    },
+    //获取试卷详情
+    async examDetail({ commit }, payload) {
+      let result = await http.get(`/exam/examDetail?${qs.stringify(payload)}`);
+      return result.data;
     }
   }
 });

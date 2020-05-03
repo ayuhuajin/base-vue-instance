@@ -175,9 +175,12 @@ export default Vue.extend({
         });
     },
     // 试卷详情
-    examDetail() {
+    examDetail(id) {
       this.$router.push({
-        name: 'BankDetail'
+        name: 'BankDetail',
+        query: {
+          id: id
+        }
       });
     },
     importExam() {
