@@ -2,18 +2,18 @@
   <div class="set-question">
     <div class="question-num">
       <span>题号:</span>
-      <el-input v-model="questionNum" placeholder="请输入内容"></el-input>
+      <el-input v-model="questionInfo.questionNum" placeholder="请输入内容"></el-input>
     </div>
     <div>
       <span>题型:</span>
-      <el-select v-model="questionType" placeholder="请选择">
+      <el-select v-model="questionInfo.questionType" placeholder="请选择">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
     </div>
     <div>
       <span>科目</span>
       <div>
-        <el-select v-model="subject" placeholder="请选择">
+        <el-select v-model="questionInfo.subject" placeholder="请选择">
           <el-option v-for="(item, index) in subjectList" :key="index" :label="item.name" :value="item._id"></el-option>
         </el-select>
       </div>
@@ -21,7 +21,7 @@
     <div>
       <span>难度</span>
       <div>
-        <el-select v-model="level" placeholder="请选择" @change="changeLevel">
+        <el-select v-model="questionInfo.level" placeholder="请选择">
           <el-option v-for="(item, index) in levelList" :key="index" :label="item.name" :value="item._id"></el-option>
         </el-select>
       </div>
@@ -29,7 +29,7 @@
     <div>
       <span>所属试卷</span>
       <div>
-        <el-select v-model="testPaper" placeholder="请选择">
+        <el-select v-model="questionInfo.testPaper" placeholder="请选择">
           <el-option
             v-for="(item, index) in testPaperList"
             :key="index"
@@ -41,13 +41,19 @@
     </div>
     <div>
       <span>题目:</span>
-      <textarea v-model="questionTitle" name="" id="" cols="30" rows="10"></textarea>
-      <!-- <input type="text" value="3333"> -->
+      <textarea
+        v-model="questionInfo.questionTitle"
+        name=""
+        id=""
+        cols="30"
+        rows="10"
+        placeholder="请输入题目"
+      ></textarea>
     </div>
     <div class="answer">
       <span>答案:</span>
       <div
-        v-for="(item, index) in chooseList"
+        v-for="(item, index) in questionInfo.opTions"
         :key="index"
         class="option-item"
         :class="{ check: item.isCheck }"
@@ -59,14 +65,21 @@
     </div>
     <div class="options">
       <span>选项：</span>
-      <div v-for="(item, index) in chooseList" :key="index">
-        <span>{{ item.name }}</span>
-        <el-input v-model="questionNum" placeholder="请输入内容"></el-input>
+      <div v-for="(item, index) in questionInfo.opTions" :key="index">
+        <span>{{ item.name }}：</span>
+        <el-input v-model="item.value" placeholder="请输入内容"></el-input>
       </div>
     </div>
     <div>
       <span>答案解析:</span>
-      <textarea v-model="questionDesc" name="" id="" cols="30" rows="10"></textarea>
+      <textarea
+        v-model="questionInfo.questionDesc"
+        name=""
+        id=""
+        cols="30"
+        rows="10"
+        placeholder="请输入答案解析"
+      ></textarea>
     </div>
     <div>
       <span class="save" @click="handleSave">保存</span>
@@ -82,13 +95,8 @@ export default {
   name: 'SetQuestion',
   mixins: [mixin],
   props: {
-    questionNum: {
-      type: Number,
-      default: 1
-    },
-    questionTitle: {
-      type: String,
-      default: '这是什么题目'
+    questionInfo: {
+      type: Object
     }
   },
   data() {
@@ -96,20 +104,6 @@ export default {
       data: 'test',
       subject: '',
       level: '',
-      options: [
-        {
-          value: 1,
-          label: '单选题'
-        },
-        {
-          value: 2,
-          label: '多选题'
-        },
-        {
-          value: 3,
-          label: '问答题'
-        }
-      ],
       questionType: '',
       testPaperList: [],
       testPaper: '',
@@ -119,44 +113,44 @@ export default {
       chooseItem: [
         {
           name: 'A',
-          value: 1,
+          value: '',
           isCheck: false
         },
         {
           name: 'B',
-          value: 2,
+          value: '',
           isCheck: false
         },
         {
           name: 'C',
-          value: 3,
+          value: '',
           isCheck: false
         },
         {
           name: 'D',
-          value: 4,
+          value: '',
           isCheck: false
         },
         {
           name: 'E',
-          value: 5,
+          value: '',
           isCheck: false
         },
         {
           name: 'F',
-          value: 6,
+          value: '',
           isCheck: false
         },
         {
           name: 'G',
-          value: 7,
+          value: '',
           isCheck: false
         }
       ],
       chooseList: [
-        { name: 'A', value: 1, isCheck: false },
-        { name: 'B', value: 2, isCheck: false },
-        { name: 'C', value: 3, isCheck: true }
+        { name: 'A', value: '', isCheck: false },
+        { name: 'B', value: '', isCheck: false },
+        { name: 'C', value: '', isCheck: false }
       ],
       questionObj: {
         questionNum: this.questionNum,
@@ -213,24 +207,21 @@ export default {
       this.$emit('handleCancel');
       console.log('取消');
     },
-    changeLevel(e) {
-      console.log(e, 9999, this.level);
-    },
     // 提交
     handleSave() {
-      let questionObj = {
-        questionNum: this.questionNum,
-        questionType: this.questionType,
-        questionTitle: this.questionTitle,
-        level: this.level,
-        subject: this.subject,
-        type: this.type,
-        testPaper: this.testPaper,
-        questionDesc: this.questionDesc,
-        options: this.chooseList,
-        answer: this.answer
-      };
-      this.$emit('handleSave', questionObj);
+      // let questionObj = {
+      //   questionNum: this.questionNum,
+      //   questionType: this.questionType,
+      //   questionTitle: this.questionTitle,
+      //   level: this.level,
+      //   subject: this.subject,
+      //   type: this.type,
+      //   testPaper: this.testPaper,
+      //   questionDesc: this.questionDesc,
+      //   options: this.chooseList,
+      //   answer: this.answer
+      // };
+      this.$emit('handleSave', this.questionInfo);
       console.log('提交');
     }
   }
@@ -273,11 +264,13 @@ export default {
 }
 textarea {
   width: 100%;
+  padding: 10px 15px;
 }
 .options {
   > div {
     display: flex;
     align-items: center;
+    margin-top: 10px;
   }
 }
 .answer {

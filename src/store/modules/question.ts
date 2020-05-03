@@ -18,6 +18,16 @@ export default root.registerModule('question', {
       let result = await http.post(`/question/delQuestion`, payload);
       return result.data;
     },
+    // 编辑试题
+    async updateQuestion({ commit }, payload) {
+      let result = await http.post(`/question/updateQuestion`, payload);
+      return result.data;
+    },
+    // 获取试题视图
+    async questionView({ commit }, payload) {
+      let result = await http.get(`/question/questionView?id=${payload}`);
+      return result.data;
+    },
     //获取试卷详情
     async examDetail({ commit }, payload) {
       let result = await http.get(`/exam/examDetail?${qs.stringify(payload)}`);

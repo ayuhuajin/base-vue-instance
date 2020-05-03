@@ -6,9 +6,7 @@
         <p>{{ item.questionTitle }}</p>
         <span @click="editQuestion">编辑</span>
       </div>
-      <div v-for="(m, num) in item.opTions" :key="num">
-        {{ m.name }}
-      </div>
+      <div v-for="(m, num) in item.opTions" :key="num">{{ m.name }}：{{ m.value }}</div>
     </div>
   </div>
 </template>

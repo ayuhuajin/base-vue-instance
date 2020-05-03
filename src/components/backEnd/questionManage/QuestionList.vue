@@ -38,7 +38,7 @@
 
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
-      <set-question @handleSave="handleSave" @handleCancel="handleCancel"></set-question>
+      <set-question :questionInfo="questionInfo" @handleSave="handleSave" @handleCancel="handleCancel"></set-question>
     </base-dialog>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
@@ -81,6 +81,22 @@ export default Vue.extend({
         pageFunc: this.initData, // 当前页数需要调用的函数
         pageSize: 10, // 当前页数
         class: 'pageClass'
+      },
+      // 设置试题设置
+      questionInfo: {
+        questionNum: '',
+        questionType: '',
+        questionTitle: '',
+        level: '',
+        subject: '',
+        type: '',
+        testPaper: '',
+        questionDesc: '',
+        opTions: [
+          { name: 'A', value: '', isCheck: false },
+          { name: 'B', value: '', isCheck: false },
+          { name: 'C', value: '', isCheck: false }
+        ]
       },
       // 弹窗设置
       dialogInfo: {
@@ -133,19 +149,12 @@ export default Vue.extend({
         return obj[value];
       }
     },
-    async handleEdit(id, num) {
+    async handleEdit(id) {
+      console.log(id, 999);
       this.id = id;
       this.showDialog = true;
-      try {
-        let obj = await exam.dispatch('examView', { id: id });
-        if (obj) {
-          this.examTitle = obj[0].title;
-          this.level = obj[0].level;
-          this.subject = obj[0].subject;
-        }
-      } catch (err) {
-        console.log('报错');
-      }
+      let obj = await question.dispatch('questionView', id);
+      this.questionInfo = obj[0];
     },
     handleDelete(id) {
       question
@@ -160,6 +169,7 @@ export default Vue.extend({
         });
     },
     handleSave(obj) {
+      console.log('obj', 999);
       if (!this.id) {
         question
           .dispatch('addQuestion', obj)
@@ -171,18 +181,10 @@ export default Vue.extend({
             console.log('失败');
           });
       } else {
-        exam
-          .dispatch('updateBlog', {
-            id: this.id,
-            title: this.examTitle,
-            subject: this.subject,
-            level: this.level,
-            date: timeFormate.timeformatDay(new Date())
-          })
-          .then(() => {
-            this.initData();
-            this.showDialog = false;
-          });
+        question.dispatch('updateQuestion', obj).then(() => {
+          this.initData();
+          this.showDialog = false;
+        });
       }
     },
     handleCancel() {
