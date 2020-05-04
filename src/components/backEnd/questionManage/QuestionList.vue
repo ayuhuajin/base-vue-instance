@@ -96,7 +96,8 @@ export default Vue.extend({
           { name: 'A', value: '', isCheck: false },
           { name: 'B', value: '', isCheck: false },
           { name: 'C', value: '', isCheck: false }
-        ]
+        ],
+        reply: ''
       },
       // 弹窗设置
       dialogInfo: {
