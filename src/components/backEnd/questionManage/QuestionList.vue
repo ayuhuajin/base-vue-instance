@@ -150,7 +150,6 @@ export default Vue.extend({
       }
     },
     async handleEdit(id) {
-      console.log(id, 999);
       this.id = id;
       this.showDialog = true;
       let obj = await question.dispatch('questionView', id);
@@ -169,7 +168,6 @@ export default Vue.extend({
         });
     },
     handleSave(obj) {
-      console.log('obj', 999);
       if (!this.id) {
         question
           .dispatch('addQuestion', obj)

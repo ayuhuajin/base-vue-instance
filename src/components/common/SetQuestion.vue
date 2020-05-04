@@ -101,7 +101,6 @@ export default {
   },
   data() {
     return {
-      data: 'test',
       subject: '',
       level: '',
       questionType: '',
@@ -146,8 +145,7 @@ export default {
           value: '',
           isCheck: false
         }
-      ],
-      chooseList: []
+      ]
     };
   },
   created() {
@@ -163,10 +161,9 @@ export default {
     },
     // 添加选项
     addChooseItem() {
-      let len = this.chooseList.length;
-      console.log(len);
+      let len = this.questionInfo.options.length;
       if (len < 7) {
-        this.chooseList.push(this.chooseItem[len]);
+        this.questionInfo.options.push(this.chooseItem[len]);
       }
     },
     // 选中选项
@@ -190,24 +187,10 @@ export default {
     // 取消
     closeDialog() {
       this.$emit('handleCancel');
-      console.log('取消');
     },
     // 提交
     handleSave() {
-      // let questionObj = {
-      //   questionNum: this.questionNum,
-      //   questionType: this.questionType,
-      //   questionTitle: this.questionTitle,
-      //   level: this.level,
-      //   subject: this.subject,
-      //   type: this.type,
-      //   testPaper: this.testPaper,
-      //   questionDesc: this.questionDesc,
-      //   options: this.chooseList,
-      //   answer: this.answer
-      // };
       this.$emit('handleSave', this.questionInfo);
-      console.log('提交');
     }
   }
 };
