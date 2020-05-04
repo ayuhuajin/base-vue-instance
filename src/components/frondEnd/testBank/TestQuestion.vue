@@ -152,6 +152,9 @@ export default Vue.extend({
       }
     },
     handlerSubmit() {
+      this.$router.push({
+        name: 'testResult'
+      });
       console.log('提交试卷');
     }
   }
