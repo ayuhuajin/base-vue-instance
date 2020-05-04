@@ -92,7 +92,7 @@ export default Vue.extend({
         type: '',
         testPaper: '',
         questionDesc: '',
-        opTions: [
+        options: [
           { name: 'A', value: '', isCheck: false },
           { name: 'B', value: '', isCheck: false },
           { name: 'C', value: '', isCheck: false }

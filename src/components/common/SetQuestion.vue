@@ -53,7 +53,7 @@
     <div class="answer">
       <span>答案:</span>
       <div
-        v-for="(item, index) in questionInfo.opTions"
+        v-for="(item, index) in questionInfo.options"
         :key="index"
         class="option-item"
         :class="{ check: item.isCheck }"
@@ -65,7 +65,7 @@
     </div>
     <div class="options">
       <span>选项：</span>
-      <div v-for="(item, index) in questionInfo.opTions" :key="index">
+      <div v-for="(item, index) in questionInfo.options" :key="index">
         <span>{{ item.name }}：</span>
         <el-input v-model="item.value" placeholder="请输入内容"></el-input>
       </div>
@@ -147,22 +147,7 @@ export default {
           isCheck: false
         }
       ],
-      chooseList: [
-        { name: 'A', value: '', isCheck: false },
-        { name: 'B', value: '', isCheck: false },
-        { name: 'C', value: '', isCheck: false }
-      ],
-      questionObj: {
-        questionNum: this.questionNum,
-        questionType: this.questionType,
-        questionTitle: this.questionTitle,
-        level: this.level,
-        subject: this.subject,
-        type: this.type,
-        testPaper: this.testPaper,
-        questionDesc: this.questionDesc,
-        chooseList: this.chooseList
-      }
+      chooseList: []
     };
   },
   created() {
@@ -186,18 +171,18 @@ export default {
     },
     // 选中选项
     chooseOption(item) {
-      this.answer = [];
-      if (this.questionType == 'multi') {
-        this.chooseList.forEach(item => {
+      this.questionInfo.answer = [];
+      if (this.questionInfo.questionType == 1) {
+        this.questionInfo.options.forEach(item => {
           item.isCheck = false;
         });
         item.isCheck = !item.isCheck;
-        this.answer.push(item.name);
+        this.questionInfo.answer.push(item.name);
       } else {
         item.isCheck = !item.isCheck;
-        this.chooseList.forEach(item => {
+        this.questionInfo.options.forEach(item => {
           if (item.isCheck == true) {
-            this.answer.push(item.name);
+            this.questionInfo.answer.push(item.name);
           }
         });
       }
