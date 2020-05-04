@@ -15,11 +15,11 @@
         <el-radio
           v-for="(item, index) in answerOptions"
           :key="index"
-          :label="item.answerId"
+          :label="item.name"
           @change="handlerChange('single')"
         >
           <img v-if="isImg(item.answer)" :src="item.answer" alt />
-          <div v-else v-html="item.answer">{{ item.answer }}</div>
+          <div v-else v-html="item.value">{{ item.value }}</div>
         </el-radio>
       </el-radio-group>
     </div>
@@ -28,9 +28,9 @@
         <el-checkbox
           v-for="(item, index) in answerOptions"
           :key="index"
-          :label="item.answerId"
+          :label="item.name"
           @change="handlerChange('multiple')"
-          >{{ item.answer }}</el-checkbox
+          >{{ item.value }}</el-checkbox
         >
       </el-checkbox-group>
     </div>
@@ -67,26 +67,26 @@ export default {
       type: [Array, String, Number]
     },
     answer: {
-      type: Object
+      type: [Object, Array, String]
     }
   },
 
   data() {
     return {
       checkList: [], //多选
-      radio: '', // 单选
-      reply: '' //问答
+      radio: '' // 单选
     };
   },
   watch: {
-    'answer.answer': {
+    answer: {
       handler(newName, oldName) {
+        this.checkList = [];
+        this.radio = '';
         if (this.answer) {
-          this.checkList = [];
           if (this.questionType == '1') {
-            this.radio = parseInt(this.answer.answer);
+            this.radio = this.answer;
           } else if (this.questionType == '2') {
-            this.checkList = this.answer.answer;
+            this.checkList = this.answer;
           }
         }
       },
@@ -118,12 +118,13 @@ export default {
     }
   },
   mounted() {
+    this.checkList = [];
+    this.radio = '';
     if (this.answer) {
-      this.checkList = [];
       if (this.questionType == '1') {
-        this.radio = parseInt(this.answer.answer);
+        this.radio = this.answer;
       } else if (this.questionType == '2') {
-        this.checkList = this.answer.answer;
+        this.checkList = this.answer;
       }
     }
   },

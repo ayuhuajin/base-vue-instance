@@ -2,11 +2,11 @@
   <div>
     <div v-if="isEnd" class="test-question">
       <base-question
-        :index="currentQuestion.questionNumber"
+        :index="currentQuestion.questionNum"
         :questionType="currentQuestion.questionType"
         :topic="currentQuestion.questionTitle"
         :answerOptions="currentQuestion.options"
-        :answer="currentQuestion.answer"
+        :answer="currentQuestion.reply"
         @changeAnswer="changeAnswer"
       ></base-question>
       <div class="qs-footer">
@@ -23,10 +23,10 @@
         <div
           @click="currentNumber(index)"
           v-for="(item, index) in examList"
-          :class="[{ disable: !item.answer }]"
+          :class="[{ disable: !item.reply }]"
           :key="index"
         >
-          {{ item.questionNumber }}
+          {{ item.questionNum }}
         </div>
       </div>
       <div @click="handlerSubmit" class="submit" :class="{ isDisAble: !isAllAnswer }">提交并查看结果</div>
@@ -37,6 +37,8 @@
 <script>
 import Vue from 'vue';
 import BaseQuestion from '@/components/common/BaseQuestion';
+import question from '@/store/modules/question.ts';
+
 export default Vue.extend({
   name: 'TestQuestion',
   components: { BaseQuestion },
@@ -45,27 +47,27 @@ export default Vue.extend({
       currentNum: 0,
       isEnd: true,
       examList: [
-        {
-          questionNumber: 1,
-          questionType: 1,
-          questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-          options: [{ answer: 'A', answerId: 1 }, { answer: 'B', answerId: 2 }],
-          answer: null
-        },
-        {
-          questionNumber: 2,
-          questionType: 2,
-          questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
-          options: [{ answer: 'A', answerId: 1 }, { answer: 'B', answerId: 2 }],
-          answer: null
-        },
-        {
-          questionNumber: 3,
-          questionType: 3,
-          questionTitle: '说出栈和队列的区别?',
-          options: '',
-          answer: null
-        }
+        // {
+        //   questionNumber: 1,
+        //   questionType: 1,
+        //   questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
+        //   options: [{ answer: 'A', answerId: 1 }, { answer: 'B', answerId: 2 }],
+        //   answer: null
+        // },
+        // {
+        //   questionNumber: 2,
+        //   questionType: 2,
+        //   questionTitle: '阅读下面的文字,按要求作答。睿智的思想,高尚的情感,灵动的才智,无不贮藏于根深叶茂的文学之树',
+        //   options: [{ answer: 'A', answerId: 1 }, { answer: 'B', answerId: 2 }],
+        //   answer: null
+        // },
+        // {
+        //   questionNumber: 3,
+        //   questionType: 3,
+        //   questionTitle: '说出栈和队列的区别?',
+        //   options: '',
+        //   answer: null
+        // }
       ],
       currentQuestion: {},
       isAllAnswer: false
@@ -75,7 +77,13 @@ export default Vue.extend({
     this.init();
   },
   methods: {
-    init() {
+    async init() {
+      let result = await question.dispatch('examDetail', {
+        pageSize: 100000,
+        pageNumber: 1,
+        examId: '5ead9adab5bd814c084e6e6f'
+      });
+      this.examList = result.data;
       this.currentQuestion = this.examList[0];
     },
     // 点击题号
@@ -109,7 +117,7 @@ export default Vue.extend({
     // 判断是否已全部做完
     judgeAllAnswer() {
       let obj = this.examList.find(item => {
-        return item.answer == null;
+        return item.reply == '';
       });
       if (obj) {
         this.isAllAnswer = false;
@@ -123,28 +131,24 @@ export default Vue.extend({
     putAnswer(answer, index) {
       if (this.examList[index].questionType == '3') {
         if (answer == '') {
-          if (this.examList[index].answer == null) {
-            this.examList[index].answer = null;
-            this.examList[index].options = answer;
-          } else {
-            this.examList[index].answer = null;
-            this.examList[index].options = answer;
-          }
+          this.examList[index].reply = '';
         } else {
-          if (this.examList[index].answer == null) {
-            this.examList[index].answer = { answer: answer };
-            this.examList[index].options = answer;
-          } else {
-            this.examList[index].answer.answer = answer;
-            this.examList[index].options = answer;
-          }
+          this.examList[index].reply = answer;
         }
+      } else if (this.examList[index].questionType == '2') {
+        if (answer == '') {
+          this.examList[index].reply = '';
+        } else {
+          this.examList[index].reply = answer;
+        }
+        console.log('多选题');
       } else {
-        if (this.examList[index].answer == null) {
-          this.examList[index].answer = { answer: answer };
+        if (answer == '') {
+          this.examList[index].reply = '';
         } else {
-          this.examList[index].answer.answer = answer;
+          this.examList[index].reply = answer;
         }
+        console.log('单选题');
       }
     },
     handlerSubmit() {
