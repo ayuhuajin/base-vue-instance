@@ -15,7 +15,14 @@
       <div>
         <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
-        <el-button @click="importExcel" type="primary">导入</el-button>
+        <label @click="importExcel" for="import" type="primary">导入</label>
+        <input
+          type="file"
+          id="import"
+          @change="handleImport"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+    application/vnd.ms-excel"
+        />
         <el-button @click="exportExcel" type="warning">导出</el-button>
       </div>
     </main-header>
@@ -58,6 +65,7 @@ import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import question from '@/store/modules/question';
 import exam from '@/store/modules/exam';
 import mixin from '@/assets/js/mixin.ts';
+import XLSX from 'xlsx';
 export default Vue.extend({
   name: 'QuestionList',
   mixins: [mixin],
@@ -214,6 +222,45 @@ export default Vue.extend({
     // 导出excel
     exportExcel() {
       console.log('导出');
+    },
+    handleImport() {
+      console.log(23);
+      let fileReader = new FileReader();
+      var file = event.currentTarget.files[0];
+      // 回调函数
+      fileReader.onload = ev => {
+        try {
+          let data = ev.target.result;
+          let workbook = XLSX.read(data, {
+            type: 'binary'
+          });
+          // excel读取出的数据
+          let excelData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+          // 将上面数据转换成 table需要的数据
+          console.log(excelData);
+
+          let arr = [];
+          excelData.forEach(item => {
+            let obj = {};
+            obj.questionTitle = item['题目'];
+            obj.subject = item['科目'];
+            obj.questionType = item['题型'];
+            obj.testPaper = item['所属试卷'];
+            obj.level = item['难度'];
+            obj.answer = item['答案'];
+            obj.questionDesc = item['答案解析'];
+            obj.time = item['发布日期'];
+            arr.push(obj);
+          });
+          this.tableData = [...arr];
+          console.log(this.tableData);
+        } catch (e) {
+          window.alert('文件类型不正确！');
+          return false;
+        }
+      };
+      // 读取文件 成功后执行上面的回调函数
+      fileReader.readAsBinaryString(file);
     }
   }
 });
