@@ -13,6 +13,11 @@ export default root.registerModule('tools', {
       let result = await http.get(`/tools/toolList?${qs.stringify(payload)}`);
       return result.data;
     },
+    //获取所有工具-前端
+    async getAllToolView({ commit }, payload) {
+      let result = await http.get(`/tools/getToolList?${qs.stringify(payload)}`);
+      return result.data;
+    },
     // 添加工具
     async addTool({ commit }, payload) {
       let result = await http.post(`/tools/addTool`, payload);

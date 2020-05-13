@@ -38,7 +38,7 @@ export default Vue.extend({
   },
   methods: {
     async init() {
-      let result = await tools.dispatch('getAllTool', {
+      let result = await tools.dispatch('getAllToolView', {
         pageSize: 10000,
         pageNumber: 1
       });
