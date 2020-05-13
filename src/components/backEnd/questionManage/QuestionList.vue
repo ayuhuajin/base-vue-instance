@@ -15,6 +15,8 @@
       <div>
         <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
+        <el-button @click="importExcel" type="primary">导入</el-button>
+        <el-button @click="exportExcel" type="warning">导出</el-button>
       </div>
     </main-header>
     <!-- 表格 -->
@@ -204,6 +206,14 @@ export default Vue.extend({
     changeCategory(e) {
       this.pageInfo.pageNumber = 1;
       this.initData();
+    },
+    // 导入excel
+    importExcel() {
+      console.log('导入');
+    },
+    // 导出excel
+    exportExcel() {
+      console.log('导出');
     }
   }
 });
