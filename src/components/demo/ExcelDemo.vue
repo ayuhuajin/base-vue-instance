@@ -1,15 +1,16 @@
 <template>
-  <div class="excel-demo">
-    excel demo
+  <div class="copy-clip">
+    {{data}}
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import ExcelDemo from '@/components/demo/ExcelDemo.vue';
 export default Vue.extend({
-  components: {
-    ExcelDemo
+  data(){
+    return {
+      data:'123'
+    }
   }
 });
 </script>
