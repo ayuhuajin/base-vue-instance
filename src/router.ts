@@ -231,21 +231,25 @@ let router = new Router({
         }
       ]
     },
-
+    {
+      path: '/demo',
+      name: 'demo',
+      component: () => import('./views/Demo.vue')
+    },
     {
       path: '/login',
       name: 'login',
       component: () => import('./views/Login.vue')
     },
     {
-      path: '*',
-      component: () => import('./components/common/404.vue')
-    },
-    {
       path: '/test',
       name: 'Test',
       component: () => import('./views/Test.vue'),
       meta: { title: '嗨前端-test' }
+    },
+    {
+      path: '*',
+      component: () => import('./components/common/404.vue')
     }
   ]
 });
