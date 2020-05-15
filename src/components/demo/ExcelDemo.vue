@@ -1,16 +1,16 @@
 <template>
   <div class="copy-clip">
-    {{data}}
+    {{ data }}
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
 export default Vue.extend({
-  data(){
+  data() {
     return {
-      data:'123'
-    }
+      data: '123'
+    };
   }
 });
 </script>
