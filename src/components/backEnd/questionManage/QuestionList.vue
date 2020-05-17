@@ -181,7 +181,7 @@ export default Vue.extend({
     handleSave(obj) {
       if (!this.id) {
         question
-          .dispatch('addQuestion', obj)
+          .dispatch('addQuestion', [obj])
           .then(() => {
             this.initData();
             this.closeDialog();
@@ -254,6 +254,15 @@ export default Vue.extend({
           });
           this.tableData = [...arr];
           console.log(this.tableData);
+          question
+            .dispatch('addQuestion', this.tableData)
+            .then(() => {
+              this.initData();
+              this.closeDialog();
+            })
+            .catch(err => {
+              console.log('失败');
+            });
         } catch (e) {
           window.alert('文件类型不正确！');
           return false;
