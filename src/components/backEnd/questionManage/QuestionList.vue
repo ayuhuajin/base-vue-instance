@@ -119,7 +119,45 @@ export default Vue.extend({
       showDialog: false,
       // 表格列表
       questionData: [],
-      examList: []
+      examList: [],
+      tableTitleData: [
+        {
+          label: '题号',
+          prop: 'questionNum'
+        },
+        {
+          label: '题型',
+          prop: 'questionType'
+        },
+        {
+          label: '科目',
+          prop: 'subject'
+        },
+        {
+          label: '难度',
+          prop: 'level'
+        },
+        {
+          label: '所属试卷',
+          prop: 'testPaper'
+        },
+        {
+          label: '题目',
+          prop: 'questionTitle'
+        },
+        {
+          label: '答案',
+          prop: 'answer'
+        },
+        {
+          label: '选项',
+          prop: 'options'
+        },
+        {
+          label: '答案解析',
+          prop: 'questionDesc'
+        }
+      ]
     };
   },
   async mounted() {
@@ -222,9 +260,27 @@ export default Vue.extend({
     // 导出excel
     exportExcel() {
       console.log('导出');
+      // 导出表格的表头设置
+      let allColumns = this.tableTitleData;
+      var columnNames = [];
+      var columnValues = [];
+      for (var i = 0; i < allColumns.length; i++) {
+        columnNames[i] = allColumns[i].label;
+        columnValues[i] = allColumns[i].prop;
+      }
+      require.ensure([], () => {
+        const { export_json_to_excel } = require('../../../assets/js/excel/Export2Excel');
+        const tHeader = columnNames;
+        const filterVal = columnValues;
+        const list = this.questionData;
+        const data = this.formatJson(filterVal, list);
+        export_json_to_excel(tHeader, data, '试题excel');
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]));
     },
     handleImport() {
-      console.log(23);
       let fileReader = new FileReader();
       var file = event.currentTarget.files[0];
       // 回调函数
