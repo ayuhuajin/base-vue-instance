@@ -1,8 +1,8 @@
 <template>
   <div class="demo-test">
-    <!-- <excel-demo></excel-demo>
-    <copy-clip></copy-clip> -->
-    <wx-login></wx-login>
+    <excel-demo></excel-demo>
+    <!-- <copy-clip></copy-clip> -->
+    <!-- <wx-login></wx-login> -->
   </div>
 </template>
 
@@ -13,9 +13,9 @@ import CopyClip from '@/components/demo/CopyClip.vue';
 import WxLogin from '@/components/demo/WxLogin.vue';
 export default Vue.extend({
   components: {
-    ExcelDemo,
-    CopyClip,
-    WxLogin
+    ExcelDemo
+    // CopyClip
+    // WxLogin
   }
 });
 </script>
