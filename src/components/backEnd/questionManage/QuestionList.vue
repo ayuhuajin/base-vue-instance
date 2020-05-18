@@ -15,15 +15,16 @@
       <div>
         <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
-        <label @click="importExcel" for="import" type="primary">导入</label>
+        <label class="up-load" @click="importExcel" for="import" type="primary">导入</label>
         <input
+          class="up-input"
           type="file"
           id="import"
           @change="handleImport"
           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
     application/vnd.ms-excel"
         />
-        <el-button @click="exportExcel" type="warning">导出</el-button>
+        <el-button @click="exportExcel" type="success">导出</el-button>
       </div>
     </main-header>
     <!-- 表格 -->
@@ -274,7 +275,8 @@ export default Vue.extend({
         const filterVal = columnValues;
         const list = this.questionData;
         const data = this.formatJson(filterVal, list);
-        export_json_to_excel(tHeader, data, '试题excel');
+        console.log(data, 999);
+        // export_json_to_excel(tHeader, data, '试题excel');
       });
     },
     formatJson(filterVal, jsonData) {
@@ -334,6 +336,18 @@ export default Vue.extend({
 .bank-list {
   > div:not(:first-child) {
     margin-top: 15px;
+  }
+  .up-load {
+    width: 120px;
+    margin-right: 10px;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    background: #24e4c1;
+  }
+  .up-input {
+    width: 0;
   }
   .content-detail {
     margin-left: 20px;
