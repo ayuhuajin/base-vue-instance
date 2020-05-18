@@ -276,7 +276,7 @@ export default Vue.extend({
         const list = this.questionData;
         const data = this.formatJson(filterVal, list);
         console.log(data, 999);
-        // export_json_to_excel(tHeader, data, '试题excel');
+        export_json_to_excel(tHeader, data, '试题excel');
       });
     },
     formatJson(filterVal, jsonData) {
@@ -300,6 +300,8 @@ export default Vue.extend({
           let arr = [];
           excelData.forEach(item => {
             let obj = {};
+            obj.options = [];
+            obj.questionNum = item['题号'];
             obj.questionTitle = item['题目'];
             obj.subject = item['科目'];
             obj.questionType = item['题型'];
@@ -308,6 +310,10 @@ export default Vue.extend({
             obj.answer = item['答案'];
             obj.questionDesc = item['答案解析'];
             obj.time = item['发布日期'];
+            obj.options[0] = { name: 'A', value: item['A'], isCheck: false };
+            obj.options[1] = { name: 'B', value: item['B'], isCheck: false };
+            obj.options[2] = { name: 'C', value: item['C'], isCheck: false };
+            obj.options[3] = { name: 'D', value: item['D'], isCheck: false };
             arr.push(obj);
           });
           this.tableData = [...arr];
@@ -322,6 +328,8 @@ export default Vue.extend({
               console.log('失败');
             });
         } catch (e) {
+          console.log(e, 565);
+
           window.alert('文件类型不正确！');
           return false;
         }
