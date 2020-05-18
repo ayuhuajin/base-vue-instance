@@ -13,6 +13,9 @@ import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 Vue.use(mavonEditor);
 
+import VueClipboard from 'vue-clipboard2';
+Vue.use(VueClipboard);
+
 Vue.directive('highlight', function(el) {
   let blocks = el.querySelectorAll('pre code');
   blocks.forEach(block => {
