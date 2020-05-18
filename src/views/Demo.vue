@@ -1,7 +1,7 @@
 <template>
   <div class="demo-test">
     <excel-demo></excel-demo>
-    <copy-clip></copy-clip>
+    <!-- <copy-clip></copy-clip> -->
     <!-- <wx-login></wx-login> -->
   </div>
 </template>
@@ -14,7 +14,7 @@ import CopyClip from '@/components/demo/CopyClip.vue';
 export default Vue.extend({
   components: {
     ExcelDemo,
-    CopyClip
+    // CopyClip
     // WxLogin
   }
 });
