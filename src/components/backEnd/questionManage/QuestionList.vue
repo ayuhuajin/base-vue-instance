@@ -151,8 +151,20 @@ export default Vue.extend({
           prop: 'answer'
         },
         {
-          label: '选项',
-          prop: 'options'
+          label: 'A',
+          prop: 'A'
+        },
+        {
+          label: 'B',
+          prop: 'B'
+        },
+        {
+          label: 'C',
+          prop: 'C'
+        },
+        {
+          label: 'D',
+          prop: 'D'
         },
         {
           label: '答案解析',
@@ -273,14 +285,30 @@ export default Vue.extend({
         const { export_json_to_excel } = require('../../../assets/js/excel/Export2Excel');
         const tHeader = columnNames;
         const filterVal = columnValues;
-        const list = this.questionData;
+        const list = this.splitOption(this.questionData);
+        console.log(tHeader, filterVal, list, 87);
+
         const data = this.formatJson(filterVal, list);
         console.log(data, 999);
         export_json_to_excel(tHeader, data, '试题excel');
       });
     },
+    splitOption(list) {
+      return list.map(item => {
+        if (item.options) {
+          item.options.forEach(m => {
+            item[m.name] = m.value;
+          });
+          return item;
+        }
+      });
+    },
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]));
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          return v[j];
+        })
+      );
     },
     handleImport() {
       let fileReader = new FileReader();
@@ -310,10 +338,10 @@ export default Vue.extend({
             obj.answer = item['答案'];
             obj.questionDesc = item['答案解析'];
             obj.time = item['发布日期'];
-            obj.options[0] = { name: 'A', value: item['A'], isCheck: false };
-            obj.options[1] = { name: 'B', value: item['B'], isCheck: false };
-            obj.options[2] = { name: 'C', value: item['C'], isCheck: false };
-            obj.options[3] = { name: 'D', value: item['D'], isCheck: false };
+            obj.options[0] = { name: 'A', value: item['A'], isCheck: obj.answer.includes('A') };
+            obj.options[1] = { name: 'B', value: item['B'], isCheck: obj.answer.includes('B') };
+            obj.options[2] = { name: 'C', value: item['C'], isCheck: obj.answer.includes('C') };
+            obj.options[3] = { name: 'D', value: item['D'], isCheck: obj.answer.includes('D') };
             arr.push(obj);
           });
           this.tableData = [...arr];

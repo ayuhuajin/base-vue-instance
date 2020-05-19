@@ -13,7 +13,7 @@ import CopyClip from '@/components/demo/CopyClip.vue';
 // import WxLogin from '@/components/demo/WxLogin.vue';
 export default Vue.extend({
   components: {
-    ExcelDemo,
+    ExcelDemo
     // CopyClip
     // WxLogin
   }
