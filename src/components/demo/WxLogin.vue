@@ -7,6 +7,8 @@
 <script>
 // 微信登录需要服务号与微信认证？？？
 import Vue from 'vue';
+import Axios from 'axios';
+import demo from '@/store/modules/demo';
 export default Vue.extend({
   data() {
     return {
@@ -23,15 +25,24 @@ export default Vue.extend({
       const local = window.location.href;
       if (code == null || code === '') {
         window.location.href =
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx58ec77bed4a1261d&redirect_uri=' +
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb534ddc40d15ecfc&redirect_uri=' +
           encodeURIComponent(local) +
-          '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
+          '&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
       } else {
-        this.getinfo();
+        //api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+        this.getinfo(code);
       }
     },
-    getinfo() {
+    async getinfo(code) {
       console.log('f');
+      let result = await demo.dispatch('getWxToken', code);
+      console.log(result, 99997);
+
+      // Axios.get(
+      //   `https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxb534ddc40d15ecfc&secret=ae877da26da8e05dbf26ba9014b090e3&code=${code}&grant_type=authorization_code`
+      // ).then(response => {
+      //   ctx.response.body = response.data;
+      // });
     },
     getUrlParam(name) {
       //封装方法
