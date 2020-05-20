@@ -100,7 +100,7 @@ export default Vue.extend({
         content: [{ message: '请选择文章分类', trigger: 'blur' }]
       },
       uploadInfo: {
-        uploadURl: 'http://10.70.1.11:12306/upload',
+        uploadURl: 'http://192.168.1.101:12306/upload',
         hide: false,
         uploadClass: 'uploadClass',
         desc: ''

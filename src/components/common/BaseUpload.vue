@@ -10,6 +10,7 @@
       :before-upload="beforeUpload"
       :on-remove="handleRemove"
       :on-error="handleError"
+      :headers="{ Authorization: 'Bearer ' + token }"
     >
       <i class="el-icon-plus avatar-uploader-icon"> </i>
     </el-upload>
@@ -30,7 +31,8 @@ export default Vue.extend({
   data() {
     return {
       title: '上传图片',
-      fileList: []
+      fileList: [],
+      token: localStorage.getItem('token')
     };
   },
   mounted() {},
