@@ -7,6 +7,10 @@ export default root.registerModule('demo', {
     async getWxToken({ commit }, payload) {
       let result = await http.get(`/wxtoken?code=${payload}`);
       return result;
+    },
+    async createWxMenu({ commit }, payload) {
+      let result = await http.post(`/createWxMenu`);
+      return result;
     }
   }
 });
