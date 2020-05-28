@@ -2,6 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import UserHome from './views/UserHome.vue';
 import AdminHome from './views/AdminHome.vue';
+import NProgress from 'nprogress'; // progress bar
+import 'nprogress/nprogress.css'; // progress bar style
+
+NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 Vue.use(Router);
 
@@ -254,22 +258,28 @@ let router = new Router({
   ]
 });
 router.beforeEach((to, from, next) => {
+  NProgress.start();
   if (to.meta.requireAuth) {
     const token = localStorage.getItem('token');
     if (token) {
+      NProgress.done();
       next();
     } else {
+      NProgress.done();
       next({
         path: '/login',
         query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
       });
     }
+    NProgress.done();
     next();
   } else {
+    NProgress.done();
     next();
   }
 });
 router.afterEach((to, from) => {
+  NProgress.done();
   if (to.meta && to.meta.title) {
     document.title = to.meta.title;
   }

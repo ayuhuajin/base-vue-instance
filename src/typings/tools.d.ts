@@ -4,3 +4,4 @@ declare module 'qs';
 declare module '@/assets/js/utils/secret';
 declare module 'vconsole';
 declare module 'lodash';
+declare module 'nprogress';
