@@ -16,7 +16,8 @@ export default Vue.extend({
     };
   },
   created() {
-    this.init();
+    // this.init();
+    this.createMenu();
   },
   methods: {
     init() {
@@ -50,6 +51,9 @@ export default Vue.extend({
       var r = window.location.search.substr(1).match(reg); //匹配目标参数
       if (r != null) return unescape(r[2]);
       return null; //返回参数值
+    },
+    async createMenu() {
+      let result = await demo.dispatch('createWxMenu');
     }
   }
 });

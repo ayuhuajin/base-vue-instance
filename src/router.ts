@@ -252,6 +252,12 @@ let router = new Router({
       meta: { title: '嗨前端-test' }
     },
     {
+      path: '/ali',
+      name: 'Ali',
+      component: () => import('./views/Ali.vue'),
+      meta: { title: '嗨前端-阿里' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
