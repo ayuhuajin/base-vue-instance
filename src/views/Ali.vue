@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import AliPay from '@/components/ali/AliPay';
+import AliPay from '@/components/ali/AliPay.vue';
 export default Vue.extend({
   components: {
     AliPay

@@ -57,6 +57,10 @@ module.exports = {
       };
     }
   },
+  // chainWebpack(config) {
+  //   config.plugins.delete('preload'); // TODO: need test
+  //   config.plugins.delete('prefetch'); // TODO: need test
+  // },
 
   transpileDependencies: [
     './node_modules/query-string/index.js',
