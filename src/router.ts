@@ -258,6 +258,12 @@ let router = new Router({
       meta: { title: '嗨前端-阿里' }
     },
     {
+      path: '/ali/hai',
+      name: 'PayCallback',
+      component: () => import('./components/ali/PayCallback.vue'),
+      meta: { title: '嗨前端-支付回调' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
