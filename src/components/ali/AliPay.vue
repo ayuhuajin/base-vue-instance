@@ -1,12 +1,17 @@
 <template>
-  <div class="ali-pay">
-    测试阿里支付
-  </div>
+  <div class="ali-pay">测试阿里支付<span @click="createInit">$6元</span></div>
 </template>
 
 <script lang="js">
 import Vue from 'vue';
-export default Vue.extend({});
+import ali from '@/store/modules/ali'
+export default Vue.extend({
+  methods:{
+    createInit(){
+      ali.dispatch('createOrder')
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
