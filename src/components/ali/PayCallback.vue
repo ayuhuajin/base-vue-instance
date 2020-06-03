@@ -1,6 +1,6 @@
 <template>
   <div class="pay-callback">
-    支付回调
+    支付回调，付款成功。。。。。。。。
   </div>
 </template>
 

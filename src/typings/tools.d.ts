@@ -5,3 +5,5 @@ declare module '@/assets/js/utils/secret';
 declare module 'vconsole';
 declare module 'lodash';
 declare module 'nprogress';
+declare module 'vue-qr';
+declare module 'vue-clipboard2';

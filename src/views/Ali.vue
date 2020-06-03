@@ -4,12 +4,19 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vue from 'vue';
 import AliPay from '@/components/ali/AliPay.vue';
 export default Vue.extend({
   components: {
-    AliPay
+    AliPay,
+  },
+  data(){
+    return{
+    }
+  },
+  methods: {
+
   }
 });
 </script>
