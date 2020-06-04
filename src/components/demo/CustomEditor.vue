@@ -17,6 +17,7 @@
 // 微信登录需要服务号与微信认证？？？
 import Vue from 'vue';
 import VueUeditorWrap from 'vue-ueditor-wrap';
+import md5 from 'md5';
 export default Vue.extend({
   components: {
     VueUeditorWrap
@@ -29,13 +30,13 @@ export default Vue.extend({
         // 编辑器不自动被内容撑高
         autoHeightEnabled: false,
         // 初始容器高度
-        initialFrameHeight: 440,
+        initialFrameHeight: 300,
         // 初始容器宽度
-        initialFrameWidth: '100%',
+        initialFrameWidth: '60%',
         // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
         serverUrl: 'http://35.201.165.105:8000/controller.php',
         // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
-        UEDITOR_HOME_URL: '/static/UEditor/'
+        UEDITOR_HOME_URL: '../../../UEditor/'
       }
     };
   },
@@ -49,6 +50,8 @@ export default Vue.extend({
     // 7. 借助 beforeInit 钩子，你可以实现对 UEditor 的二次开发，会在 scripts 加载完毕之后、编辑器初始化之前触发，以 编辑器 id 和 配置参数 作为入参
     addCustomUI(editorId, editorConfig) {
       // console.log(editorId + '的配置参数是:', JSON.stringify(editorConfig, null, 2))
+      console.log(123, 234234);
+
       var domUtils = window.UE.dom.domUtils;
       // 1. 自定义按钮
       window.UE.registerUI(
@@ -69,7 +72,11 @@ export default Vue.extend({
               });
               var n = t.length + 1;
               var r = 'gapfilling-span ' + md5(e);
-              editor.execCommand('inserthtml', '<span class="' + r + '">' + n + '</span>', true);
+              editor.execCommand(
+                'inserthtml',
+                '<span style="color:red !important" class="' + r + '">' + n + '</span>',
+                true
+              );
             }
           });
           // 创建一个 button
@@ -79,11 +86,11 @@ export default Vue.extend({
             // 提示
             title: '插入填空题标识',
             // 需要添加的额外样式，可指定 icon 图标，图标路径参考常见问题 2
-            cssRules:
-              "background-image: url('/static/UEditor/themes/default/images/gapfilling.png') !important;background-size: cover;",
+            cssRules: "background-image: url('/gapfilling.png') !important;background-size: cover;",
             // 点击时执行的命令
-            onclick: function() {
+            onclick: () => {
               // 这里可以不用执行命令，做你自己的操作也可
+              console.log(123123);
               editor.execCommand(uiName);
             }
           });
@@ -106,7 +113,10 @@ export default Vue.extend({
       );
     },
     questionItemReset(content) {
-      let spanRegex = new RegExp('<span class="gapfilling-span (.*?)">(.*?)<\\/span>', 'g');
+      let spanRegex = new RegExp(
+        '<span style="color:red !important" class="gapfilling-span (.*?)">(.*?)<\\/span>',
+        'g'
+      );
       let _this = this;
       let newFormItem = [];
       let gapfillingItems = [];
@@ -119,7 +129,7 @@ export default Vue.extend({
         return false;
       }
       gapfillingItems.forEach(function(span, index) {
-        let pairRegex = /<span class="gapfilling-span (.*?)">(.*?)<\/span>/;
+        let pairRegex = /<span style="color: red !important" class="gapfilling-span (.*?)">(.*?)<\/span>/;
         pairRegex.test(span);
         newFormItem.push({ prefix: RegExp.$2, itemId: RegExp.$1, content: '', score: 1 });
       });
@@ -143,3 +153,13 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss">
+.gapfilling-span {
+  color: red !important;
+  border-bottom: 1px solid red !important;
+  font-size: 21px !important;
+  margin: 0 12px !important;
+  width: 40px !important;
+}
+</style>
+gapfilling-spa
