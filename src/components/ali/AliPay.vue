@@ -25,10 +25,11 @@ export default Vue.extend({
   },
   methods:{
     createInit(){
+      let out_trade_no = Date.parse(new Date());
       ali.dispatch('createOrder',{
-        out_trade_no: 'out_trade_no_123',// 必填 商户订单主键, 就是你要生成的
+        out_trade_no: out_trade_no,// 必填 商户订单主键, 就是你要生成的
         subject: '女装',      // 必填 商品概要
-        total_amount: 6,    // 必填 多少钱
+        total_amount: 0.01,    // 必填 多少钱
       }).then((result)=>{
         console.log(result,8989);
         this.config.value = result.data.qrCode
