@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "analyz": "npm run build --report",
+    "serve:build": "vue-cli-service serve --open --mode production",
     "serve": "vue-cli-service serve --open",
     "test": "vue-cli-service serve --open --mode test",
     "build": "vue-cli-service build",

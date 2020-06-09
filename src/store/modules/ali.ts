@@ -10,7 +10,7 @@ export default root.registerModule('ali', {
     },
     // 查询订单
     async queryOrder({ commit }, payload) {
-      let result = await http.get(`/ali/order`);
+      let result = await http.get(`/ali/queryOrder`);
       return result;
     }
   }

@@ -2,6 +2,8 @@
   <div class="ali-pay">
     零食<span @click="createInit">6元</span>
     <vue-qr id="qrcode" :logoSrc="config.logo" :text="config.value" :size="config.size" :margin="0"></vue-qr>
+
+    <div @click="searchOrder">查询订单</div>
   </div>
 </template>
 
@@ -34,6 +36,11 @@ export default Vue.extend({
         console.log(result,8989);
         this.config.value = result.data.qrCode
 
+      })
+    },
+    searchOrder(){
+      ali.dispatch('queryOrder',12312312312).then((data)=>{
+        console.log(data,'shuju');
       })
     },
     // 下载二维码
