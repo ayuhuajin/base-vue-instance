@@ -22,25 +22,32 @@ export default Vue.extend({
         value:'',
         logo:'',
         size:200
-      }
+      },
+      timer:null,
+      out_trade_no:''
     }
   },
   methods:{
     createInit(){
-      let out_trade_no = Date.parse(new Date());
+      this.out_trade_no = Date.parse(new Date());
       ali.dispatch('createOrder',{
-        out_trade_no: out_trade_no,// 必填 商户订单主键, 就是你要生成的
+        out_trade_no: this.out_trade_no,// 必填 商户订单主键, 就是你要生成的
         subject: '女装',      // 必填 商品概要
         total_amount: 0.01,    // 必填 多少钱
       }).then((result)=>{
         console.log(result,8989);
         this.config.value = result.data.qrCode
-
+        this.timer = setInterval(this.searchOrder, 2000);
       })
     },
+
     searchOrder(){
-      ali.dispatch('queryOrder',12312312312).then((data)=>{
-        console.log(data,'shuju');
+      ali.dispatch('queryOrder',this.out_trade_no).then((data)=>{
+        console.log(data.data.tradeStatus,'shuju');
+          if(data.data.tradeStatus =='TRADE_SUCCESS') {
+            clearInterval(this.timer);
+            window.location.href="http://wulilang.com/ali/hai"
+          }
       })
     },
     // 下载二维码
