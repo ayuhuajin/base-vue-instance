@@ -8,6 +8,11 @@ export default root.registerModule('ali', {
       let result = await http.post(`/ali/createOrder`, payload);
       return result;
     },
+    // 新建订单
+    async createAliOrder({ commit }, payload) {
+      let result = await http.post(`/aliPay/createOrder`, payload);
+      return result;
+    },
     // 查询订单
     async queryOrder({ commit }, payload) {
       let result = await http.get(`/ali/queryOrder?id=${payload}`);
