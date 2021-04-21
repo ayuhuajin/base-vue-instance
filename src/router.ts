@@ -264,6 +264,12 @@ let router = new Router({
       meta: { title: '嗨前端-支付回调' }
     },
     {
+      path: '/maps',
+      name: 'ExportMapsData',
+      component: () => import('./views/ExportMapsData.vue'),
+      meta: { title: '地图数据' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
