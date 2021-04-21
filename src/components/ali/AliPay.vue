@@ -1,6 +1,6 @@
 <template>
   <div class="ali-pay">
-    零食<span @click="createInit">6元</span>
+    零食<span @click="createInit">6元1</span>
     <vue-qr id="qrcode" :logoSrc="config.logo" :text="config.value" :size="config.size" :margin="0"></vue-qr>
 
     <div @click="searchOrder">查询订单</div>
