@@ -11,6 +11,7 @@
 </template>
 <script>
 import Vue from 'vue'
+import ali from '@/store/modules/ali'
 export default Vue.extend({
   name: 'ALiPay',
   data() {
