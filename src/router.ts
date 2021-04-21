@@ -270,6 +270,12 @@ let router = new Router({
       meta: { title: '地图数据' }
     },
     {
+      path: '/payDemo',
+      name: 'payDemo',
+      component: () => import('./views/PayDemo.vue'),
+      meta: { title: '支付demo' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
