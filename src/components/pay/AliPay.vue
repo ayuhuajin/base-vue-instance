@@ -26,10 +26,20 @@ export default Vue.extend({
         out_trade_no: this.out_trade_no,// 必填 商户订单主键, 就是你要生成的
         subject: '女装',      // 必填 商品概要
         total_amount: 0.01,    // 必填 多少钱
-      }).then((result)=>{
-        console.log(result,8989);
-        this.config.value = result.data.qrCode
-        this.timer = setInterval(this.searchOrder, 2000);
+      }).then((res)=>{
+        const div = document.createElement('div')
+        div.classList = 'ali-form'
+        if (res.data) {
+          div.innerHTML = res.data
+          document.body.appendChild(div)
+          const form = document.querySelector('.ali-form form')
+          form.submit()
+        }
+        // console.log(result.data);
+        // window.href = result.data.data
+        // console.log(result,8989);
+        // this.config.value = result.data.qrCode
+        // this.timer = setInterval(this.searchOrder, 2000);
       })
     },
     payMoney(){
