@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="footer">Copyright © 2018-2020 All Rights Reserved.</div>
+    <div class="footer">
+      Copyright © 2018-2020 All Rights Reserved.
+      <a href="https://beian.miit.gov.cn/">闽ICP备18007646号-2</a>
+    </div>
   </div>
 </template>
 
