@@ -2,6 +2,7 @@
   <div class="web-socket">
     <input v-model="value" />
     <el-button @click="sendMes">发送</el-button>
+    <div v-for="(item, index) in message" :key="index">{{ item }}</div>
   </div>
 </template>
 
@@ -12,7 +13,8 @@ export default Vue.extend({
   data(){
     return{
       value:111,
-      ws:null
+      ws:null,
+      message:[]
     }
   },
   mounted(){
@@ -25,9 +27,11 @@ export default Vue.extend({
       this.ws.send(this.value);
     },
     init(){
-      this.ws = new WebSocket("ws://10.123.61.14:11223");
-      this.ws.onopen = function(){this.ws.send("Test!4444"); };
-      this.ws.onmessage = function(evt){console.log(evt.data,888);};
+      var ws = new WebSocket("ws://10.123.61.14:11223");
+      let that = this
+      this.ws = ws
+      this.ws.onopen = function(){that.ws.send("Test!4444"); };
+      this.ws.onmessage = function(evt){console.log(evt.data,888);that.message.push(evt.data)};
       this.ws.onclose = function(evt){console.log(1111);};
       this.ws.onerror = function(evt){console.log(222);ws.close();};
       // console.log(333);
