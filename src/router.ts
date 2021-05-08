@@ -282,6 +282,18 @@ let router = new Router({
       meta: { title: 'socket' }
     },
     {
+      path: '/shopList',
+      name: 'shopList',
+      component: () => import('./components/shop/ShopList.vue'),
+      meta: { title: '商品列表' }
+    },
+    {
+      path: '/shopDetail',
+      name: 'shopDetail',
+      component: () => import('./components/shop/ShopDetail.vue'),
+      meta: { title: '商品详情' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }

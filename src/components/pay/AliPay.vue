@@ -10,41 +10,43 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import ali from '@/store/modules/ali'
+import Vue from 'vue';
+import ali from '@/store/modules/ali';
 export default Vue.extend({
   name: 'ALiPay',
   data() {
     return {
-      test:'test'
+      test: 'test'
     };
   },
   methods: {
-    createInit(){
+    createInit() {
       this.out_trade_no = Date.parse(new Date());
-      ali.dispatch('createAliOrder',{
-        out_trade_no: this.out_trade_no,// 必填 商户订单主键, 就是你要生成的
-        subject: '女装',      // 必填 商品概要
-        total_amount: 0.01,    // 必填 多少钱
-      }).then((res)=>{
-        const div = document.createElement('div')
-        div.classList = 'ali-form'
-        if (res.data) {
-          div.innerHTML = res.data
-          document.body.appendChild(div)
-          const form = document.querySelector('.ali-form form')
-          form.submit()
-        }
-        // console.log(result.data);
-        // window.href = result.data.data
-        // console.log(result,8989);
-        // this.config.value = result.data.qrCode
-        // this.timer = setInterval(this.searchOrder, 2000);
-      })
+      ali
+        .dispatch('createAliOrder', {
+          out_trade_no: this.out_trade_no, // 必填 商户订单主键, 就是你要生成的
+          subject: '女装', // 必填 商品概要
+          total_amount: 0.01 // 必填 多少钱
+        })
+        .then(res => {
+          const div = document.createElement('div');
+          div.classList = 'ali-form';
+          if (res.data) {
+            div.innerHTML = res.data;
+            document.body.appendChild(div);
+            const form = document.querySelector('.ali-form form');
+            form.submit();
+          }
+          // console.log(result.data);
+          // window.href = result.data.data
+          // console.log(result,8989);
+          // this.config.value = result.data.qrCode
+          // this.timer = setInterval(this.searchOrder, 2000);
+        });
     },
-    payMoney(){
+    payMoney() {
       console.log('fui');
     }
   }
-})
+});
 </script>
