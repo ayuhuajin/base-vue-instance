@@ -276,6 +276,12 @@ let router = new Router({
       meta: { title: '支付demo' }
     },
     {
+      path: '/websocket',
+      name: 'websocket',
+      component: () => import('./components/websocket/WebScoket.vue'),
+      meta: { title: 'socket' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
