@@ -94,7 +94,7 @@ export default Vue.extend({
       console.log('初始化');
     },
     goShopDetail(item) {
-      let str = md5(item.shopSecret);
+      let str = md5(123 + item.shopSecret + 123);
       console.log(item, 888, str);
       if (this.secretStr !== item.shopSecret) {
         this.$message.success('暂无权限查看');
