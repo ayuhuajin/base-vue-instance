@@ -42,6 +42,7 @@ module.exports = {
     config.devtool = config.mode === 'production' ? false : 'source-map';
     // config.devtool = 'eval-source-map';
     if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true; //移除console
       config.externals = process.env.NODE_ENV === 'production' ? getProdExternals() : {}; // 排除打包的插件
       return {
         plugins: [
