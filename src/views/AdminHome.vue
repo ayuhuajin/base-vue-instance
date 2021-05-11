@@ -1,8 +1,8 @@
 <template>
   <div class="admin-home">
-    <base-header></base-header>
+    <!-- <base-header></base-header> -->
     <div class="wrap">
-      <base-sidebar></base-sidebar>
+      <!-- <base-sidebar></base-sidebar> -->
       <base-main></base-main>
     </div>
   </div>
@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import BaseHeader from '@/components/common/BaseHeader.vue';
-import BaseSidebar from '@/components/common/BaseSidebar.vue';
+// import BaseHeader from '@/components/common/BaseHeader.vue';
+// import BaseSidebar from '@/components/common/BaseSidebar.vue';
 import BaseMain from '@/components/common/BaseMain.vue';
 export default Vue.extend({
   name: 'AdminHome',
   components: {
-    BaseHeader,
-    BaseSidebar,
+    // BaseHeader,
+    // BaseSidebar,
     BaseMain
   },
   methods: {}

@@ -178,6 +178,25 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/shop',
+          component: () => import('./components/backEnd/shop/ShopView.vue'),
+          meta: { title: '嗨前端-商品', requireAuth: true },
+          children: [
+            {
+              path: '/',
+              name: 'ShopList',
+              component: () => import('./components/backEnd/shop/ShopList.vue'),
+              meta: { title: '嗨前端-商品列表', requireAuth: true }
+            },
+            {
+              path: '/backEnd/bankDetail',
+              name: 'sBDetail',
+              component: () => import('./components/backEnd/testBank/BankDetail.vue'),
+              meta: { title: '嗨前端-添加试卷', requireAuth: true }
+            }
+          ]
+        },
+        {
           path: '/backEnd/questionManage',
           meta: { title: '试题' },
           component: () => import('./components/backEnd/questionManage/QuestionView.vue'),
