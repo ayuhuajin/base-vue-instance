@@ -313,6 +313,12 @@ let router = new Router({
       meta: { title: '商品详情' }
     },
     {
+      path: '/contactList',
+      name: 'contactList',
+      component: () => import('./views/contactList.vue'),
+      meta: { title: '联系列表' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }

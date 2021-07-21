@@ -5,15 +5,6 @@
       <el-button @click="searchData2(polygonArr)">搜索</el-button>
       <el-button @click="exportData">导出</el-button>
     </div>
-    <div id="container" class="container" ref="SelectMap"></div>
-    <div id="result"></div>
-    <div id="result1" style="display:none"></div>
-    <ul class="list">
-      <li v-for="(item, index) in businessData" :key="index">
-        <span>{{ item.address }}</span> <span @click="addFriend">{{ item.tel }}</span>
-      </li>
-    </ul>
-    <span @click="addFriend">234234</span>
     <div class="input-card" style="width: 120px">
       <button class="btn" @click="rectOpem()" style="margin-bottom: 5px">开始编辑</button>
       <button class="btn" @click="closeOpem()" style="margin-bottom: 5px">结束编辑</button>
@@ -25,6 +16,16 @@
       <button class="btn" @click="clearDraw()" style="margin-bottom: 5px">关闭绘图</button>
       <button class="btn" @click="getLngLat()" style="margin-bottom: 5px">获取中心点</button>
     </div>
+    <div id="container" class="container" ref="SelectMap"></div>
+    <div id="result"></div>
+    <div id="result1" style="display:none"></div>
+
+    <ul class="list">
+      <li v-for="(item, index) in businessData" :key="index">
+        <span>{{ item.address }}</span> <span @click="addFriend">{{ item.tel }}</span>
+      </li>
+    </ul>
+    <!-- <span @click="addFriend">234234</span> -->
   </div>
 </template>
 
