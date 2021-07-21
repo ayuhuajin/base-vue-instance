@@ -9,6 +9,7 @@
         <span @click="delContact(item)">删除</span>
         <span>{{ item.isAddContactWX ? '已添加' : '未添加' }}</span>
         <span @click="updateContact(item)">添加</span>
+        <span>{{ item.phone }}</span>
         <span @click="addWechat(item)">添加微信</span>
       </li>
     </ul>
