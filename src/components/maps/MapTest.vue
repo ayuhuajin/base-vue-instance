@@ -32,6 +32,7 @@
 <script>
 import Vue from 'vue';
 import gdMap from '@/plugins/gdMaps.ts';
+import contact from '@/store/modules/contact';
 export default Vue.extend({
   name: 'GdMap',
   data() {
@@ -409,12 +410,27 @@ export default Vue.extend({
         this.searchData2(item);
       });
     },
+    // 添加联系人
+    addContact(list) {
+      list.forEach(item => {
+        item.phone = item.tel;
+        item.addr = item.address;
+        item.province = item.pname;
+        item.country = item.cityname;
+        item.city = item.adname;
+      });
+      contact.dispatch('addContact', list).then(result => {
+        console.log('wancheng');
+      });
+    },
     // 导出
     exportData() {
       if (this.businessData && this.businessData.length == 0) {
         this.init(false);
         return;
       }
+      // 添加联系人
+      this.addContact(this.businessData);
       // 导出表格的表头设置
       let allColumns = this.tableTitleData;
       var columnNames = [];

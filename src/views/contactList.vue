@@ -9,6 +9,7 @@
         <span @click="delContact(item)">删除</span>
         <span>{{ item.isAddContactWX ? '已添加' : '未添加' }}</span>
         <span @click="updateContact(item)">添加</span>
+        <span @click="addWechat(item)">添加微信</span>
       </li>
     </ul>
   </div>
@@ -61,7 +62,25 @@ export default Vue.extend({
       })
     },
     // 添加微信
-    addWechat(){
+    addWechat(item){
+      this.copyUrl(item.phone)
+      window.location.href='weixin://';
+    },
+    // 复制方法
+    copyUrl(text){
+      let input = document.createElement("input");
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      input.setSelectionRange(0, input.value.length)
+
+      if (document.execCommand) {
+        document.execCommand('Copy');
+        this.$message.success('复制成功');
+      } else {
+        this.$message.error('复制失败');
+      }
+      document.body.removeChild(input);
     }
   }
 });
