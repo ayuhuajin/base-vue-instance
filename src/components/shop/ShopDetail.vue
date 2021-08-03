@@ -1,7 +1,9 @@
 <template>
   <div class="shop-list">
     <ul>
-      sdfsdfasd
+      <li>
+        <p>{{ item.content }}</p>
+      </li>
     </ul>
   </div>
 </template>
@@ -18,7 +20,7 @@ export default Vue.extend({
           shopId: '',
           shopName: '第一件商品', // 商品名称
           shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
+          content: '第一件商品', // 商品内容
           shopSecret: '12345',
           onTrial: false, // 是否试用
           isPurchase: false, // 是否购买
@@ -32,7 +34,7 @@ export default Vue.extend({
           shopId: '',
           shopName: '第一件商品', // 商品名称
           shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
+          content: '第一件商品', // 商品内容
           shopSecret: '123456',
           onTrial: false, // 是否试用
           isPurchase: false, // 是否购买

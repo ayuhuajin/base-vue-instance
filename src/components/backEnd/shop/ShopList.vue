@@ -26,6 +26,17 @@
         </template>
       </el-table-column>
     </base-table>
+    <!-- 弹窗 -->
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
+      <div class="bank">
+        <span>商品名称</span>
+        <el-input v-model="shopItem.shopName" placeholder="请输入商品名称"></el-input>
+      </div>
+      <div>
+        <span class="save" @click="handleSave()">保存</span>
+        <span class="cancel" @click="closeDialog">取消</span>
+      </div>
+    </base-dialog>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
   </div>
@@ -36,6 +47,7 @@ import Vue from 'vue';
 import MainHeader from '@/components/common/MainHeader.vue';
 import PageChange from '@/components/common/PageChange.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
+import BaseDialog from '@/components/common/BaseDialog.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import shop from '@/store/modules/shop';
 
@@ -46,12 +58,14 @@ export default Vue.extend({
   components: {
     MainHeader,
     BaseTable,
-    PageChange
+    PageChange,
+    BaseDialog
   },
   data() {
     return {
       title: '商品列表',
       keyword: '',
+      shopName: '',
       // 分页设置
       pageInfo: {
         pageNumber: 1, // 当前页数
@@ -61,14 +75,25 @@ export default Vue.extend({
         class: 'pageClass'
       },
       shopData: [
-        {
-          shopName: '无用商品',
-          time: '2021-04-08',
-          payCount: '3',
-          payMoney: 6,
-          secretStr: '33566'
-        }
-      ]
+        // {
+        //   shopName: '无用商品',
+        //   time: '2021-04-08',
+        //   payCount: '3',
+        //   payMoney: 6,
+        //   secretStr: '33566'
+        // }
+      ],
+      // 弹窗设置
+      dialogInfo: {
+        visible: true,
+        titleName: '添加商品',
+        dialogWidth: '800px',
+        activeClass: 'user-dialog'
+      },
+      showDialog: false,
+      shopItem: {
+        shopName: ''
+      }
     };
   },
   async mounted() {
@@ -83,26 +108,58 @@ export default Vue.extend({
     async initData() {
       let result = await shop.dispatch('getAllShop', {
         pageSize: this.pageInfo.pageSize,
-        pageNumber: this.pageInfo.pageNumber,
-        title: this.name
+        pageNumber: this.pageInfo.pageNumber
+        // title: this.name
       });
+      this.shopData = result.data;
       console.log(result, 999);
     },
     // 查询
     search() {
       console.log('查询');
     },
+    handleSave() {
+      console.log(this.shopItem, 88899999);
+      if (!this.shopItem._id) {
+        shop.dispatch('addShop', { shopName: 12311 }).then(result => {
+          this.initData();
+          this.$message.success('添加商品成功');
+          this.showDialog = false;
+        });
+      } else {
+        shop.dispatch('updateShop', { id: this.shopItem._id, shopName: 123333 }).then(result => {
+          this.initData();
+          this.$message.success('编辑商品成功');
+          this.showDialog = false;
+        });
+      }
+    },
+    // 关闭弹窗
+    closeDialog() {
+      this.showDialog = false;
+    },
     // 新增商品
     handleAdd() {
-      console.log('新增');
+      this.showDialog = true;
+      // this.$router.push({
+      //   name: 'AddShop'
+      // });
     },
     // 编辑商品
-    handleEdit() {
+    handleEdit(id) {
       console.log('编辑');
+      shop.dispatch('ShopView', id).then(result => {
+        this.shopItem = result[0];
+        console.log(result[0], 99999);
+        this.showDialog = true;
+      });
     },
     // 删除商品
-    handleDelete() {
-      console.log('删除商品');
+    handleDelete(id) {
+      shop.dispatch('delShop', { id: id }).then(() => {
+        this.$message.success('删除成功');
+        this.initData();
+      });
     }
   }
 });

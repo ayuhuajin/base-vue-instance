@@ -189,10 +189,10 @@ let router = new Router({
               meta: { title: '嗨前端-商品列表', requireAuth: true }
             },
             {
-              path: '/backEnd/bankDetail',
-              name: 'sBDetail',
-              component: () => import('./components/backEnd/testBank/BankDetail.vue'),
-              meta: { title: '嗨前端-添加试卷', requireAuth: true }
+              path: '/backEnd/addShop',
+              name: 'AddShop',
+              component: () => import('./components/backEnd/shop/ShopEdit.vue'),
+              meta: { title: '嗨前端-添加商品', requireAuth: true }
             }
           ]
         },

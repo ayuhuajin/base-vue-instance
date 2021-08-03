@@ -1,16 +1,21 @@
 <template>
   <div class="contact-list">
     <span @click="getList">获取联系列表</span>
-
     <span @click="addContact">添加联系人</span>
     <ul>
       <li v-for="(item, index) in list" :key="index">
-        <span>{{ item.name }} </span>
-        <span @click="delContact(item)">删除</span>
-        <span>{{ item.isAddContactWX ? '已添加' : '未添加' }}</span>
+        <div>
+          <span>{{ item.name }} </span>
+          <span>{{ item.phone }}</span>
+        </div>
+        <div>
+          <span @click="addWechat(item)">微信：{{ item.wechat }}</span>
+          <span>{{ item.isAddContactWX ? '已添加' : '未添加' }}</span>
+        </div>
+        <span>{{ item.addr }}</span>
+        <!-- <span @click="delContact(item)">删除</span>
         <span @click="updateContact(item)">添加</span>
-        <span>{{ item.phone }}</span>
-        <span @click="addWechat(item)">添加微信</span>
+        <span @click="addWechat(item)">添加微信</span> -->
       </li>
     </ul>
   </div>
@@ -90,5 +95,11 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .contact-list {
   color: #666;
+  li {
+    margin: 4%;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background: #fff;
+  }
 }
 </style>

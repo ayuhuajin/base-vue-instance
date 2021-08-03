@@ -113,9 +113,9 @@ export default Vue.extend({
   ul {
     display: flex;
     text-align: center;
-    justify-content: space-around;
+    padding: 0 2%;
+    justify-content: space-between;
     flex-wrap: wrap;
-    justify-content: flex-start;
     img {
       width: 30vw;
       height: 30vw;
@@ -125,7 +125,7 @@ export default Vue.extend({
       margin-top: 10px;
       padding: 10px;
       border-radius: 10px;
-      background: coral;
+      background: #fff;
     }
   }
 }
