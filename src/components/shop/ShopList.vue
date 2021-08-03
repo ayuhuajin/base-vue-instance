@@ -1,9 +1,9 @@
 <template>
   <div class="shop-list">
     <ul>
-      <li v-for="(item, index) in shopList" :key="index" @click="goShopDetail(item)">
+      <li v-for="(item, index) in shopData" :key="index" @click="goShopDetail(item)">
         <img :src="item.shopImg" alt="" />
-        <p>初三一年级</p>
+        <p>{{ item.shopName }}</p>
         <p>密码</p>
         <p>免费试听</p>
       </li>
@@ -13,6 +13,7 @@
 <script>
 import Vue from 'vue';
 import md5 from 'md5';
+import shop from '@/store/modules/shop';
 export default Vue.extend({
   name: 'ShopList',
   data() {
@@ -76,7 +77,8 @@ export default Vue.extend({
           isGroupBy: false, // 是否团购
           buyCount: 0 // 被购买几次
         }
-      ]
+      ],
+      shopData: []
     };
   },
   computed: {
@@ -88,10 +90,18 @@ export default Vue.extend({
   },
   mounted() {
     this.init();
+    this.initData();
   },
   methods: {
     init() {
       console.log('初始化');
+    },
+    async initData() {
+      let result = await shop.dispatch('getAllShop', {
+        // title: this.name
+      });
+      this.shopData = result.data;
+      console.log(result, 999);
     },
     goShopDetail(item) {
       let str = md5(123 + item.shopSecret + 123);

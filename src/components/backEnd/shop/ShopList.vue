@@ -17,7 +17,7 @@
       <el-table-column prop="time" :formatter="formateTime" label="发布日期"> </el-table-column>
       <el-table-column prop="payCount" label="付款人数"></el-table-column>
       <el-table-column prop="payMoney" label="金额"></el-table-column>
-      <el-table-column prop="secretStr" label="权限密钥"></el-table-column>
+      <el-table-column prop="shopSecret" label="权限密钥"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
@@ -31,6 +31,9 @@
       <div class="bank">
         <span>商品名称</span>
         <el-input v-model="shopItem.shopName" placeholder="请输入商品名称"></el-input>
+
+        <span>密钥</span>
+        <el-input v-model="shopItem.shopSecret" placeholder="请输入商品名称"></el-input>
       </div>
       <div>
         <span class="save" @click="handleSave()">保存</span>
@@ -121,13 +124,14 @@ export default Vue.extend({
     handleSave() {
       console.log(this.shopItem, 88899999);
       if (!this.shopItem._id) {
-        shop.dispatch('addShop', { shopName: 12311 }).then(result => {
+        shop.dispatch('addShop', this.shopItem).then(result => {
           this.initData();
           this.$message.success('添加商品成功');
           this.showDialog = false;
         });
       } else {
-        shop.dispatch('updateShop', { id: this.shopItem._id, shopName: 123333 }).then(result => {
+        this.shopItem.id = this.shopItem._id;
+        shop.dispatch('updateShop', this.shopItem).then(result => {
           this.initData();
           this.$message.success('编辑商品成功');
           this.showDialog = false;
