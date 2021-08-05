@@ -31,6 +31,10 @@
       <div class="bank">
         <span>商品名称</span>
         <el-input v-model="shopItem.shopName" placeholder="请输入商品名称"></el-input>
+        <span>图片</span>
+        <!-- <el-form-item label="图片上传"> -->
+        <base-upload :uploadInfo="uploadInfo"></base-upload>
+        <!-- </el-form-item> -->
 
         <span>密钥</span>
         <el-input v-model="shopItem.shopSecret" placeholder="请输入商品名称"></el-input>
@@ -51,6 +55,7 @@ import MainHeader from '@/components/common/MainHeader.vue';
 import PageChange from '@/components/common/PageChange.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
+import BaseUpload from '@/components/common/BaseUpload.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import shop from '@/store/modules/shop';
 
@@ -62,7 +67,8 @@ export default Vue.extend({
     MainHeader,
     BaseTable,
     PageChange,
-    BaseDialog
+    BaseDialog,
+    BaseUpload
   },
   data() {
     return {
@@ -76,6 +82,12 @@ export default Vue.extend({
         pageFunc: this.initData, // 当前页数需要调用的函数
         pageSize: 10, // 当前页数
         class: 'pageClass'
+      },
+      uploadInfo: {
+        uploadURl: 'http://10.123.61.205:12306/upload/2',
+        hide: false,
+        uploadClass: 'uploadClass',
+        desc: ''
       },
       shopData: [
         // {
