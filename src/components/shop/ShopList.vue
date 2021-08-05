@@ -4,82 +4,49 @@
       <li v-for="(item, index) in shopData" :key="index" @click="goShopDetail(item)">
         <img :src="item.img ? item.img : defaultImg" alt="" />
         <p>{{ item.shopName }}</p>
-        <p>密码</p>
+        <p v-if="item.showSecret">密码:{{ item.showSecret }}</p>
         <p>免费试听</p>
+        <span @click="buy">购买</span>
       </li>
     </ul>
+    <!-- 弹窗 -->
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
+      <el-input v-model="secretStr" placeholder="请输入商品密钥"></el-input>
+      <div class="operation">
+        <span class="save" @click="handleSave()">保存</span>
+        <span class="cancel" @click="closeDialog">取消</span>
+      </div>
+    </base-dialog>
   </div>
 </template>
 <script>
 import Vue from 'vue';
 import md5 from 'md5';
 import shop from '@/store/modules/shop';
+import BaseDialog from '@/components/common/BaseDialog.vue';
+
 export default Vue.extend({
   name: 'ShopList',
+  components: {
+    BaseDialog
+  },
   data() {
     return {
+      // secret: '',
       test: 'test',
-      secretStr: '1234',
+      secretStr: '',
       defaultImg: require('../../assets/images/2.jpg'),
-      shopList: [
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
-          shopSecret: '12345',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        },
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
-          shopSecret: '123456',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        },
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
-          shopSecret: '123456',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        },
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
-          shopSecret: '123456',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        }
-      ],
-      shopData: []
+      shopList: [],
+      shopData: [],
+      // 弹窗设置
+      dialogInfo: {
+        visible: true,
+        titleName: '暂无权限,请输入商品密钥',
+        dialogWidth: '80%',
+        activeClass: 'user-dialog'
+      },
+      showDialog: false,
+      activeItem: ''
     };
   },
   computed: {
@@ -104,11 +71,26 @@ export default Vue.extend({
       this.shopData = result.data;
       console.log(result, 999);
     },
+    buy() {
+      console.log('goumai');
+    },
+    // 关闭弹窗
+    closeDialog() {
+      this.showDialog = false;
+      this.secretStr = '';
+    },
+    handleSave() {
+      // let str = md5(123 + this.secretStr + 123);
+      this.goShopDetail(this.activeItem);
+      console.log('jinru', this.activeItem);
+    },
     goShopDetail(item) {
       let str = md5(123 + this.secretStr + 123);
       console.log(item, 888, str);
       if (str !== item.secret) {
-        this.$message.success('暂无权限查看');
+        this.$message.success('密钥错误,暂无权限查看');
+        this.activeItem = item;
+        this.showDialog = true;
         return;
       }
       this.$router.push({
@@ -123,7 +105,38 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss">
+.user-dialog {
+  /deep/ .el-dialog__body {
+    .operation {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+  .el-input__inner {
+    line-height: 44px;
+  }
+}
+</style>
 <style scoped lang="scss">
+.save,
+.cancel {
+  margin-top: 20px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid #409eff;
+  text-align: center;
+  line-height: 40px;
+  color: white;
+  cursor: pointer;
+  background: #66b1ff;
+}
+.cancel {
+  margin-left: 20px;
+  border: 1px solid #dcdfe6;
+  color: #333;
+  background: white;
+}
 .shop-list {
   ul {
     display: flex;

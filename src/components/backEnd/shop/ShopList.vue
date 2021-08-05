@@ -44,6 +44,8 @@
         <el-input v-model="shopItem.shopSecret" placeholder="请输入商品密钥"></el-input>
         <span>内容</span>
         <el-input v-model="shopItem.content" placeholder="请输入商品内容"></el-input>
+        <span>金额</span>
+        <el-input v-model="shopItem.payMoney" placeholder="请输入商品金额"></el-input>
       </div>
       <div>
         <span class="save" @click="handleSave()">保存</span>
