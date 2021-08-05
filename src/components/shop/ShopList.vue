@@ -2,7 +2,7 @@
   <div class="shop-list">
     <ul>
       <li v-for="(item, index) in shopData" :key="index" @click="goShopDetail(item)">
-        <img :src="item.shopImg" alt="" />
+        <img :src="item.img ? item.img : defaultImg" alt="" />
         <p>{{ item.shopName }}</p>
         <p>密码</p>
         <p>免费试听</p>
@@ -19,7 +19,8 @@ export default Vue.extend({
   data() {
     return {
       test: 'test',
-      secretStr: this.$route.query.shopSId,
+      secretStr: '1234',
+      defaultImg: require('../../assets/images/2.jpg'),
       shopList: [
         {
           shopId: '',
@@ -104,14 +105,18 @@ export default Vue.extend({
       console.log(result, 999);
     },
     goShopDetail(item) {
-      let str = md5(123 + item.shopSecret + 123);
+      let str = md5(123 + this.secretStr + 123);
       console.log(item, 888, str);
-      if (this.secretStr !== item.shopSecret) {
+      if (str !== item.secret) {
         this.$message.success('暂无权限查看');
         return;
       }
       this.$router.push({
-        name: 'shopDetail'
+        name: 'shopDetail',
+        query: {
+          id: item._id,
+          secret: str
+        }
         // path: '/shopDetail'
       });
     }

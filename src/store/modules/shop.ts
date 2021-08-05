@@ -32,6 +32,11 @@ export default root.registerModule('shop', {
     async ShopView({ commit }, payload) {
       let result = await http.get(`/shop/ShopView?id=${payload}`);
       return result.data;
+    },
+    // 获取商品详情
+    async getShopByIdSecret({ commit }, payload) {
+      let result = await http.get(`/shop/getshopView?${qs.stringify(payload)}`);
+      return result.data;
     }
   }
 });

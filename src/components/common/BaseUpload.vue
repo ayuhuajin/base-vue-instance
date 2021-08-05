@@ -4,7 +4,7 @@
       :action="uploadInfo.uploadURl"
       list-type="picture-card"
       :show-file-list="true"
-      :file-list="fileList"
+      :file-list="uploadInfo.fileList"
       :class="uploadInfo.uploadClass"
       :on-success="handleSuccess"
       :before-upload="beforeUpload"
@@ -24,14 +24,24 @@ export default Vue.extend({
   name: 'BaseUpload',
   props: {
     uploadInfo: {
-      type: Object,
-      require: true
+      type: Object
     }
   },
   data() {
     return {
       title: '上传图片',
-      fileList: [],
+      // fileList: [
+      //   {
+      //     name: 'food.jpeg',
+      //     url:
+      //       'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+      //   },
+      //   {
+      //     name: 'food2.jpeg',
+      //     url:
+      //       'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+      //   }
+      // ],
       token: localStorage.getItem('token')
     };
   },
@@ -42,7 +52,10 @@ export default Vue.extend({
     //文件上传失败
     handleError(err: any, file: any, fileList: any) {},
     // 文件上传成功
-    handleSuccess(res: any, file: any, fileList: any) {},
+    handleSuccess(res: any, file: any, fileList: any) {
+      console.log(res, file, fileList, 99999);
+      this.$emit('handleSuccess', res.data.url);
+    },
     // 文件移除
     handleRemove(file: any, fileList: any) {}
   }

@@ -2,92 +2,54 @@
   <div class="shop-list">
     <ul>
       <li>
-        <p>{{ item.content }}</p>
+        <p>{{ secretStr }}</p>
+        <div>
+          <p>{{ obj.content }}</p>
+          <span @click="copyUrl(obj.content)">复制</span>
+        </div>
       </li>
     </ul>
   </div>
 </template>
 <script>
 import Vue from 'vue';
+import shop from '@/store/modules/shop';
 export default Vue.extend({
-  name: 'ShopList',
+  name: 'ShopDetail',
   data() {
     return {
       test: 'test',
-      secretStr: this.$route.query.shopSId,
-      shopList: [
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '第一件商品', // 商品内容
-          shopSecret: '12345',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        },
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '第一件商品', // 商品内容
-          shopSecret: '123456',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        },
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
-          shopSecret: '123456',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        },
-        {
-          shopId: '',
-          shopName: '第一件商品', // 商品名称
-          shopImg: require('../../assets/images/2.jpg'),
-          content: '', // 商品内容
-          shopSecret: '123456',
-          onTrial: false, // 是否试用
-          isPurchase: false, // 是否购买
-          isWechatFriend: false, // 是否微信好友
-          OfficialAccount: false, // 是否关注公众号
-          isDiscount: false, // 是否有优惠
-          isGroupBy: false, // 是否团购
-          buyCount: 0 // 被购买几次
-        }
-      ]
+      id: this.$route.query.id,
+      secretStr: this.$route.query.secret,
+      obj: {}
     };
   },
-  computed: {
-    shopL() {
-      return this.shopList.filter(item => {
-        return this.secretStr !== item.shopSecret;
-      });
-    }
-  },
+  computed: {},
   mounted() {
     this.init();
   },
   methods: {
     init() {
-      console.log('初始化');
+      shop.dispatch('getShopByIdSecret', { id: this.id, secret: this.secretStr }).then(result => {
+        console.log(result, 9999);
+        this.obj = result[0];
+      });
+    },
+    // 复制方法
+    copyUrl(text) {
+      let input = document.createElement('input');
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      input.setSelectionRange(0, input.value.length);
+
+      if (document.execCommand) {
+        document.execCommand('Copy');
+        this.$message.success('复制成功');
+      } else {
+        this.$message.error('复制失败');
+      }
+      document.body.removeChild(input);
     }
   }
 });

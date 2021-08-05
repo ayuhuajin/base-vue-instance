@@ -14,6 +14,11 @@
     <!-- 表格 -->
     <base-table :tableData="shopData">
       <el-table-column prop="shopName" label="商品名称" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="img" label="商品" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <img :src="scope.row.img" alt="" />
+        </template>
+      </el-table-column>
       <el-table-column prop="time" :formatter="formateTime" label="发布日期"> </el-table-column>
       <el-table-column prop="payCount" label="付款人数"></el-table-column>
       <el-table-column prop="payMoney" label="金额"></el-table-column>
@@ -33,11 +38,12 @@
         <el-input v-model="shopItem.shopName" placeholder="请输入商品名称"></el-input>
         <span>图片</span>
         <!-- <el-form-item label="图片上传"> -->
-        <base-upload :uploadInfo="uploadInfo"></base-upload>
+        <base-upload :uploadInfo="uploadInfo" @handleSuccess="handleSuccess"></base-upload>
         <!-- </el-form-item> -->
-
         <span>密钥</span>
-        <el-input v-model="shopItem.shopSecret" placeholder="请输入商品名称"></el-input>
+        <el-input v-model="shopItem.shopSecret" placeholder="请输入商品密钥"></el-input>
+        <span>内容</span>
+        <el-input v-model="shopItem.content" placeholder="请输入商品内容"></el-input>
       </div>
       <div>
         <span class="save" @click="handleSave()">保存</span>
@@ -87,7 +93,8 @@ export default Vue.extend({
         uploadURl: 'http://10.123.61.205:12306/upload/2',
         hide: false,
         uploadClass: 'uploadClass',
-        desc: ''
+        desc: '',
+        fileList: []
       },
       shopData: [
         // {
@@ -161,12 +168,18 @@ export default Vue.extend({
       //   name: 'AddShop'
       // });
     },
+    // 图片上传成功
+    handleSuccess(url) {
+      this.shopItem.img = url;
+    },
     // 编辑商品
     handleEdit(id) {
       console.log('编辑');
+      this.uploadInfo.fileList[0] = {};
       shop.dispatch('ShopView', id).then(result => {
         this.shopItem = result[0];
         console.log(result[0], 99999);
+        this.uploadInfo.fileList[0].url = result[0].img;
         this.showDialog = true;
       });
     },
