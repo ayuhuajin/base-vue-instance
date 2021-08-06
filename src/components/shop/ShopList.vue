@@ -6,7 +6,10 @@
         <p>{{ item.shopName }}</p>
         <p v-if="item.showSecret">密码:{{ item.showSecret }}</p>
         <p>免费试听</p>
-        <span @click.stop="buy(item)">购买</span>
+        <p>
+          <span>${{ item.payMoney }}元</span>
+          <span @click.stop="buy(item)">购买</span>
+        </p>
       </li>
     </ul>
     <!-- 弹窗 -->
@@ -23,6 +26,7 @@
 import Vue from 'vue';
 import md5 from 'md5';
 import shop from '@/store/modules/shop';
+import ali from '@/store/modules/ali';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 
 export default Vue.extend({
@@ -46,7 +50,9 @@ export default Vue.extend({
         activeClass: 'user-dialog'
       },
       showDialog: false,
-      activeItem: ''
+      activeItem: '',
+      timer: null,
+      out_trade_no: ''
     };
   },
   computed: {
@@ -72,7 +78,27 @@ export default Vue.extend({
       console.log(result, 999);
     },
     buy(item) {
-      console.log('goumai', item);
+      this.out_trade_no = Date.parse(new Date());
+      ali
+        .dispatch('createOrder', {
+          out_trade_no: this.out_trade_no, // 必填 商户订单主键, 就是你要生成的
+          subject: item.shopName, // 必填 商品概要
+          total_amount: item.payMoney // 必填 多少钱
+        })
+        .then(result => {
+          console.log(result, 8989);
+          window.location.href = result.data.qrCode;
+          this.timer = setInterval(this.searchOrder, 2000);
+        });
+    },
+    searchOrder() {
+      ali.dispatch('queryOrder', this.out_trade_no).then(data => {
+        console.log(data.data.tradeStatus, 'shuju');
+        if (data.data.tradeStatus == 'TRADE_SUCCESS') {
+          clearInterval(this.timer);
+          window.location.href = 'http://wulilang.com/ali/hai';
+        }
+      });
     },
     // 关闭弹窗
     closeDialog() {
