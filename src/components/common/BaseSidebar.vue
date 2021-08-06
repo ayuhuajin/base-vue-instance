@@ -35,6 +35,7 @@
           <span slot="title">商品管理</span>
           <el-menu-item index="/backEnd/shop">商品列表</el-menu-item>
           <el-menu-item index="/backEnd/questionManage">商品</el-menu-item>
+          <el-menu-item index="/backEnd/order">订单</el-menu-item>
           <!-- <el-menu-item index="/backEnd/toolType">科目</el-menu-item> -->
         </el-submenu>
         <el-menu-item index="/backEnd/git">Git</el-menu-item>

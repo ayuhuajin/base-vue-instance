@@ -1,12 +1,12 @@
 <template>
   <div class="shop-list">
     <ul>
-      <li v-for="(item, index) in shopData" :key="index" @click="goShopDetail(item)">
+      <li v-for="(item, index) in shopData" :key="index" @click.stop="goShopDetail(item)">
         <img :src="item.img ? item.img : defaultImg" alt="" />
         <p>{{ item.shopName }}</p>
         <p v-if="item.showSecret">密码:{{ item.showSecret }}</p>
         <p>免费试听</p>
-        <span @click="buy">购买</span>
+        <span @click.stop="buy(item)">购买</span>
       </li>
     </ul>
     <!-- 弹窗 -->
@@ -71,8 +71,8 @@ export default Vue.extend({
       this.shopData = result.data;
       console.log(result, 999);
     },
-    buy() {
-      console.log('goumai');
+    buy(item) {
+      console.log('goumai', item);
     },
     // 关闭弹窗
     closeDialog() {

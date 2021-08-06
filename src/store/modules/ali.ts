@@ -17,6 +17,11 @@ export default root.registerModule('ali', {
     async queryOrder({ commit }, payload) {
       let result = await http.get(`/ali/queryOrder?id=${payload}`);
       return result;
+    },
+    // 新建H5付款订单
+    async createH5Order({ commit }, payload) {
+      let result = await http.post(`/ali/createH5Order`, payload);
+      return result;
     }
   }
 });

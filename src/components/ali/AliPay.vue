@@ -2,8 +2,10 @@
   <div class="ali-pay">
     零食<span @click="createInit">6元1</span>
     <vue-qr id="qrcode" :logoSrc="config.logo" :text="config.value" :size="config.size" :margin="0"></vue-qr>
-
+    <span @click="downloadImg">下载图片</span>
     <div @click="searchOrder">查询订单</div>
+    <div @click="purchase()">购买</div>
+    <a :href="config.value">453453</a>
   </div>
 </template>
 
@@ -28,6 +30,20 @@ export default Vue.extend({
     }
   },
   methods:{
+    // 购买
+    purchase(){
+      console.log('购买');
+      this.out_trade_no = Date.parse(new Date());
+      ali.dispatch('createH5Order',{
+        out_trade_no: this.out_trade_no,// 必填 商户订单主键, 就是你要生成的
+        subject: '女装',      // 必填 商品概要
+        total_amount: 0.01,    // 必填 多少钱
+      }).then((result)=>{
+        console.log(result,8989);
+        // this.config.value = result.data.qrCode
+        // this.timer = setInterval(this.searchOrder, 2000);
+      })
+    },
     createInit(){
       this.out_trade_no = Date.parse(new Date());
       ali.dispatch('createOrder',{
@@ -37,6 +53,7 @@ export default Vue.extend({
       }).then((result)=>{
         console.log(result,8989);
         this.config.value = result.data.qrCode
+        window.location.href = this.config.value
         this.timer = setInterval(this.searchOrder, 2000);
       })
     },
@@ -52,7 +69,7 @@ export default Vue.extend({
     },
     // 下载二维码
     downloadImg(e) {
-      var oQrcode = document.querySelector('#qrcode img');
+      var oQrcode = document.querySelector('#qrcode');
       var url = oQrcode.src;
       var a = document.createElement('a');
       var event = new MouseEvent('click');
