@@ -13,19 +13,20 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="orderList">
-      <el-table-column prop="payCount" label="订单号"></el-table-column>
+      <el-table-column prop="orderId" label="订单号"></el-table-column>
       <el-table-column prop="shopName" label="商品名称" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="img" label="商品" show-overflow-tooltip>
+      <!-- <el-table-column prop="img" label="商品" show-overflow-tooltip>
         <template slot-scope="scope">
           <img :src="scope.row.img" alt="" />
         </template>
-      </el-table-column>
+      </el-table-column> -->
+      <el-table-column prop="payMoney" label="订单金额"></el-table-column>
+      <el-table-column prop="status" label="订单状态"></el-table-column>
       <el-table-column prop="time" :formatter="formateTime" label="订单日期"> </el-table-column>
-      <el-table-column prop="payCount" label="订单金额"></el-table-column>
-      <el-table-column prop="payMoney" label="金额"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <span class="content-edit" @click="handleEdit(scope.row._id)">退款1</span>
+          <span class="content-edit" @click="handleRevoke(scope.row)">撤销订单</span>
+          <span class="content-edit" @click="handleRefund(scope.row)">退款</span>
           <span class="content-delete" @click="handleDelete(scope.row._id)">删除订单</span>
           <span class="content-detail" @click="examDetail(scope.row._id)">订单详情</span>
         </template>
@@ -43,6 +44,7 @@ import PageChange from '@/components/common/PageChange.vue';
 import BaseTable from '@/components/common/BaseTable.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
 import order from '@/store/modules/order';
+import ali from '@/store/modules/ali';
 
 import mixin from '@/assets/js/mixin.ts';
 export default Vue.extend({
@@ -93,6 +95,19 @@ export default Vue.extend({
     handleSave() {
       order.dispatch('addOrder', { shopName: 'cesg' }).then(result => {
         this.$message.success('添加订单成功');
+        this.initData();
+      });
+    },
+    // 撤销订单
+    handleRevoke(item) {
+      ali.dispatch('revokeOrder', { out_trade_no: item.orderId }).then(result => {
+        this.initData();
+      });
+    },
+    // 退款
+    handleRefund(item) {
+      console.log('退款');
+      ali.dispatch('refundOrder', { out_trade_no: item.orderId, total_amount: item.payMoney }).then(result => {
         this.initData();
       });
     },

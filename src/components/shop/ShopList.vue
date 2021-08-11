@@ -28,6 +28,7 @@ import md5 from 'md5';
 import shop from '@/store/modules/shop';
 import ali from '@/store/modules/ali';
 import BaseDialog from '@/components/common/BaseDialog.vue';
+import uuidv1 from 'uuid/v1';
 
 export default Vue.extend({
   name: 'ShopList',
@@ -78,7 +79,11 @@ export default Vue.extend({
       console.log(result, 999);
     },
     buy(item) {
-      this.out_trade_no = Date.parse(new Date());
+      this.out_trade_no =
+        (Date.parse(new Date()) / 1000).toString() + parseInt((Math.random() + 1) * Math.pow(10, 8 - 1));
+      // this.out_trade_no = uuidv1();
+      console.log(this.out_trade_no, 99999);
+      // return;
       ali
         .dispatch('createOrder', {
           out_trade_no: this.out_trade_no, // 必填 商户订单主键, 就是你要生成的

@@ -22,6 +22,18 @@ export default root.registerModule('ali', {
     async createH5Order({ commit }, payload) {
       let result = await http.post(`/ali/createH5Order`, payload);
       return result;
+    },
+    // 撤销订单
+    async revokeOrder({ commit }, payload) {
+      console.log(234234);
+
+      let result = await http.post(`/ali/revokeOrder`, payload);
+      return result;
+    },
+    // 退款
+    async refundOrder({ commit }, payload) {
+      let result = await http.post(`/ali/refundOrder`, payload);
+      return result;
     }
   }
 });
