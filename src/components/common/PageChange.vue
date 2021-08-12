@@ -8,8 +8,8 @@
       :background="pageInfo.background"
       :layout="layout"
       :total="pageInfo.totalPages"
-      hide-on-single-page
     >
+      <!-- hide-on-single-page -->
     </el-pagination>
   </div>
 </template>

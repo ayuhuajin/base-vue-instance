@@ -3,8 +3,27 @@
     <!-- 头部 -->
     <main-header :titleName="title">
       <div>
-        <span>查找</span>
-        <el-input v-model="keyword" placeholder="请输入查找内容"></el-input>
+        <span>商品名称</span>
+        <el-input v-model="keyword" placeholder="请输入查找内容" clearable></el-input>
+      </div>
+      <div>
+        <span>订单Id</span>
+        <el-input v-model="orderId" placeholder="请输入订单Id" clearable></el-input>
+      </div>
+      <div>
+        <span>订单状态</span>
+        <el-select v-model="status" placeholder="请选择" @change="changeCategory($event)">
+          <el-option
+            v-for="(item, index) in orderStutus"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
+      <div>
+        <span>日期</span>
+        <el-date-picker v-model="date" type="date" placeholder="选择日期"> </el-date-picker>
       </div>
       <div>
         <el-button type="primary" @click="search">查询</el-button>
@@ -58,7 +77,10 @@ export default Vue.extend({
   data() {
     return {
       title: '订单列表',
-      keyword: '',
+      keyword: '', //商品名称
+      orderId: '', //订单Id
+      status: '', //订单状态
+      date: '', //日期
       // 分页设置
       pageInfo: {
         pageNumber: 1, // 当前页数
@@ -67,6 +89,7 @@ export default Vue.extend({
         pageSize: 10, // 当前页数
         class: 'pageClass'
       },
+      orderStutus: [{ label: '未付款', value: '未付款' }, { label: '已付款', value: '已付款' }],
       orderList: []
     };
   },
@@ -83,14 +106,20 @@ export default Vue.extend({
     async initData() {
       let result = await order.dispatch('getOrderList', {
         pageSize: this.pageInfo.pageSize,
-        pageNumber: this.pageInfo.pageNumber
+        pageNumber: this.pageInfo.pageNumber,
+        orderId: this.orderId,
+        name: this.keyword,
+        status: this.status,
+        date: this.date
       });
       console.log(result, 999);
       this.orderList = result.data;
+      this.pageInfo.totalPages = result.total;
     },
     // 查询
     search() {
       console.log('查询');
+      this.initData();
     },
     handleSave() {
       order.dispatch('addOrder', { shopName: 'cesg' }).then(result => {
