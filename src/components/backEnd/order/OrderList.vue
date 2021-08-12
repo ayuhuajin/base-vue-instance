@@ -12,7 +12,7 @@
       </div>
       <div>
         <span>订单状态</span>
-        <el-select v-model="status" placeholder="请选择" @change="changeCategory($event)">
+        <el-select v-model="status" placeholder="请选择">
           <el-option
             v-for="(item, index) in orderStutus"
             :key="index"
