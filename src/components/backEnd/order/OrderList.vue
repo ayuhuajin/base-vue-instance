@@ -42,6 +42,8 @@
       <el-table-column prop="payMoney" label="订单金额"></el-table-column>
       <el-table-column prop="status" label="订单状态"></el-table-column>
       <el-table-column prop="time" :formatter="formateTime" label="订单日期"> </el-table-column>
+      <el-table-column prop="gmt_create" label="创建时间"> </el-table-column>
+      <el-table-column prop="gmt_payment" label="付款时间"> </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleRevoke(scope.row)">撤销订单</span>

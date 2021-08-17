@@ -53,7 +53,8 @@ export default Vue.extend({
       showDialog: false,
       activeItem: '',
       timer: null,
-      out_trade_no: ''
+      out_trade_no: '',
+      intervalCount: 0
     };
   },
   computed: {
@@ -79,31 +80,47 @@ export default Vue.extend({
       console.log(result, 999);
     },
     buy(item) {
-      this.out_trade_no =
-        (Date.parse(new Date()) / 1000).toString() + parseInt((Math.random() + 1) * Math.pow(10, 8 - 1));
+      let orderId = (Date.parse(new Date()) / 1000).toString() + parseInt((Math.random() + 1) * Math.pow(10, 8 - 1));
       // this.out_trade_no = uuidv1();
-      console.log(this.out_trade_no, 99999);
+      console.log(this.out_trade_no, 99999, item._id);
       // return;
       ali
         .dispatch('createOrder', {
-          out_trade_no: this.out_trade_no, // 必填 商户订单主键, 就是你要生成的
+          out_trade_no: orderId, // 必填 商户订单主键, 就是你要生成的
           subject: item.shopName, // 必填 商品概要
           total_amount: item.payMoney // 必填 多少钱
         })
         .then(result => {
+          this.intervalCount = 0;
           console.log(result, 8989);
-          window.location.href = result.data.qrCode;
-          this.timer = setInterval(this.searchOrder, 2000);
+          // window.location.href = result.data.qrCode;
+          this.timer = setInterval(this.searchOrder(orderId), 2000);
         });
     },
-    searchOrder() {
-      ali.dispatch('queryOrder', this.out_trade_no).then(data => {
-        console.log(data.data.tradeStatus, 'shuju');
-        if (data.data.tradeStatus == 'TRADE_SUCCESS') {
-          clearInterval(this.timer);
-          window.location.href = 'http://wulilang.com/ali/hai';
-        }
-      });
+    searchOrder(orderId) {
+      console.log(333);
+
+      this.intervalCount++;
+      if (this.intervalCount > 10) {
+        clearInterval(this.timer);
+        this.intervalCount = 0;
+        ali.dispatch('revokeOrder', { out_trade_no: orderId }).then(result => {
+          ali.dispatch('queryOrder', orderId).then(data => {
+            if (data.data.tradeStatus == 'TRADE_SUCCESS') {
+              // window.location.href = 'http://wulilang.com/ali/hai';
+              console.log(333);
+            }
+          });
+        });
+      } else {
+        ali.dispatch('queryOrder', orderId).then(data => {
+          console.log(data.data.tradeStatus, 'shuju');
+          if (data.data.tradeStatus == 'TRADE_SUCCESS') {
+            clearInterval(this.timer);
+            window.location.href = 'http://wulilang.com/ali/hai';
+          }
+        });
+      }
     },
     // 关闭弹窗
     closeDialog() {
