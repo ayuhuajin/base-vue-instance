@@ -14,6 +14,7 @@
 <script>
 import Vue from 'vue';
 import shop from '@/store/modules/shop';
+import order from '@/store/modules/order';
 export default Vue.extend({
   name: 'ShopDetail',
   data() {
@@ -21,6 +22,7 @@ export default Vue.extend({
       test: 'test',
       id: this.$route.query.id,
       secretStr: this.$route.query.secret,
+      orderId: this.$route.query.orderId,
       obj: {}
     };
   },
@@ -30,6 +32,15 @@ export default Vue.extend({
   },
   methods: {
     init() {
+      order.dispatch('queryOrderById', { orderId: this.orderId }).then(result => {
+        console.log(result[0].status, 78987897);
+        if (result[0].status == '未付款') {
+          this.$message.error('请先获取查看权限');
+          this.$router.push({
+            name: 'shopList'
+          });
+        }
+      });
       shop.dispatch('getShopByIdSecret', { id: this.id, secret: this.secretStr }).then(result => {
         console.log(result, 9999);
         this.obj = result[0];
