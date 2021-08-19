@@ -2,7 +2,7 @@
   <div class="shop-list">
     <ul>
       <li v-for="(item, index) in shopData" :key="index" @click.stop="goShopDetail(item)">
-        <img :src="item.img ? item.img : defaultImg" alt="" />
+        <img :src="item.img ? item.img : 1" alt="" />
         <p>{{ item.shopName }}</p>
         <p v-if="item.showSecret">密码:{{ item.showSecret }}</p>
         <p>免费试听</p>
@@ -26,6 +26,7 @@
 import Vue from 'vue';
 import md5 from 'md5';
 import shop from '@/store/modules/shop';
+import order from '@/store/modules/order';
 import ali from '@/store/modules/ali';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import uuidv1 from 'uuid/v1';
@@ -80,10 +81,44 @@ export default Vue.extend({
       console.log(result, 999);
     },
     buy(item) {
+      let orderList = localStorage.getItem('orderList');
+      if (orderList) {
+        orderList = JSON.parse(orderList);
+        console.log(orderList[item._id], 77755555);
+        if (orderList[item._id]) {
+          order.dispatch('queryOrderById', { orderId: orderList[item._id] }).then(result => {
+            console.log(result[0].status, 78987897);
+            if (result[0].status == '未付款') {
+              this.createOrder(item);
+            } else if (result[0].status == '已付款') {
+              console.log(8888888);
+              this.$router.push({
+                name: 'shopDetail',
+                query: {
+                  id: item._id,
+                  orderId: orderList[item._id]
+                  // secret: str
+                }
+              });
+            }
+          });
+        } else {
+          this.createOrder(item);
+        }
+        // orderList[item._id] = orderId
+        localStorage.setItem('orderList', JSON.stringify(orderList));
+      } else {
+        this.createOrder(item);
+        // orderList = {};
+        // // orderList[item._id] = orderId
+        // localStorage.setItem('orderList', JSON.stringify(orderList));
+      }
+      return;
+    },
+    // 创建订单
+    createOrder(item) {
       let orderId = (Date.parse(new Date()) / 1000).toString() + parseInt((Math.random() + 1) * Math.pow(10, 8 - 1));
-      // this.out_trade_no = uuidv1();
-      console.log(this.out_trade_no, 99999, item._id);
-      // return;
+      // console.log(this.out_trade_no, 99999, item._id);
       ali
         .dispatch('createOrder', {
           out_trade_no: orderId, // 必填 商户订单主键, 就是你要生成的
@@ -92,14 +127,23 @@ export default Vue.extend({
         })
         .then(result => {
           this.intervalCount = 0;
-          console.log(result, 8989);
-          // window.location.href = result.data.qrCode;
+          let orderList = localStorage.getItem('orderList');
+          if (orderList) {
+            orderList = JSON.parse(orderList);
+            orderList[item._id] = orderId;
+            localStorage.setItem('orderList', JSON.stringify(orderList));
+          } else {
+            orderList = {};
+            orderList[item._id] = orderId;
+            localStorage.setItem('orderList', JSON.stringify(orderList));
+          }
+          console.log(result, 8989, item._id);
+          window.location.href = result.data.qrCode;
           this.timer = setInterval(this.searchOrder(orderId), 2000);
         });
     },
+    // 查询订单状态
     searchOrder(orderId) {
-      console.log(333);
-
       this.intervalCount++;
       if (this.intervalCount > 10) {
         clearInterval(this.timer);
