@@ -3,6 +3,15 @@
     <ul>
       <li v-for="(item, index) in shopData" :key="index" @click.stop="goShopDetail(item)">
         <img :src="item.img ? item.img : 1" alt="" />
+        <vue-qr
+          id="qrcode"
+          class="qrcode"
+          v-if="item.qrCode"
+          :logoSrc="config.logo"
+          :text="item.qrCode"
+          :size="config.size"
+          :margin="0"
+        ></vue-qr>
         <p>{{ item.shopName }}</p>
         <p v-if="item.showSecret">密码:{{ item.showSecret }}</p>
         <p>免费试听</p>
@@ -10,6 +19,8 @@
           <span>${{ item.payMoney }}元</span>
           <span @click.stop="buy(item)">购买</span>
         </p>
+        <!-- {{ item.qrCode }}
+        <img class="qrcode" v-if="item.qrCode" :src="item.qrCode" alt="" /> -->
       </li>
     </ul>
     <!-- 弹窗 -->
@@ -30,14 +41,21 @@ import order from '@/store/modules/order';
 import ali from '@/store/modules/ali';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import uuidv1 from 'uuid/v1';
+import VueQr from 'vue-qr';
 
 export default Vue.extend({
   name: 'ShopList',
   components: {
-    BaseDialog
+    BaseDialog,
+    VueQr
   },
   data() {
     return {
+      config: {
+        value: '',
+        logo: '',
+        size: 200
+      },
       // secret: '',
       test: 'test',
       secretStr: '',
@@ -137,18 +155,45 @@ export default Vue.extend({
             orderList[item._id] = orderId;
             localStorage.setItem('orderList', JSON.stringify(orderList));
           }
+          // 判断客户端类型
+          var ua = navigator.userAgent.toLowerCase();
+          // IOS
+          if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+              console.log('在微信里打开');
+              window.location.href = result.data.qrCode;
+            } else {
+              console.log('不在微信里打开');
+              window.location.href = result.data.qrCode;
+            }
+            // Android
+          } else if (/(Android)/i.test(navigator.userAgent)) {
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+              console.log('在微信里打开');
+              window.location.href = result.data.qrCode;
+            } else {
+              console.log('不在微信里打开');
+              window.location.href = result.data.qrCode;
+            }
+            // PC
+          } else {
+            console.log('这是PC', result.data.qrCode);
+            this.$set(item, 'qrCode', result.data.qrCode);
+            this.timer = setInterval(this.searchOrder, 5000, orderId, item);
+          }
           console.log(result, 8989, item._id);
-          window.location.href = result.data.qrCode;
-          this.timer = setInterval(this.searchOrder(orderId), 2000);
         });
     },
     // 查询订单状态
-    searchOrder(orderId) {
+    searchOrder(orderId, item) {
+      console.log(orderId, 'jinlia');
       this.intervalCount++;
       if (this.intervalCount > 10) {
         clearInterval(this.timer);
         this.intervalCount = 0;
         ali.dispatch('revokeOrder', { out_trade_no: orderId }).then(result => {
+          item.qrCode = '';
+          this.$message.error('订单已超时撤销');
           ali.dispatch('queryOrder', orderId).then(data => {
             if (data.data.tradeStatus == 'TRADE_SUCCESS') {
               // window.location.href = 'http://wulilang.com/ali/hai';
@@ -158,9 +203,10 @@ export default Vue.extend({
         });
       } else {
         ali.dispatch('queryOrder', orderId).then(data => {
-          console.log(data.data.tradeStatus, 'shuju');
+          console.log(data.data.tradeStatus, 'shuju', 1234);
           if (data.data.tradeStatus == 'TRADE_SUCCESS') {
             clearInterval(this.timer);
+            console.log(' Pc 端付款成功');
             window.location.href = 'http://wulilang.com/ali/hai';
           }
         });
@@ -241,11 +287,17 @@ export default Vue.extend({
       height: 30vw;
     }
     li {
+      position: relative;
       flex: 0 0 30%;
       margin-top: 10px;
       padding: 10px;
       border-radius: 10px;
       background: #fff;
+    }
+    .qrcode {
+      position: absolute;
+      left: 10px;
+      top: 10px;
     }
   }
 }
