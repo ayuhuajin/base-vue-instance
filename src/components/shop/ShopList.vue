@@ -19,15 +19,15 @@
           <span>${{ item.payMoney }}元</span>
           <span @click.stop="buy(item)">购买</span>
         </p>
-        <!-- {{ item.qrCode }}
-        <img class="qrcode" v-if="item.qrCode" :src="item.qrCode" alt="" /> -->
       </li>
     </ul>
     <!-- 弹窗 -->
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showDialog" @closeDialog="closeDialog">
-      <el-input v-model="secretStr" placeholder="请输入商品密钥"></el-input>
+      <el-input v-model="orderId" placeholder="请输入订单号进入"></el-input>
+      <el-input v-model="secretStr" placeholder="请输入商品密钥进入"></el-input>
       <div class="operation">
-        <span class="save" @click="handleSave()">保存</span>
+        <span class="save" @click="gotoDetail()">进入</span>
+        <span class="save" @click="buy(activeItem)">获取权限</span>
         <span class="cancel" @click="closeDialog">取消</span>
       </div>
     </base-dialog>
@@ -73,7 +73,8 @@ export default Vue.extend({
       activeItem: '',
       timer: null,
       out_trade_no: '',
-      intervalCount: 0
+      intervalCount: 0,
+      orderId: '' // 订单号
     };
   },
   computed: {
@@ -217,28 +218,48 @@ export default Vue.extend({
       this.showDialog = false;
       this.secretStr = '';
     },
-    handleSave() {
+    // 进入详情页
+    gotoDetail() {
       // let str = md5(123 + this.secretStr + 123);
       this.goShopDetail(this.activeItem);
       console.log('jinru', this.activeItem);
     },
-    goShopDetail(item) {
+    async goShopDetail(item) {
+      let orderList = localStorage.getItem('orderList');
+      if (orderList) {
+        orderList = JSON.parse(orderList);
+        console.log(orderList[item._id], 77755555);
+      }
       let str = md5(123 + this.secretStr + 123);
-      console.log(item, 888, str);
-      if (str !== item.secret) {
+      let shopObj = await shop.dispatch('getShopByIdSecret', {
+        id: item._id,
+        secret: str,
+        orderId: orderList[item._id] || 0
+      });
+      if (shopObj == '密钥出错') {
         this.$message.success('密钥错误,暂无权限查看');
         this.activeItem = item;
         this.showDialog = true;
         return;
       }
-      this.$router.push({
-        name: 'shopDetail',
-        query: {
-          id: item._id,
-          secret: str
-        }
-        // path: '/shopDetail'
-      });
+      if (shopObj && shopObj.length > 0) {
+        this.$router.push({
+          name: 'shopDetail',
+          query: {
+            id: item._id,
+            secret: str,
+            orderId: orderList[item._id] || 0
+          }
+        });
+      }
+
+      console.log('通过验证', shopObj);
+      // if (str !== item.secret) {
+      //   this.$message.success('密钥错误,暂无权限查看');
+      //   this.activeItem = item;
+      //   this.showDialog = true;
+      //   return;
+      // }
     }
   }
 });

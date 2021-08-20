@@ -31,20 +31,22 @@ export default Vue.extend({
     this.init();
   },
   methods: {
-    init() {
-      order.dispatch('queryOrderById', { orderId: this.orderId }).then(result => {
-        console.log(result[0].status, 78987897);
-        if (result[0].status == '未付款') {
-          this.$message.error('请先获取查看权限');
-          this.$router.push({
-            name: 'shopList'
-          });
-        }
+    async init() {
+      // let orderObj = await order.dispatch('queryOrderById', { orderId: this.orderId });
+      let shopObj = await shop.dispatch('getShopByIdSecret', {
+        id: this.id,
+        secret: this.secretStr,
+        orderId: this.orderId
       });
-      shop.dispatch('getShopByIdSecret', { id: this.id, secret: this.secretStr }).then(result => {
-        console.log(result, 9999);
-        this.obj = result[0];
-      });
+      if (shopObj == '密钥出错') {
+        this.$message.error('请先获取查看权限');
+        this.$router.push({
+          name: 'shopList'
+        });
+      } else {
+        console.log('通过验证', shopObj);
+        this.obj = shopObj[0];
+      }
     },
     // 复制方法
     copyUrl(text) {
