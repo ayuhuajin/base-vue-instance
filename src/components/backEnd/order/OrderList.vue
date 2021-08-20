@@ -120,6 +120,7 @@ export default Vue.extend({
     },
     // 查询
     search() {
+      this.pageInfo.pageNumber = 1;
       console.log('查询');
       this.initData();
     },

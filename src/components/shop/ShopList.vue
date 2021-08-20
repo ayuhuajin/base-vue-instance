@@ -74,7 +74,8 @@ export default Vue.extend({
       timer: null,
       out_trade_no: '',
       intervalCount: 0,
-      orderId: '' // 订单号
+      orderId: '', // 订单号
+      canClick: true
     };
   },
   computed: {
@@ -100,16 +101,23 @@ export default Vue.extend({
       console.log(result, 999);
     },
     buy(item) {
+      if (!this.canClick) {
+        return;
+      }
+      this.canClick = false;
+      setTimeout(() => {
+        this.canClick = true;
+      }, 500);
       let orderList = localStorage.getItem('orderList');
       if (orderList) {
         orderList = JSON.parse(orderList);
         console.log(orderList[item._id], 77755555);
         if (orderList[item._id]) {
           order.dispatch('queryOrderById', { orderId: orderList[item._id] }).then(result => {
-            console.log(result[0].status, 78987897);
-            if (result[0].status == '未付款') {
+            // console.log(result[0].status, 78987897);
+            if (result[0] && result[0].status == '未付款') {
               this.createOrder(item);
-            } else if (result[0].status == '已付款') {
+            } else if (result[0] && result[0].status == '已付款') {
               console.log(8888888);
               this.$router.push({
                 name: 'shopDetail',
@@ -119,6 +127,8 @@ export default Vue.extend({
                   // secret: str
                 }
               });
+            } else {
+              this.createOrder(item);
             }
           });
         } else {
@@ -136,6 +146,7 @@ export default Vue.extend({
     },
     // 创建订单
     createOrder(item) {
+      clearInterval(this.timer);
       let orderId = (Date.parse(new Date()) / 1000).toString() + parseInt((Math.random() + 1) * Math.pow(10, 8 - 1));
       // console.log(this.out_trade_no, 99999, item._id);
       ali
