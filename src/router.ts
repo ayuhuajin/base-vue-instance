@@ -332,6 +332,12 @@ let router = new Router({
       meta: { title: '联系列表' }
     },
     {
+      path: '/v2demo',
+      name: 'v2demo',
+      component: () => import('./views/VueDemo.vue'),
+      meta: { title: 'vue2' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
