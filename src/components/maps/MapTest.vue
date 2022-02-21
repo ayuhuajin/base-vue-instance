@@ -195,8 +195,10 @@ export default Vue.extend({
           // event.obj 为绘制出来的覆盖物对象
           // that.polygonArr = []
           that.overlays.push(event.obj);
-          // console.log('绘图',event.obj.Ce.path)
-          let list = event.obj.Ce.path;
+          // console.log('绘图', event.obj.getPath())
+          // if (!event.obj.Ce.path) return;
+          // let list = event.obj.Ce.path;
+          let list = event.obj.getPath();
           let polyArr = [];
           list.forEach(ele => {
             polyArr.push([ele.lng, ele.lat]);
