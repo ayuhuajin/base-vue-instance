@@ -338,6 +338,12 @@ let router = new Router({
       meta: { title: 'vue2' }
     },
     {
+      path: '/jsdemo',
+      name: 'jsdemo',
+      component: () => import('./views/JsDemo.vue'),
+      meta: { title: 'js' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
