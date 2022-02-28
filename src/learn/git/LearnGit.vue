@@ -1,6 +1,7 @@
 <template>
   <div>
     学习git
+    <span> git log --no-merges master.. 查看当前分支log</span>
   </div>
 </template>
 

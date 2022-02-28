@@ -11,19 +11,47 @@
 <script lang="ts">
 import Vue from 'vue';
 import demo1 from '@/components/jsdemo/demo1.vue';
+import demo2 from '@/components/jsdemo/demo2.vue';
+import demo3 from '@/components/jsdemo/demo3.vue';
+import demo4 from '@/components/jsdemo/demo4.vue';
+import demo5 from '@/components/jsdemo/demo5.vue';
 
 export default Vue.extend({
   components: {
-    demo1
+    demo1,
+    demo2,
+    demo3,
+    demo4,
+    demo5
   },
   data() {
     return {
-      activeName: 'demo1',
+      activeName: 'demo4',
       tabList: [
         {
           label: '发布订阅者',
           name: 'demo1',
           index: 1
+        },
+        {
+          label: 'promise',
+          name: 'demo2',
+          index: 2
+        },
+        {
+          label: 'async await',
+          name: 'demo3',
+          index: 3
+        },
+        {
+          label: 'module',
+          name: 'demo4',
+          index: 4
+        },
+        {
+          label: 'Class',
+          name: 'demo5',
+          index: 5
         }
       ]
     };
