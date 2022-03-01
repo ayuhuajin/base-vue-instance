@@ -19,10 +19,14 @@ export default Vue.extend({
   mounted() {
     // this.init();
     // this.getPromiseAll();
-    this.getPromiseRace();
+    // this.getPromiseRace();
     // this.promise1().then(res => {
     //   console.log(res, '输出this.promise1');
     // });
+    let all = Promise.all([this.promise5(), this.promise6(), this.promise7]);
+    all.then(res => {
+      console.log(res, 789);
+    });
   },
   methods: {
     init() {
@@ -62,6 +66,26 @@ export default Vue.extend({
         // reject(4);
       });
     },
+    promise5() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(15);
+        }, 1000);
+      });
+    },
+    // promiseall获取 异步代码获取不到里面的状态,需要用promise5 的return new Promise
+    async promise6() {
+      let b = '';
+      setTimeout(() => {
+        b = 16;
+        return 16;
+      }, 1000);
+    },
+    // promiseall 可以获取同步代码的 状态
+    async promise7() {
+      return 7;
+    },
+
     // 全部完成，返回值组成一个数组，传递给p的回调函数
     // 只要之中有一个被rejected，all的状态就变成rejected，此时第一个被reject的实例的返回值，会传递给all的回调函数。
     getPromiseAll() {
