@@ -16,6 +16,7 @@ import demo3 from '@/components/jsdemo/demo3.vue';
 import demo4 from '@/components/jsdemo/demo4.vue';
 import demo5 from '@/components/jsdemo/demo5.vue';
 import demo6 from '@/components/jsdemo/demo6.vue';
+import demo7 from '@/components/jsdemo/demo7.vue';
 
 export default Vue.extend({
   components: {
@@ -24,11 +25,12 @@ export default Vue.extend({
     demo3,
     demo4,
     demo5,
-    demo6
+    demo6,
+    demo7
   },
   data() {
     return {
-      activeName: 'demo6',
+      activeName: 'demo7',
       tabList: [
         {
           label: '发布订阅者',
@@ -59,6 +61,11 @@ export default Vue.extend({
           label: '解构赋值',
           name: 'demo6',
           index: 6
+        },
+        {
+          label: 'this',
+          name: 'demo7',
+          index: 7
         }
       ]
     };
