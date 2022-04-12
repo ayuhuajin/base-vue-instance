@@ -6,15 +6,15 @@
       <el-button @click="exportData">导出</el-button>
     </div>
     <div class="input-card" style="width: 120px">
-      <button class="btn" @click="rectOpem()" style="margin-bottom: 5px">开始编辑</button>
-      <button class="btn" @click="closeOpem()" style="margin-bottom: 5px">结束编辑</button>
+      <!-- <button class="btn" @click="rectOpem()" style="margin-bottom: 5px">开始编辑</button>
+      <button class="btn" @click="closeOpem()" style="margin-bottom: 5px">结束编辑</button> -->
       <button class="btn" @click="drawRectangle()" style="margin-bottom: 5px">绘制矩形</button>
-      <button class="btn" @click="drawPolygon()" style="margin-bottom: 5px">绘制多边形</button>
+      <!-- <button class="btn" @click="drawPolygon()" style="margin-bottom: 5px">绘制多边形</button>
       <button class="btn" @click="searchData()" style="margin-bottom: 5px">搜索</button>
       <button class="btn" @click="searchData2(polygonArr)" style="margin-bottom: 5px">搜索2</button>
-      <button class="btn" @click="clearPolygon()" style="margin-bottom: 5px">移除多边形</button>
+      <button class="btn" @click="clearPolygon()" style="margin-bottom: 5px">移除多边形</button> -->
       <button class="btn" @click="clearDraw()" style="margin-bottom: 5px">关闭绘图</button>
-      <button class="btn" @click="getLngLat()" style="margin-bottom: 5px">获取中心点</button>
+      <!-- <button class="btn" @click="getLngLat()" style="margin-bottom: 5px">获取中心点</button> -->
     </div>
     <div id="container" class="container" ref="SelectMap"></div>
     <div id="result"></div>
@@ -314,10 +314,10 @@ export default Vue.extend({
         pageSize: 50, // 单页显示结果条数
         pageIndex: 1, // 页码
         city: '010', // 兴趣点城市
-        citylimit: true, //是否强制限制在设置的城市内搜索
-        map: that.map, // 展现结果的地图实例
-        panel: 'result1', // 结果列表将在此容器中进行展示。
-        autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
+        citylimit: true //是否强制限制在设置的城市内搜索
+        // map: that.map // 展现结果的地图实例
+        // panel: 'result1', // 结果列表将在此容器中进行展示。
+        // autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
       });
       // console.log(that.polygonArr,777888)
       var polygon = new AMap.Polygon({
@@ -355,7 +355,7 @@ export default Vue.extend({
 
       placeSearch.searchInBounds(that.keyWord, polygon, (status, result) => {
         if (status !== 'complete') return;
-        console.log(result.poiList.count, 'count数');
+        console.log(result.poiList.count, 'count数12345');
         let count = Math.ceil(result.poiList.count / result.poiList.pageSize);
         if (current < count) {
           current++;
@@ -367,6 +367,7 @@ export default Vue.extend({
           that.businessData.push(...result.poiList.pois);
           console.log(current);
         }
+        placeSearch.clear();
         console.log(that.businessData);
       });
     },
@@ -425,12 +426,33 @@ export default Vue.extend({
         console.log('wancheng');
       });
     },
+    // 是否为手机号码
+    isPhone(str) {
+      let arr = str.split(';');
+      let bool = arr.some(obj => {
+        return obj.length == 11;
+      });
+      return bool;
+    },
     // 导出
     exportData() {
       if (this.businessData && this.businessData.length == 0) {
         this.init(false);
         return;
       }
+      // 过滤空与非手机号
+      let filterList = this.businessData.filter(item => {
+        console.log(item.tel, 456);
+        return item.tel !== '' && this.isPhone(item.tel);
+
+        // return item.tel !== '';
+      });
+      this.businessData = filterList;
+      // let list = this.businessData.filter(item => {
+      //   console.log(item.phone, 456);
+      //   return item.phone !== '';
+      // });
+      console.log(this.businessData, '过滤后');
       // 添加联系人
       this.addContact(this.businessData);
       // 导出表格的表头设置
