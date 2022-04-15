@@ -3,6 +3,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import '@/assets/css/reset.css'; //样式重置
+// import '@/assets/css/base.scss'; //样式重置
+// import '@/assets/css/common.scss'; //样式重置
+import 'element-ui/lib/theme-chalk/index.css';
+// import 'compass-mixins/lib/_compass.scss';
+// import 'compass-mixins/lib/compass/_layout.scss';
 //import '@/assets/js/errorMonitoring.js'; // 错误监控
 // import '@/services/mock/mock.ts'; // 模拟数据
 import './plugins/element.js';

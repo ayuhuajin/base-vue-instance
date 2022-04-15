@@ -47,7 +47,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import LiveVideo from '@/components/common/LiveVideo.vue';
-import About from '@/views/About.vue';
+// import About from '@/views/About.vue';
 import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules/index.ts';
 import gdMap from '@/plugins/gdMaps.ts';

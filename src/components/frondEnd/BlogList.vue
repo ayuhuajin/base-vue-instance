@@ -3,7 +3,7 @@
     <template v-if="blogList.length > 0">
       <ul>
         <li v-for="(item, index) in blogList" :key="item._id" @click="toDetail(item)">
-          <img :src="item.img.length > 0 ? item.img : require(`../../assets/images/${(index + 1) % 5}.jpg`)" alt="" />
+          <img :src="item.img.length > 0 ? item.img : getImageUrl(index)" alt="" />
           <div>
             <h4>{{ item.title }}</h4>
             <p>{{ formate(item.time) }}</p>
@@ -60,6 +60,9 @@ export default Vue.extend({
     });
   },
   methods: {
+    getImageUrl(index) {
+      return new URL(`../../assets/images/${(index + 1) % 5}.jpg`, import.meta.url).href;
+    },
     async init() {
       try {
         let blogObj = await blog.dispatch('getBlogList', {
