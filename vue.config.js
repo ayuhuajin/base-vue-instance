@@ -39,8 +39,9 @@ module.exports = {
   },
   configureWebpack: config => {
     // webpack配置，值位对象时会合并配置，为方法时会改写配置
-    config.devtool = config.mode === 'production' ? false : 'source-map';
-    // config.devtool = 'eval-source-map';
+    // config.devtool:'source-map',
+    // config.devtool = config.mode === 'production' ? false : 'source-map';
+    config.devtool = 'eval-source-map'; // 浏览器能看到源码
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true; //移除console
       config.externals = process.env.NODE_ENV === 'production' ? getProdExternals() : {}; // 排除打包的插件
