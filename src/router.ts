@@ -344,6 +344,11 @@ let router = new Router({
       meta: { title: 'js' }
     },
     {
+      path: '/nodeDemo',
+      name: 'nodeDemo',
+    component: () => import('./views/NodeDemo.vue')
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
