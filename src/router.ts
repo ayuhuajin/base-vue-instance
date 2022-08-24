@@ -197,6 +197,19 @@ let router = new Router({
           ]
         },
         {
+          path: '/backEnd/company',
+          component: () => import('./components/backEnd/company/CompanyView.vue'),
+          meta: { title: '嗨前端-公司', requireAuth: true },
+          children: [
+            {
+              path: '/',
+              name: 'CompanyList',
+              component: () => import('./components/backEnd/company/CompanyList.vue'),
+              meta: { title: '嗨前端-用户', requireAuth: true }
+            }
+          ]
+        },
+        {
           path: '/backEnd/order',
           component: () => import('./components/backEnd/order/OrderView.vue'),
           meta: { title: '嗨前端-订单', requireAuth: true },

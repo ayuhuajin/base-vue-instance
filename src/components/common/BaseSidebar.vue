@@ -38,6 +38,10 @@
           <el-menu-item index="/backEnd/order">订单</el-menu-item>
           <!-- <el-menu-item index="/backEnd/toolType">科目</el-menu-item> -->
         </el-submenu>
+        <el-submenu index="company">
+          <span slot="title">公司</span>
+          <el-menu-item index="/backEnd/company">公司管理</el-menu-item>
+        </el-submenu>
         <el-menu-item index="/backEnd/git">Git</el-menu-item>
         <el-submenu index="es5">
           <span slot="title">算法</span>
