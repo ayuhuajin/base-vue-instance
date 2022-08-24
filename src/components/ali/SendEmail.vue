@@ -1,0 +1,171 @@
+<template>
+  <div>
+    <div>
+      <el-input v-model="emailObj.from" placeholder="请输入发送邮箱"></el-input>
+      <el-input v-model="emailObj.to" placeholder="请输入收件邮箱"></el-input>
+      <el-input v-model="emailObj.replyTo" placeholder="请输入回件邮箱"></el-input>
+      <el-input v-model="emailObj.subject" placeholder="请输入主题"></el-input>
+      <el-input v-model="emailObj.text" placeholder="请输入内容"></el-input>
+      <el-input v-model="emailObj.html" placeholder="请输入html"></el-input>
+      <el-button @click="sendList">发送</el-button>
+      <el-button @click="sendEmail">发送单个</el-button>
+    </div>
+    <div>
+      <el-upload
+        class="upload-demo"
+        action="/"
+        :on-change="handleChange"
+        :on-exceed="handleExceed"
+        :on-remove="handleRemove"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+        :auto-upload="false"
+      >
+        <el-button size="small" type="primary">点击上传</el-button>
+        <!-- <div slot="tip" class="el-upload__tip">只 能 上 传 xlsx / xls 文 件</div> -->
+      </el-upload>
+    </div>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue';
+import ali from '@/store/modules/ali';
+import XLSX from 'xlsx';
+
+export default Vue.extend({
+  data() {
+    return {
+      len: 0,
+      emailObj: {
+        from: 'singhai@email.wulilang.com', //发送邮箱
+        to: '', //发往哪里
+        subject: 'Hello', // Subject line
+        text: '', //标题
+        html: '', //内容
+        replyTo: '782118880@qq.com', //custom reply address
+        attachments: [] // 附件
+      }
+    };
+  },
+  methods: {
+    sendList() {
+      // this.tableData.forEach(item => {
+      //   console.log(item, 1234);
+      if (this.tableData && this.tableData.length > 0) {
+        this.sendEmail(this.tableData[this.len].email);
+      } else {
+        this.$message.error('请先导入数据');
+      }
+      // if (item.email.length > 3) {
+      //   // this.emailObj.email = item.email;
+      //   this.sendEmail(item.email);
+      // }
+      // });
+    },
+    sendEmail(email) {
+      console.log(email, 897989);
+      this.len++;
+      this.emailObj.to = email;
+      if (!email || email.length < 3) {
+        this.sendList();
+        return;
+      }
+
+      ali.dispatch('sendEmail', this.emailObj).then(result => {
+        console.log(result, 8989);
+        setTimeout(() => {
+          if (this.len <= 3) {
+            this.sendList();
+          }
+        }, 1000);
+      });
+    },
+    //上传文件时处理方法
+    handleChange(file, fileList) {
+      const types = file.raw.name.split('.')[1];
+      const fileType = ['xlsx', 'xlc', 'xlm', 'xls', 'xlt', 'xlw', 'csv'].some(item => item === types);
+      console.log(fileType, 678);
+      this.fileTemp = file.raw;
+      if (this.fileTemp) {
+        if (fileType) {
+          this.excelImport();
+        } else {
+          this.$message({
+            type: 'warning',
+            message: '附件格式错误，请删除后重新上传！'
+          });
+        }
+      } else {
+        this.$message({
+          type: 'warning',
+          message: '请上传附件！'
+        });
+      }
+    },
+    //超出最大上传文件数量时的处理方法
+    handleExceed() {
+      this.$message({
+        type: 'warning',
+        message: '超出最大上传文件数量的限制！'
+      });
+      return;
+    },
+    //移除文件的操作方法
+    handleRemove(file, fileList) {
+      this.fileTemp = null;
+    },
+
+    // 导入
+    excelImport() {
+      let fileReader = new FileReader();
+      var file = event.currentTarget.files[0];
+      console.log(file, 'file');
+      // 回调函数
+      fileReader.onload = ev => {
+        try {
+          let data = ev.target.result;
+          let workbook = XLSX.read(data, {
+            type: 'binary'
+          });
+          // excel读取出的数据
+          let excelData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+          // 将上面数据转换成 table需要的数据
+          console.log(excelData, 'excelData');
+          let arr = [];
+          excelData.forEach(item => {
+            console.log(item, '获取item');
+            let obj = {};
+            obj.companyName = item['公司名称'];
+            obj.leganName = item['法定代表人'];
+            obj.address = item['注册地址'];
+            obj.phone = item['电话'];
+            obj.otherPhone = item['其他电话'];
+            obj.email = item['邮箱'];
+            obj.range = item['经营范围'];
+            arr.push(obj);
+          });
+          // 导入传值,这时可传后端保存
+          this.tableData = [...arr];
+          console.log(this.tableData, 45678);
+        } catch (e) {
+          window.alert('文件类型不正确！');
+          return false;
+        }
+      };
+      // 读取文件 成功后执行上面的回调函数
+      fileReader.readAsBinaryString(file);
+    }
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+/deep/ .el-input {
+  display: block;
+  width: 300px;
+  margin-top: 10px;
+}
+/deep/ .el-button {
+  margin-top: 10px;
+}
+</style>
