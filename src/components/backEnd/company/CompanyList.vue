@@ -56,6 +56,8 @@
       <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="otherEmail" label="其他邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="natureOfBusiness" label="经营范围" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column>
       <el-table-column label="操作" align="center" width="240">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
@@ -122,6 +124,10 @@
         <el-input v-model="companyItem.otherEmail" placeholder="请输入其他邮箱"></el-input>
         <span>经营范围</span>
         <el-input v-model="companyItem.natureOfBusiness" placeholder="请输入经营范围"></el-input>
+        <span>备注</span>
+        <el-input v-model="companyItem.remark" placeholder="请输入备注"></el-input>
+        <span>发送次数</span>
+        <el-input v-model="companyItem.sendNum" placeholder="请输入经营范围"></el-input>
       </div>
       <div>
         <span class="save" @click="handleSave()">保存</span>
@@ -219,7 +225,9 @@ export default Vue.extend({
         otherPhone: '',
         email: '',
         otherEmail: '',
-        natureOfBusiness: ''
+        natureOfBusiness: '',
+        remark: '',
+        sendNum: ''
       }
     };
   },
@@ -359,6 +367,8 @@ export default Vue.extend({
             obj.email = item['邮箱'];
             obj.otherEmail = item['邮箱'];
             obj.natureOfBusiness = item['经营范围'];
+            obj.remark = '';
+            obj.sendNum = 0;
             arr.push(obj);
           });
           // 导入传值,这时可传后端保存
