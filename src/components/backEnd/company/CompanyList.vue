@@ -63,7 +63,7 @@
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
           <span class="content-delete" @click="handleDelete(scope.row._id)">删除</span>
           <span class="content-detail" @click="companyDetail(scope.row._id)">详情</span>
-          <span class="content-detail" @click="sendEmail(scope.row._id)">发送</span>
+          <span class="content-detail" @click="sendSingleEmail(scope.row._id)">发送</span>
         </template>
       </el-table-column>
     </base-table>
@@ -134,6 +134,9 @@
         <span class="cancel" @click="closeDialog">取消</span>
       </div>
     </base-dialog>
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showSendDialog" @closeDialog="closeDialog">
+      <send-email></send-email>
+    </base-dialog>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
   </div>
@@ -147,6 +150,7 @@ import BaseTable from '@/components/common/BaseTable.vue';
 import BaseDialog from '@/components/common/BaseDialog.vue';
 import BaseUpload from '@/components/common/BaseUpload.vue';
 import timeFormate from '@/assets/js/utils/timeFormate.ts';
+import SendEmail from '@/components/ali/SendEmail.vue';
 import company from '@/store/modules/company';
 import ali from '@/store/modules/ali';
 import XLSX from 'xlsx';
@@ -159,7 +163,8 @@ export default Vue.extend({
     MainHeader,
     BaseTable,
     PageChange,
-    BaseDialog
+    BaseDialog,
+    SendEmail
   },
   data() {
     return {
@@ -181,23 +186,16 @@ export default Vue.extend({
         desc: '',
         fileList: []
       },
-      companyData: [
-        // {
-        //   companyName: '无用商品',
-        //   time: '2021-04-08',
-        //   payCount: '3',
-        //   payMoney: 6,
-        //   secretStr: '33566'
-        // }
-      ],
+      companyData: [],
       // 弹窗设置
       dialogInfo: {
         visible: true,
-        titleName: '添加商品',
+        titleName: '添加公司',
         dialogWidth: '800px',
         activeClass: 'user-dialog'
       },
       showDialog: false,
+      showSendDialog: false,
       companyItem: {
         companyName: '',
         operatingStatus: '',
@@ -228,6 +226,16 @@ export default Vue.extend({
         natureOfBusiness: '',
         remark: '',
         sendNum: ''
+      },
+      // 邮件发送格式
+      emailObj: {
+        from: 'singhai@email.wulilang.com', //发送邮箱
+        to: '', //发往哪里
+        subject: 'Hello', // Subject line
+        text: '', //标题
+        html: '', //内容
+        replyTo: '782118880@qq.com', //custom reply address
+        attachments: [] // 附件
       }
     };
   },
@@ -252,6 +260,9 @@ export default Vue.extend({
     // 查询
     search() {
       console.log('查询');
+    },
+    sendSingleEmail() {
+      console.log(111112);
     },
     sendList() {
       // this.tableData.forEach(item => {
@@ -396,14 +407,14 @@ export default Vue.extend({
       if (!this.companyItem._id) {
         company.dispatch('addCompany', this.companyItem).then(result => {
           this.initData();
-          this.$message.success('添加商品成功');
+          this.$message.success('添加公司成功');
           this.showDialog = false;
         });
       } else {
         this.companyItem.id = this.companyItem._id;
         company.dispatch('updateCompany', this.companyItem).then(result => {
           this.initData();
-          this.$message.success('编辑商品成功');
+          this.$message.success('编辑公司成功');
           this.showDialog = false;
         });
       }
@@ -422,18 +433,13 @@ export default Vue.extend({
       //   name: 'AddCompany'
       // });
     },
-    // 图片上传成功
-    handleSuccess(url) {
-      this.companyItem.img = url;
-    },
-    // 编辑商品
+    // 编辑公司
     handleEdit(id) {
       console.log('编辑');
       this.uploadInfo.fileList[0] = {};
       company.dispatch('CompanyView', id).then(result => {
         this.companyItem = result[0];
         console.log(result[0], 99999);
-        this.uploadInfo.fileList[0].url = result[0].img;
         this.showDialog = true;
       });
     },
