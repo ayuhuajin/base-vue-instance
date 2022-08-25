@@ -30,6 +30,7 @@
 <script>
 import Vue from 'vue';
 import ali from '@/store/modules/ali';
+import company from '@/store/modules/company';
 import XLSX from 'xlsx';
 
 export default Vue.extend({
@@ -136,17 +137,38 @@ export default Vue.extend({
             console.log(item, '获取item');
             let obj = {};
             obj.companyName = item['公司名称'];
-            obj.leganName = item['法定代表人'];
-            obj.address = item['注册地址'];
+            obj.operatingStatus = item['经营状态'];
+            obj.legalPerson = item['法定代表人'];
+            obj.registeredCapital = item['注册资本'];
+            obj.paidInCapital = item['实缴资本'];
+            obj.dateOfIncorporation = item['成立日期'];
+            obj.approvalDate = item['核准日期'];
+            obj.businessTerm = item['营业期限'];
+            obj.province = item['所属省份'];
+            obj.city = item['所属城市'];
+            obj.county = item['所属区县'];
+            obj.unifiedSocialCreditCode = item['统一社会信用代码'];
+            obj.TINumber = item['纳税人识别号'];
+            obj.registrationNumber = item['注册号'];
+            obj.organizationCode = item['组织机构代码'];
+            obj.numberOfInsured = item['参保人数'];
+            obj.companyType = item['公司类型'];
+            obj.industry = item['所属行业'];
+            obj.NameUsedBefore = item['曾用名'];
+            obj.registeredAddress = item['注册地址'];
+            obj.newAddress = item['最新年报地址'];
+            obj.website = item['网址'];
             obj.phone = item['电话'];
             obj.otherPhone = item['其他电话'];
             obj.email = item['邮箱'];
-            obj.range = item['经营范围'];
+            obj.otherEmail = item['邮箱'];
+            obj.natureOfBusiness = item['经营范围'];
             arr.push(obj);
           });
           // 导入传值,这时可传后端保存
           this.tableData = [...arr];
           console.log(this.tableData, 45678);
+          this.addCompany(this.tableData);
         } catch (e) {
           window.alert('文件类型不正确！');
           return false;
@@ -154,6 +176,11 @@ export default Vue.extend({
       };
       // 读取文件 成功后执行上面的回调函数
       fileReader.readAsBinaryString(file);
+    },
+    addCompany(data) {
+      company.dispatch('addCompany', data).then(result => {
+        console.log(result, 8989);
+      });
     }
   }
 });

@@ -1,6 +1,12 @@
 <template>
   <div class="base-table">
-    <el-table :data="tableData" :class="tableClass" style="width: 100%" @row-dblclick="doubleClick">
+    <el-table
+      :data="tableData"
+      :class="tableClass"
+      style="width: 100%"
+      @row-dblclick="doubleClick"
+      @selection-change="handleSelectionChange"
+    >
       <slot></slot>
     </el-table>
   </div>
@@ -18,6 +24,10 @@ export default Vue.extend({
     tableClass: {
       type: String,
       default: 'tableClass'
+    },
+    type: {
+      type: String,
+      default: 'index'
     }
   },
   data() {
@@ -27,6 +37,9 @@ export default Vue.extend({
   methods: {
     doubleClick() {
       console.log('双击');
+    },
+    handleSelectionChange(value) {
+      this.$emit('selectChange', value);
     }
   }
 });
