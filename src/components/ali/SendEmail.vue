@@ -7,10 +7,13 @@
       <el-input v-model="emailObj.subject" placeholder="请输入主题"></el-input>
       <el-input v-model="emailObj.text" placeholder="请输入内容"></el-input>
       <el-input v-model="emailObj.html" placeholder="请输入html"></el-input>
-      <el-button @click="sendList">发送</el-button>
-      <el-button @click="sendEmail">发送单个</el-button>
+      <!-- <el-button @click="sendList">发送</el-button>
+      <el-button @click="sendEmail">发送单个</el-button> -->
+      <div id="editor" style="width:300px;height:300px;"></div>
+      <el-button @click="close">关闭</el-button>
+      <el-button @click="comfirm">确认</el-button>
     </div>
-    <div>
+    <!-- <div>
       <el-upload
         class="upload-demo"
         action="/"
@@ -21,9 +24,8 @@
         :auto-upload="false"
       >
         <el-button size="small" type="primary">点击上传</el-button>
-        <!-- <div slot="tip" class="el-upload__tip">只 能 上 传 xlsx / xls 文 件</div> -->
       </el-upload>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -32,23 +34,40 @@ import Vue from 'vue';
 import ali from '@/store/modules/ali';
 import company from '@/store/modules/company';
 import XLSX from 'xlsx';
+import wangeditor from 'wangeditor';
 
 export default Vue.extend({
+  props: {
+    emailObj: {
+      type: Object
+    }
+  },
   data() {
     return {
-      len: 0,
-      emailObj: {
-        from: 'singhai@email.wulilang.com', //发送邮箱
-        to: '', //发往哪里
-        subject: 'Hello', // Subject line
-        text: '', //标题
-        html: '', //内容
-        replyTo: '782118880@qq.com', //custom reply address
-        attachments: [] // 附件
-      }
+      len: 0
+      // emailObj: {
+      //   from: 'singhai@email.wulilang.com', //发送邮箱
+      //   to: '', //发往哪里
+      //   subject: '', // Subject line
+      //   text: '', //标题
+      //   html: '', //内容
+      //   replyTo: '782118880@qq.com', //custom reply address
+      //   attachments: [] // 附件
+      // }
     };
   },
+  mounted() {
+    this.createEditor();
+  },
   methods: {
+    // 创建编辑器
+    createEditor() {
+      this.editor = new wangeditor('#editor');
+      this.editor.customConfig.onchange = html => {
+        console.log(44546464, html);
+      };
+      this.editor.create();
+    },
     sendList() {
       // this.tableData.forEach(item => {
       //   console.log(item, 1234);
@@ -115,7 +134,6 @@ export default Vue.extend({
     handleRemove(file, fileList) {
       this.fileTemp = null;
     },
-
     // 导入
     excelImport() {
       let fileReader = new FileReader();
@@ -181,6 +199,13 @@ export default Vue.extend({
       company.dispatch('addCompany', data).then(result => {
         console.log(result, 8989);
       });
+    },
+    close() {
+      this.$emit('close');
+    },
+    comfirm() {
+      console.log(this.editor, 88899);
+      this.$emit('comfirm', this.emailObj);
     }
   }
 });

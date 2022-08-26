@@ -135,7 +135,7 @@
       </div>
     </base-dialog>
     <base-dialog :dialogInfo="dialogInfo" :showDialog="showSendDialog" @closeDialog="closeDialog">
-      <send-email></send-email>
+      <send-email :emailObj="emailObj" @close="showSendDialog = false" @comfirm="comfirm"></send-email>
     </base-dialog>
     <!-- 分页 -->
     <page-change :pageInfo="pageInfo"></page-change>
@@ -168,7 +168,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      title: '公司列表',
+      title: '',
       keyword: '',
       companyName: '',
       // 分页设置
@@ -231,7 +231,7 @@ export default Vue.extend({
       emailObj: {
         from: 'singhai@email.wulilang.com', //发送邮箱
         to: '', //发往哪里
-        subject: 'Hello', // Subject line
+        subject: '', // Subject line
         text: '', //标题
         html: '', //内容
         replyTo: '782118880@qq.com', //custom reply address
@@ -262,6 +262,9 @@ export default Vue.extend({
       console.log('查询');
     },
     sendSingleEmail() {
+      if (!this.emailObj.subject) {
+        this.showSendDialog = true;
+      }
       console.log(111112);
     },
     sendList() {
@@ -449,6 +452,9 @@ export default Vue.extend({
         this.$message.success('删除成功');
         this.initData();
       });
+    },
+    comfirm(obj) {
+      console.log(obj, 8989);
     }
   }
 });
