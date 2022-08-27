@@ -32,7 +32,12 @@ export default root.registerModule('ali', {
     },
     // 退款
     async refundOrder({ commit }, payload) {
-      let result = await http.post(`/ali/refundOrder`, payload);
+      let result = await http.post(`/ali/sendEmail`, payload);
+      return result;
+    },
+    // 发送邮件
+    async sendEmail({ commit }, payload) {
+      let result = await http.post(`/ali/sendEmail`, payload);
       return result;
     }
   }
