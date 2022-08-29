@@ -7,6 +7,7 @@
         <el-input v-model="keyword" placeholder="请输入查找内容"></el-input>
       </div>
       <div>
+        <el-button @click="sendEmailBySelect">发送</el-button>
         <el-upload
           class="upload-demo"
           action="/"
@@ -16,11 +17,8 @@
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
           :auto-upload="false"
         >
-          <el-button size="small" type="primary">点击上传</el-button>
-          <!-- <div slot="tip" class="el-upload__tip">只 能 上 传 xlsx / xls 文 件</div> -->
+          <el-button type="primary">导入</el-button>
         </el-upload>
-        <el-button @click="sendEmailBySelect">发送</el-button>
-        <el-button type="primary" @click="search">导入</el-button>
         <el-button type="primary" @click="search">导出</el-button>
         <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
@@ -288,7 +286,6 @@ export default Vue.extend({
         this.$message.error('请先选择需要发送的邮箱');
       }
     },
-
     sendEmail(obj) {
       this.len++;
       this.emailObj.to = obj.email;
@@ -364,7 +361,7 @@ export default Vue.extend({
       var file = event.currentTarget.files[0];
       console.log(file, 'file');
       // 回调函数
-      fileReader.onload = ev => {
+      fileReader.onload = async ev => {
         try {
           let data = ev.target.result;
           let workbook = XLSX.read(data, {
@@ -412,7 +409,8 @@ export default Vue.extend({
           // 导入传值,这时可传后端保存
           this.tableData = [...arr];
           console.log(this.tableData, 45678);
-          this.addCompany(this.tableData);
+          await this.addCompany(this.tableData);
+          this.initData();
         } catch (e) {
           window.alert('文件类型不正确！');
           return false;
