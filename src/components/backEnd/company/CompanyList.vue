@@ -19,7 +19,7 @@
           <el-button size="small" type="primary">点击上传</el-button>
           <!-- <div slot="tip" class="el-upload__tip">只 能 上 传 xlsx / xls 文 件</div> -->
         </el-upload>
-        <el-button @click="sendList">发送</el-button>
+        <el-button @click="sendEmailBySelect">发送</el-button>
         <el-button type="primary" @click="search">导入</el-button>
         <el-button type="primary" @click="search">导出</el-button>
         <el-button type="primary" @click="search">查询</el-button>
@@ -63,7 +63,7 @@
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
           <span class="content-delete" @click="handleDelete(scope.row._id)">删除</span>
           <span class="content-detail" @click="companyDetail(scope.row._id)">详情</span>
-          <span class="content-detail" @click="sendSingleEmail(scope.row._id)">发送</span>
+          <span class="content-detail" @click="sendSingleEmail(scope.row)">发送</span>
         </template>
       </el-table-column>
     </base-table>
@@ -194,6 +194,7 @@ export default Vue.extend({
         dialogWidth: '800px',
         activeClass: 'user-dialog'
       },
+      len: 0,
       showDialog: false,
       showSendDialog: false,
       companyItem: {
@@ -229,6 +230,7 @@ export default Vue.extend({
       },
       // 邮件发送格式
       emailObj: {
+        companyId: '',
         from: 'singhai@email.wulilang.com', //发送邮箱
         to: '', //发往哪里
         subject: '', // Subject line
@@ -255,17 +257,57 @@ export default Vue.extend({
         // title: this.name
       });
       this.companyData = result.data;
-      console.log(result, 999);
+      this.pageInfo.totalPages = result.total;
     },
     // 查询
     search() {
       console.log('查询');
     },
-    sendSingleEmail() {
+    sendSingleEmail(obj) {
       if (!this.emailObj.subject) {
         this.showSendDialog = true;
+        return;
       }
+      this.emailObj.email = obj.email;
+      this.emailObj.companyId = obj._id;
+      ali.dispatch('sendEmail', this.emailObj).then(result => {
+        this.$message.success('发送成功');
+        this.initData();
+      });
       console.log(111112);
+    },
+    // 批量发送
+    sendEmailBySelect() {
+      if (!this.emailObj.subject) {
+        this.showSendDialog = true;
+        return;
+      }
+      if (this.emailList && this.emailList.length > 0) {
+        this.sendEmail(this.emailList[this.len]);
+      } else {
+        this.$message.error('请先选择需要发送的邮箱');
+      }
+    },
+
+    sendEmail(obj) {
+      this.len++;
+      this.emailObj.to = obj.email;
+      this.emailObj.companyId = obj._id;
+      if (!obj.email || obj.email.length < 3) {
+        this.sendEmailBySelect();
+        return;
+      }
+
+      ali.dispatch('sendEmail', this.emailObj).then(result => {
+        setTimeout(() => {
+          if (this.len <= this.emailList.length) {
+            this.sendEmailBySelect();
+          } else {
+            this.$message.success('发送成功');
+            this.initData();
+          }
+        }, 1000);
+      });
     },
     sendList() {
       // this.tableData.forEach(item => {
@@ -280,24 +322,6 @@ export default Vue.extend({
       //   this.sendEmail(item.email);
       // }
       // });
-    },
-    sendEmail(email) {
-      console.log(email, 897989);
-      this.len++;
-      this.emailObj.to = email;
-      if (!email || email.length < 3) {
-        this.sendList();
-        return;
-      }
-
-      ali.dispatch('sendEmail', this.emailObj).then(result => {
-        console.log(result, 8989);
-        setTimeout(() => {
-          if (this.len <= 3) {
-            this.sendList();
-          }
-        }, 1000);
-      });
     },
     //上传文件时处理方法
     handleChange(file, fileList) {
@@ -399,10 +423,11 @@ export default Vue.extend({
     },
     addCompany(data) {
       company.dispatch('addCompany', data).then(result => {
-        console.log(result, 8989);
+        this.$message.success('添加公司成功');
       });
     },
     handleSelectionChange(item) {
+      this.emailList = item;
       console.log(item, 999888);
     },
     handleSave() {
@@ -454,6 +479,8 @@ export default Vue.extend({
       });
     },
     comfirm(obj) {
+      this.showSendDialog = false;
+      this.$message.success('模板保存成功');
       console.log(obj, 8989);
     }
   }

@@ -65,6 +65,7 @@ export default Vue.extend({
       this.editor = new wangeditor('#editor');
       this.editor.customConfig.onchange = html => {
         console.log(44546464, html);
+        this.emailObj.html = html;
       };
       this.editor.create();
     },
