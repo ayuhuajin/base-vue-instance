@@ -23,6 +23,16 @@
         <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="handleAdd" type="warning">增加</el-button>
       </div>
+      <div>
+        <el-select v-model="isSend" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="companyData" @selectChange="handleSelectionChange">
@@ -236,7 +246,18 @@ export default Vue.extend({
         html: '', //内容
         replyTo: '782118880@qq.com', //custom reply address
         attachments: [] // 附件
-      }
+      },
+      options: [
+        {
+          value: '已发送',
+          label: '已发送'
+        }, 
+        {
+          value: '未发送',
+          label: '未发送'
+        }
+      ],
+      isSend: ''
     };
   },
   async mounted() {
@@ -251,15 +272,15 @@ export default Vue.extend({
     async initData() {
       let result = await company.dispatch('getCompanyList', {
         pageSize: this.pageInfo.pageSize,
-        pageNumber: this.pageInfo.pageNumber
-        // title: this.name
+        pageNumber: this.pageInfo.pageNumber,
+        isSend:this.isSend==="已发送"?true:false
       });
       this.companyData = result.data;
       this.pageInfo.totalPages = result.total;
     },
     // 查询
     search() {
-      console.log('查询');
+      this.initData()
     },
     sendSingleEmail(obj) {
       if (!this.emailObj.subject) {
@@ -431,7 +452,7 @@ export default Vue.extend({
     handleSave() {
       console.log(this.companyItem, 88899999);
       if (!this.companyItem._id) {
-        company.dispatch('addCompany', this.companyItem).then(result => {
+        company.dispatch('addCompany', [this.companyItem]).then(result => {
           this.initData();
           this.$message.success('添加公司成功');
           this.showDialog = false;
