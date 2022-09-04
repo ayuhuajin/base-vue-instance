@@ -2,30 +2,45 @@
   <div class="company-list">
     <!-- 头部 -->
     <main-header :titleName="title">
-      <div>
-        <span>查找</span>
-        <el-input v-model="keyword" placeholder="请输入查找内容"></el-input>
+      <div class="search">
+        <div>
+          <span>查找</span>
+          <el-input v-model="keyword" placeholder="请输入查找内容"></el-input>
+        </div>
+        <div>
+          <el-button @click="sendEmailBySelect">发送</el-button>
+          <el-upload
+            class="upload-demo"
+            action="/"
+            :on-change="handleChange"
+            :on-exceed="handleExceed"
+            :on-remove="handleRemove"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+            :auto-upload="false"
+          >
+            <el-button type="primary">导入</el-button>
+          </el-upload>
+          <el-button type="primary" @click="search">导出</el-button>
+          <el-button type="primary" @click="search">查询</el-button>
+          <el-button @click="handleAdd" type="warning">增加</el-button>
+        </div>
       </div>
-      <div>
-        <el-button @click="sendEmailBySelect">发送</el-button>
-        <el-upload
-          class="upload-demo"
-          action="/"
-          :on-change="handleChange"
-          :on-exceed="handleExceed"
-          :on-remove="handleRemove"
-          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
-          :auto-upload="false"
-        >
-          <el-button type="primary">导入</el-button>
-        </el-upload>
-        <el-button type="primary" @click="search">导出</el-button>
-        <el-button type="primary" @click="search">查询</el-button>
-        <el-button @click="handleAdd" type="warning">增加</el-button>
-      </div>
-      <div>
+      <div class="filter">
         <el-select v-model="isSend" placeholder="请选择">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+          <el-option v-for="item in isSendOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="haveWebsite" placeholder="请选择">
+          <el-option v-for="item in haveWebsiteOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="havePhone" placeholder="请选择">
+          <el-option v-for="item in havePhoneOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="haveEmail" placeholder="请选择">
+          <el-option v-for="item in haveEmailOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
         </el-select>
       </div>
     </main-header>
@@ -33,6 +48,15 @@
     <base-table :tableData="companyData" @selectChange="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="website" label="网址" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span @click="jumpWebsite(scope)" style="cursor:pointer;color:#409eff">{{ scope.row.website }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column> -->
       <!-- <el-table-column prop="operatingStatus" label="经营状态" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="legalPerson" label="法人" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="registeredCapital" label="注册资本" show-overflow-tooltip> </el-table-column>
@@ -242,17 +266,50 @@ export default Vue.extend({
         replyTo: '782118880@qq.com', //custom reply address
         attachments: [] // 附件
       },
-      options: [
+      isSendOptions: [
         {
-          value: '已发送',
+          value: true,
           label: '已发送'
         },
         {
-          value: '未发送',
+          value: false,
           label: '未发送'
         }
       ],
-      isSend: ''
+      haveWebsiteOptions: [
+        {
+          value: true,
+          label: '有网址'
+        },
+        {
+          value: false,
+          label: '无网址'
+        }
+      ],
+      havePhoneOptions: [
+        {
+          value: true,
+          label: '有电话'
+        },
+        {
+          value: false,
+          label: '无电话'
+        }
+      ],
+      haveEmailOptions: [
+        {
+          value: true,
+          label: '有邮箱'
+        },
+        {
+          value: false,
+          label: '无邮箱'
+        }
+      ],
+      isSend: '',
+      haveWebsite: '',
+      havePhone: '',
+      haveEmail: ''
     };
   },
   async mounted() {
@@ -268,7 +325,10 @@ export default Vue.extend({
       let result = await company.dispatch('getCompanyList', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
-        isSend: this.isSend === '已发送' ? true : false
+        isSend: this.isSend,
+        website: this.haveWebsite,
+        phone: this.havePhone,
+        email: this.haveEmail
       });
       this.companyData = result.data;
       this.pageInfo.totalPages = result.total;
@@ -335,6 +395,9 @@ export default Vue.extend({
       //   this.sendEmail(item.email);
       // }
       // });
+    },
+    jumpWebsite(scope) {
+      window.open(scope.row.website);
     },
     //上传文件时处理方法
     handleChange(file, fileList) {
@@ -504,5 +567,18 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .company-list {
+  /deep/ .searchOption {
+    display: block;
+  }
+  .search {
+    display: flex;
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .filter {
+    margin-top: 20px;
+  }
 }
 </style>
