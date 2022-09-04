@@ -25,20 +25,15 @@
       </div>
       <div>
         <el-select v-model="isSend" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </div>
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="companyData" @selectChange="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column prop="companyName" label="公司名称" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="operatingStatus" label="经营状态" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
+      <!-- <el-table-column prop="operatingStatus" label="经营状态" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="legalPerson" label="法人" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="registeredCapital" label="注册资本" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="paidInCapital" label="实缴资本" show-overflow-tooltip> </el-table-column>
@@ -65,7 +60,7 @@
       <el-table-column prop="otherEmail" label="其他邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="natureOfBusiness" label="经营范围" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column> -->
       <el-table-column label="操作" align="center" width="240">
         <template slot-scope="scope">
           <span class="content-edit" @click="handleEdit(scope.row._id)">编辑</span>
@@ -251,7 +246,7 @@ export default Vue.extend({
         {
           value: '已发送',
           label: '已发送'
-        }, 
+        },
         {
           value: '未发送',
           label: '未发送'
@@ -273,14 +268,14 @@ export default Vue.extend({
       let result = await company.dispatch('getCompanyList', {
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
-        isSend:this.isSend==="已发送"?true:false
+        isSend: this.isSend === '已发送' ? true : false
       });
       this.companyData = result.data;
       this.pageInfo.totalPages = result.total;
     },
     // 查询
     search() {
-      this.initData()
+      this.initData();
     },
     sendSingleEmail(obj) {
       if (!this.emailObj.subject) {
@@ -431,7 +426,9 @@ export default Vue.extend({
           this.tableData = [...arr];
           console.log(this.tableData, 45678);
           await this.addCompany(this.tableData);
-          this.initData();
+          setTimeout(() => {
+            this.initData();
+          }, 1000);
         } catch (e) {
           window.alert('文件类型不正确！');
           return false;
