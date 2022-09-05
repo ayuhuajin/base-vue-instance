@@ -397,7 +397,13 @@ export default Vue.extend({
       // });
     },
     jumpWebsite(scope) {
-      window.open(scope.row.website);
+      var reg = new RegExp('http');
+      var str = scope.row.website;
+      if (reg.test(str)) {
+        window.open(scope.row.website);
+      } else {
+        window.open(`http://${scope.row.website}`);
+      }
     },
     //上传文件时处理方法
     handleChange(file, fileList) {
