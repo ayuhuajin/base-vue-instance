@@ -306,10 +306,10 @@ export default Vue.extend({
           label: '无邮箱'
         }
       ],
-      isSend: '',
-      haveWebsite: '',
-      havePhone: '',
-      haveEmail: ''
+      isSend: null,
+      haveWebsite: null,
+      havePhone: null,
+      haveEmail: null
     };
   },
   async mounted() {
@@ -326,9 +326,9 @@ export default Vue.extend({
         pageSize: this.pageInfo.pageSize,
         pageNumber: this.pageInfo.pageNumber,
         isSend: this.isSend,
-        website: this.haveWebsite,
-        phone: this.havePhone,
-        email: this.haveEmail
+        haveWebsite: this.haveWebsite,
+        havePhone: this.havePhone,
+        haveEmail: this.haveEmail
       });
       this.companyData = result.data;
       this.pageInfo.totalPages = result.total;
@@ -483,6 +483,9 @@ export default Vue.extend({
             obj.natureOfBusiness = item['经营范围'];
             obj.remark = '';
             obj.sendNum = 0;
+            obj.haveWebsite = item['网址'] == '-' ? false : true;
+            obj.havePhone = item['电话'] == '-' ? false : true;
+            obj.haveEmail = item['邮箱'] == '-' ? false : true;
             arr.push(obj);
           });
           // 导入传值,这时可传后端保存

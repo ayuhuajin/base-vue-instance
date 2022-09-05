@@ -10,7 +10,7 @@ export default root.registerModule('company', {
     // },
     //界面展示获取所有博客
     async getCompanyList({ commit }, payload) {
-      let result = await http.get(`/company/getCompanyList?${qs.stringify(payload)}`);
+      let result = await http.post(`/company/getCompanyList?${qs.stringify(payload)}`, payload);
       return result.data;
     },
     // 添加商品
