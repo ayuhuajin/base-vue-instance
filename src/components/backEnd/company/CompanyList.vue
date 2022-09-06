@@ -161,7 +161,7 @@
         <span class="cancel" @click="closeDialog">取消</span>
       </div>
     </base-dialog>
-    <base-dialog :dialogInfo="dialogInfo" :showDialog="showSendDialog" @closeDialog="closeDialog">
+    <base-dialog :dialogInfo="dialogInfo" :showDialog="showSendDialog" @closeDialog="showSendDialog = false">
       <send-email :emailObj="emailObj" @close="showSendDialog = false" @comfirm="comfirm"></send-email>
     </base-dialog>
     <!-- 分页 -->
@@ -260,9 +260,9 @@ export default Vue.extend({
         companyId: '',
         from: 'singhai@email.wulilang.com', //发送邮箱
         to: '', //发往哪里
-        subject: '', // Subject line
+        subject: '234234', // Subject line
         text: '', //标题
-        html: '', //内容
+        html: '<p>这是一条测试{{address}}的html 内容</p>', //内容
         replyTo: '782118880@qq.com', //custom reply address
         attachments: [
           {
@@ -348,9 +348,9 @@ export default Vue.extend({
         this.showSendDialog = true;
         return;
       }
+      this.emailObj.html = this.emailObj.html.replace(/{{address}}/, obj.companyName);
       this.emailObj.email = obj.email;
       this.emailObj.to = obj.email;
-      console.log(this.emailObj, 45678);
       this.emailObj.companyId = obj._id;
       ali.dispatch('sendEmail', this.emailObj).then(result => {
         this.$message.success('发送成功');

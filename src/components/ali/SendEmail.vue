@@ -68,6 +68,7 @@ export default Vue.extend({
         this.emailObj.html = html;
       };
       this.editor.create();
+      this.editor.txt.html(this.emailObj.html);
     },
     sendList() {
       // this.tableData.forEach(item => {
