@@ -47,13 +47,13 @@
     <!-- 表格 -->
     <base-table :tableData="companyData" @selectChange="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
+      <!-- <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column> -->
       <el-table-column prop="website" label="网址" show-overflow-tooltip>
         <template slot-scope="scope">
           <span @click="jumpWebsite(scope)" style="cursor:pointer;color:#409eff">{{ scope.row.website }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column>
+      <!-- <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column> -->
       <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column> -->
@@ -264,7 +264,13 @@ export default Vue.extend({
         text: '', //标题
         html: '', //内容
         replyTo: '782118880@qq.com', //custom reply address
-        attachments: [] // 附件
+        attachments: [
+          {
+            filename: 'text.JPG',
+            content: '附件0906',
+            path: 'http://bpic.588ku.com/element_origin_min_pic/18/08/24/05dbcc82c8d3bd356e57436be0922357.jpg'
+          }
+        ] // 附件
       },
       isSendOptions: [
         {
@@ -343,12 +349,13 @@ export default Vue.extend({
         return;
       }
       this.emailObj.email = obj.email;
+      this.emailObj.to = obj.email;
+      console.log(this.emailObj, 45678);
       this.emailObj.companyId = obj._id;
       ali.dispatch('sendEmail', this.emailObj).then(result => {
         this.$message.success('发送成功');
         this.initData();
       });
-      console.log(111112);
     },
     // 批量发送
     sendEmailBySelect() {
@@ -363,6 +370,14 @@ export default Vue.extend({
       }
     },
     sendEmail(obj) {
+      console.log(obj, 99999);
+      if (this.len >= this.emailList.length) {
+        this.$message.success('发送成功');
+        // this.initData();
+        this.len = 0;
+        return;
+      }
+
       this.len++;
       this.emailObj.to = obj.email;
       this.emailObj.companyId = obj._id;
@@ -371,20 +386,19 @@ export default Vue.extend({
         return;
       }
 
+      console.log(this.emailObj, 999999);
       ali.dispatch('sendEmail', this.emailObj).then(result => {
         setTimeout(() => {
           if (this.len <= this.emailList.length) {
             this.sendEmailBySelect();
           } else {
-            this.$message.success('发送成功');
-            this.initData();
+            // this.initData();
           }
         }, 1000);
       });
     },
     sendList() {
       // this.tableData.forEach(item => {
-      //   console.log(item, 1234);
       if (this.tableData && this.tableData.length > 0) {
         this.sendEmail(this.tableData[this.len].email);
       } else {
@@ -409,7 +423,6 @@ export default Vue.extend({
     handleChange(file, fileList) {
       const types = file.raw.name.split('.')[1];
       const fileType = ['xlsx', 'xlc', 'xlm', 'xls', 'xlt', 'xlw', 'csv'].some(item => item === types);
-      console.log(fileType, 678);
       this.fileTemp = file.raw;
       if (this.fileTemp) {
         if (fileType) {
@@ -444,7 +457,6 @@ export default Vue.extend({
     excelImport() {
       let fileReader = new FileReader();
       var file = event.currentTarget.files[0];
-      console.log(file, 'file');
       // 回调函数
       fileReader.onload = async ev => {
         try {
@@ -455,10 +467,8 @@ export default Vue.extend({
           // excel读取出的数据
           let excelData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
           // 将上面数据转换成 table需要的数据
-          console.log(excelData, 'excelData');
           let arr = [];
           excelData.forEach(item => {
-            console.log(item, '获取item');
             let obj = {};
             obj.companyName = item['公司名称'];
             obj.operatingStatus = item['经营状态'];
@@ -496,7 +506,6 @@ export default Vue.extend({
           });
           // 导入传值,这时可传后端保存
           this.tableData = [...arr];
-          console.log(this.tableData, 45678);
           await this.addCompany(this.tableData);
           setTimeout(() => {
             this.initData();
@@ -519,7 +528,6 @@ export default Vue.extend({
       console.log(item, 999888);
     },
     handleSave() {
-      console.log(this.companyItem, 88899999);
       if (!this.companyItem._id) {
         company.dispatch('addCompany', [this.companyItem]).then(result => {
           this.initData();
@@ -551,11 +559,9 @@ export default Vue.extend({
     },
     // 编辑公司
     handleEdit(id) {
-      console.log('编辑');
       this.uploadInfo.fileList[0] = {};
       company.dispatch('CompanyView', id).then(result => {
         this.companyItem = result[0];
-        console.log(result[0], 99999);
         this.showDialog = true;
       });
     },
@@ -569,7 +575,6 @@ export default Vue.extend({
     comfirm(obj) {
       this.showSendDialog = false;
       this.$message.success('模板保存成功');
-      console.log(obj, 8989);
     }
   }
 });
