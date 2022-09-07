@@ -26,19 +26,19 @@
         </div>
       </div>
       <div class="filter">
-        <el-select v-model="isSend" placeholder="请选择">
+        <el-select v-model="isSend" clearable placeholder="请选择">
           <el-option v-for="item in isSendOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select v-model="haveWebsite" placeholder="请选择">
+        <el-select v-model="haveWebsite" clearable placeholder="请选择">
           <el-option v-for="item in haveWebsiteOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select v-model="havePhone" placeholder="请选择">
+        <el-select v-model="havePhone" clearable placeholder="请选择">
           <el-option v-for="item in havePhoneOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select v-model="haveEmail" placeholder="请选择">
+        <el-select v-model="haveEmail" clearable placeholder="请选择">
           <el-option v-for="item in haveEmailOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
@@ -499,6 +499,7 @@ export default Vue.extend({
             obj.natureOfBusiness = item['经营范围'];
             obj.remark = '';
             obj.sendNum = 0;
+            obj.isSend = false;
             obj.haveWebsite = item['网址'] == '-' ? false : true;
             obj.havePhone = item['电话'] == '-' ? false : true;
             obj.haveEmail = item['邮箱'] == '-' ? false : true;
