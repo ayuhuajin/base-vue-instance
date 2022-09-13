@@ -498,6 +498,8 @@ export default Vue.extend({
             obj.otherEmail = item['邮箱'];
             obj.natureOfBusiness = item['经营范围'];
             obj.remark = '';
+            obj.sendContent = '';
+            obj.clickWebsite = false;
             obj.sendNum = 0;
             obj.isSend = false;
             obj.haveWebsite = item['网址'] == '-' ? false : true;
