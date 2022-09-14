@@ -47,7 +47,7 @@
     <!-- 表格 -->
     <base-table :tableData="companyData" @selectChange="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
-      <!-- <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column> -->
+      <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="website" label="网址" show-overflow-tooltip>
         <template slot-scope="scope">
           <span @click="jumpWebsite(scope)" style="cursor:pointer;color:#409eff">{{ scope.row.website }}</span>
@@ -263,8 +263,10 @@ export default Vue.extend({
         // subject: '您的公司还差一个官网,让您的官网赋能商业',
         subject: '',
         text: '', //标题
+        // html:
+        //   '{{address}}<p>一个精致的门面是吸引用户的基础</p><p>1.树立企业品牌的形象</p><p>2.提升企业信誉</p><p>3.品牌推广功能</p><p>4.产品展示功能</p><p>5.传播企业文化</p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank">http://shijue.show</a><br></p>', //内容
         html:
-          '<p>一个精致的门面是吸引用户的基础</p><p>1.树立企业品牌的形象</p><p>2.提升企业信誉</p><p>3.品牌推广功能</p><p>4.产品展示功能</p><p>5.传播企业文化</p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank">http://shijue.show</a><br></p>', //内容
+          '<span style="font-weight: bold;">{{address}}</span>需要一个网站来装修门面，官网相当于企业的官方形象，它代表一种权威。<br><p><span style="display: inline !important;">企业官网是客户在网络上了解企业的主要媒介，</span>一个精致的门面是吸引用户的基础， 它能为公司带来什么好处？</p><p>1.树立企业品牌的形象，更容易获得客户的信任。</p><p>2.提升企业信誉</p><p>3.品牌推广功能，<span style="display: inline !important;">SEO的优化，增加企业官网曝光率。</span></p><p>4.产品展示功能，<span style="display: inline !important;">产品在官网上展示出来，以供客户阅读和了解。</span></p><p>5.传播企业文化，<span style="display: inline !important;">对企业的品牌形象塑造和信誉提升都有帮助。</span></p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank" style="font-family: 宋体;"><code style="text-decoration-line: underline;">http://shijue.show</code></a><br></p>',
         replyTo: '782118880@qq.com', //custom reply address
         attachments: [
           {
@@ -346,12 +348,15 @@ export default Vue.extend({
       this.initData();
     },
     sendSingleEmail(obj) {
+      this.emailObj.html =
+        '<span style="font-weight: bold;">{{address}}</span>需要一个网站来装修门面，官网相当于企业的官方形象，它代表一种权威。<br><p><span style="display: inline !important;">企业官网是客户在网络上了解企业的主要媒介，</span>一个精致的门面是吸引用户的基础， 它能为公司带来什么好处？</p><p>1.树立企业品牌的形象，更容易获得客户的信任。</p><p>2.提升企业信誉</p><p>3.品牌推广功能，<span style="display: inline !important;">SEO的优化，增加企业官网曝光率。</span></p><p>4.产品展示功能，<span style="display: inline !important;">产品在官网上展示出来，以供客户阅读和了解。</span></p><p>5.传播企业文化，<span style="display: inline !important;">对企业的品牌形象塑造和信誉提升都有帮助。</span></p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank" style="font-family: 宋体;"><code style="text-decoration-line: underline;">http://shijue.show</code></a><br></p>';
+      this.emailObj.html = this.emailObj.html.replace(/{{address}}/, obj.companyName);
+      this.emailObj.html = this.emailObj.html.replace(/{{id}}/, obj._id);
       if (!this.emailObj.subject) {
         this.showSendDialog = true;
         return;
       }
-      this.emailObj.html = this.emailObj.html.replace(/{{address}}/, obj.companyName);
-      this.emailObj.html = this.emailObj.html.replace(/{{id}}/, obj._id);
+
       this.emailObj.email = obj.email;
       this.emailObj.to = obj.email;
       this.emailObj.companyId = obj._id;
@@ -362,6 +367,8 @@ export default Vue.extend({
     },
     // 批量发送
     sendEmailBySelect() {
+      this.emailObj.html =
+        '<span style="font-weight: bold;">{{address}}</span>需要一个网站来装修门面，官网相当于企业的官方形象，它代表一种权威。<br><p><span style="display: inline !important;">企业官网是客户在网络上了解企业的主要媒介，</span>一个精致的门面是吸引用户的基础， 它能为公司带来什么好处？</p><p>1.树立企业品牌的形象，更容易获得客户的信任。</p><p>2.提升企业信誉</p><p>3.品牌推广功能，<span style="display: inline !important;">SEO的优化，增加企业官网曝光率。</span></p><p>4.产品展示功能，<span style="display: inline !important;">产品在官网上展示出来，以供客户阅读和了解。</span></p><p>5.传播企业文化，<span style="display: inline !important;">对企业的品牌形象塑造和信誉提升都有帮助。</span></p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank" style="font-family: 宋体;"><code style="text-decoration-line: underline;">http://shijue.show</code></a><br></p>';
       if (!this.emailObj.subject) {
         this.showSendDialog = true;
         return;
@@ -380,6 +387,8 @@ export default Vue.extend({
         this.len = 0;
         return;
       }
+      this.emailObj.html = this.emailObj.html.replace(/{{address}}/, obj.companyName);
+      this.emailObj.html = this.emailObj.html.replace(/{{id}}/, obj._id);
 
       this.len++;
       this.emailObj.to = obj.email;
