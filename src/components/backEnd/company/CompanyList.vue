@@ -260,15 +260,17 @@ export default Vue.extend({
         companyId: '',
         from: 'singhai@email.wulilang.com', //发送邮箱
         to: '', //发往哪里
-        subject: '234234', // Subject line
+        // subject: '您的公司还差一个官网,让您的官网赋能商业',
+        subject: '',
         text: '', //标题
-        html: '<p>这是一条测试{{address}}的html 内容</p>', //内容
+        html:
+          '<p>一个精致的门面是吸引用户的基础</p><p>1.树立企业品牌的形象</p><p>2.提升企业信誉</p><p>3.品牌推广功能</p><p>4.产品展示功能</p><p>5.传播企业文化</p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank">http://shijue.show</a><br></p>', //内容
         replyTo: '782118880@qq.com', //custom reply address
         attachments: [
           {
-            filename: 'text.JPG',
-            content: '附件0906',
-            path: 'http://bpic.588ku.com/element_origin_min_pic/18/08/24/05dbcc82c8d3bd356e57436be0922357.jpg'
+            filename: 'contact.JPG',
+            content: '方式',
+            path: 'http://shijue.show/img/qrcode3.png'
           }
         ] // 附件
       },
@@ -349,6 +351,7 @@ export default Vue.extend({
         return;
       }
       this.emailObj.html = this.emailObj.html.replace(/{{address}}/, obj.companyName);
+      this.emailObj.html = this.emailObj.html.replace(/{{id}}/, obj._id);
       this.emailObj.email = obj.email;
       this.emailObj.to = obj.email;
       this.emailObj.companyId = obj._id;
