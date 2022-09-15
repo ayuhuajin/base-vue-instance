@@ -37,6 +37,22 @@ module.exports = {
   devServer: {
     port: 10086 //启动端口
   },
+  pages: {
+    user: {
+      // 应用入口配置，相当于单页面应用的main.js，必需项
+      entry: './src/pages/user/main.ts',
+      // 应用的模版，相当于单页面应用的public/index.html，可选项，省略时默认与模块名一致
+      template: 'public/user.html',
+      // 编译后在dist目录的输出文件名，可选项，省略时默认与模块名一致
+      filename: 'user.html'
+    },
+    index: {
+      entry: './src/pages/index/main.ts',
+      template: 'public/index.html',
+      filename: 'index.html'
+    }
+  },
+
   configureWebpack: config => {
     // webpack配置，值位对象时会合并配置，为方法时会改写配置
     // config.devtool:'source-map',
