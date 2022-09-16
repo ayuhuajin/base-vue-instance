@@ -32,11 +32,16 @@ export default root.registerModule('company', {
     async CompanyView({ commit }, payload) {
       let result = await http.get(`/company/CompanyView?id=${payload}`);
       return result.data;
+    },
+    // 获取邮件有效性
+    async getEmailVertify({ commit }, payload) {
+      let result = await http.post(`https://www.emailcamel.com/api/batch/validate`, payload);
+      return result.data;
+    },
+    // 批量设置邮箱验证
+    async vertifyEmailBatch({ commit }, payload) {
+      let result = await http.post(`/company/updateBatch`, payload);
+      return result.data;
     }
-    // // 获取商品详情
-    // async getCompanyByIdSecret({ commit }, payload) {
-    //   let result = await http.get(`/company/getcompanyView?${qs.stringify(payload)}`);
-    //   return result.data;
-    // }
   }
 });

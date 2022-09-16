@@ -20,7 +20,8 @@
           >
             <el-button type="primary">导入</el-button>
           </el-upload>
-          <el-button type="primary" @click="search">导出</el-button>
+          <el-button @click="vertifyEmail">验证</el-button>
+          <el-button type="primary" @click="exportText">导出</el-button>
           <el-button type="primary" @click="search">查询</el-button>
           <el-button @click="handleAdd" type="warning">增加</el-button>
         </div>
@@ -40,6 +41,14 @@
         </el-select>
         <el-select v-model="haveEmail" clearable placeholder="请选择">
           <el-option v-for="item in haveEmailOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="emailValid" clearable placeholder="请选择">
+          <el-option v-for="item in emailValidOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="emailCheck" clearable placeholder="请选择">
+          <el-option v-for="item in emailCheckOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </div>
@@ -315,10 +324,38 @@ export default Vue.extend({
           label: '无邮箱'
         }
       ],
+      emailValidOptions: [
+        {
+          value: true,
+          label: '邮箱有效'
+        },
+        {
+          value: false,
+          label: '邮箱失效'
+        }
+      ],
+      emailCheckOptions: [
+        {
+          value: true,
+          label: '邮箱验证'
+        },
+        {
+          value: false,
+          label: '邮箱未验证'
+        }
+      ],
+      tableTitleData: [
+        {
+          label: '邮箱',
+          prop: 'email'
+        }
+      ],
       isSend: null,
       haveWebsite: null,
       havePhone: null,
-      haveEmail: null
+      haveEmail: null,
+      emailValid: null,
+      emailCheck: null
     };
   },
   async mounted() {
@@ -337,7 +374,9 @@ export default Vue.extend({
         isSend: this.isSend,
         haveWebsite: this.haveWebsite,
         havePhone: this.havePhone,
-        haveEmail: this.haveEmail
+        haveEmail: this.haveEmail,
+        emailValid: this.emailValid,
+        emailCheck: this.emailCheck
       });
       this.companyData = result.data;
       this.pageInfo.totalPages = result.total;
@@ -345,6 +384,16 @@ export default Vue.extend({
     // 查询
     search() {
       this.initData();
+    },
+    // 验证邮箱有效性
+    vertifyEmail() {
+      let arr = [];
+      this.emailList.forEach(item => {
+        arr.push(item.companyName);
+      });
+      company.dispatch('vertifyEmailBatch', arr).then(result => {
+        console.log(result, 8989);
+      });
     },
     sendSingleEmail(obj) {
       this.emailObj.html = email;
@@ -427,6 +476,45 @@ export default Vue.extend({
       } else {
         window.open(`http://${scope.row.website}`);
       }
+    },
+    exportText() {
+      let arr = '';
+      this.emailList.forEach(item => {
+        arr = arr + item.email + '\r';
+      });
+      const filename = '临时日志';
+      const qhyhLog = arr; // 需要导出的字符串
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(qhyhLog));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    },
+
+    // 导出
+    excelExport() {
+      // 导出表格的表头设置
+      let allColumns = this.tableTitleData;
+      var columnNames = [];
+      var columnValues = [];
+      for (var i = 0; i < allColumns.length; i++) {
+        columnNames[i] = allColumns[i].label;
+        columnValues[i] = allColumns[i].prop;
+      }
+      require.ensure([], () => {
+        const { export_json_to_excel } = require('../../../assets/js/excel/Export2Excel');
+        const tHeader = columnNames;
+        const filterVal = columnValues;
+        const list = this.emailList;
+        const data = this.formatJson(filterVal, list);
+        export_json_to_excel(tHeader, data, '学生管理');
+      });
+    },
+    // 格式化数据
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]));
     },
     //上传文件时处理方法
     handleChange(file, fileList) {
@@ -511,6 +599,8 @@ export default Vue.extend({
             obj.clickWebsite = false;
             obj.sendNum = 0;
             obj.isSend = false;
+            obj.emailValid = false;
+            obj.emailCheck = false;
             obj.haveWebsite = item['网址'] == '-' ? false : true;
             obj.havePhone = item['电话'] == '-' ? false : true;
             obj.haveEmail = item['邮箱'] == '-' ? false : true;
