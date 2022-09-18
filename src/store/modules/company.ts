@@ -35,12 +35,17 @@ export default root.registerModule('company', {
     },
     // 获取邮件有效性
     async getEmailVertify({ commit }, payload) {
-      let result = await http.post(`https://www.emailcamel.com/api/batch/validate`, payload);
+      let result = await http.get(`https://api.mail-verifier.xyz/?${qs.stringify(payload)}`);
       return result.data;
     },
     // 批量设置邮箱验证
     async vertifyEmailBatch({ commit }, payload) {
       let result = await http.post(`/company/updateBatch`, payload);
+      return result.data;
+    },
+    // 邮箱是否有效
+    async updateSwitch({ commit }, payload) {
+      let result = await http.post(`/company/updateSwitch`, payload);
       return result.data;
     }
   }

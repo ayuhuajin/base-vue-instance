@@ -62,6 +62,23 @@
           <span @click="jumpWebsite(scope)" style="cursor:pointer;color:#409eff">{{ scope.row.website }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column prop="emailValid" label="是否有效" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <el-switch
+            @change="changeSwitch(scope.row)"
+            v-model="scope.row.emailValid"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column prop="emailCheck" label="是否验证过" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span style="cursor:pointer;color:#409eff">{{ scope.row.emailCheck ? '是' : '否' }}</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column> -->
       <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
@@ -362,6 +379,13 @@ export default Vue.extend({
     this.initData();
   },
   methods: {
+    // 更改开关
+    changeSwitch(row) {
+      console.log(row, 76897);
+      company.dispatch('updateSwitch', { id: row._id, emailValid: row.emailValid }).then(result => {
+        this.$message.success('发送成功');
+      });
+    },
     formateTime(obj) {
       if (obj.time) {
         return timeFormate.timeformatDay(obj.time);
@@ -387,6 +411,15 @@ export default Vue.extend({
     },
     // 验证邮箱有效性
     vertifyEmail() {
+      // company
+      //   .dispatch('getEmailVertify', {
+      //     cmd: 'verify',
+      //     key: '8680244EB6827DFE5A11F7A1A0BCF9DA',
+      //     email: '1932182001@qq.com'
+      //   })
+      //   .then(result => {
+      //     console.log(result, 8989);
+      //   });
       let arr = [];
       this.emailList.forEach(item => {
         arr.push(item.companyName);
@@ -482,7 +515,7 @@ export default Vue.extend({
       this.emailList.forEach(item => {
         arr = arr + item.email + '\r';
       });
-      const filename = '临时日志';
+      const filename = parseInt(Math.random() * 1000000000);
       const qhyhLog = arr; // 需要导出的字符串
       const element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(qhyhLog));
@@ -599,8 +632,8 @@ export default Vue.extend({
             obj.clickWebsite = false;
             obj.sendNum = 0;
             obj.isSend = false;
-            obj.emailValid = false;
-            obj.emailCheck = false;
+            obj.emailValid = true; //是否有效
+            obj.emailCheck = false; // 是否验证
             obj.haveWebsite = item['网址'] == '-' ? false : true;
             obj.havePhone = item['电话'] == '-' ? false : true;
             obj.haveEmail = item['邮箱'] == '-' ? false : true;

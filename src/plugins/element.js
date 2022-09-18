@@ -23,7 +23,8 @@ import {
   CheckboxGroup,
   Tabs,
   TabPane,
-  DatePicker
+  DatePicker,
+  Switch
 } from 'element-ui';
 
 Vue.use(Button);
@@ -48,6 +49,7 @@ Vue.use(CheckboxGroup);
 Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(DatePicker);
+Vue.use(Switch);
 
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$message = Message;

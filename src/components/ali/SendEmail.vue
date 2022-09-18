@@ -8,8 +8,8 @@
       <el-input v-model="emailObj.text" placeholder="请输入内容"></el-input>
       <el-input v-model="emailObj.html" placeholder="请输入html"></el-input>
       <!-- <el-button @click="sendList">发送</el-button>
-      <el-button @click="sendEmail">发送单个</el-button> -->
-      <div id="editor" style="width:300px;height:300px;"></div>
+        <el-button @click="sendEmail">发送单个</el-button> -->
+      <div id="editor" style="width:700px;height:300px;"></div>
       <el-button @click="close">关闭</el-button>
       <el-button @click="comfirm">确认</el-button>
     </div>
