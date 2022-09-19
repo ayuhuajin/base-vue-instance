@@ -383,12 +383,13 @@ export default Vue.extend({
   },
   methods: {
     selectable(row, index) {
-      console.log(34345, row, index);
-      if (row.email && row.email.length > 3 && !row.emailCheck) {
-        return true;
-      } else {
-        return false;
-      }
+      // console.log(34345, row, index);
+      return true;
+      // if (row.email && row.email.length > 3 && !row.emailCheck) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
     },
     // 更改开关
     changeSwitch(row) {
