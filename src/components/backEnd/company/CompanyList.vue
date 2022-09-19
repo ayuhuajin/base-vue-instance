@@ -21,6 +21,7 @@
             <el-button type="primary">导入</el-button>
           </el-upload>
           <el-button @click="vertifyEmail">验证</el-button>
+          <el-button @click="emailVertify">验证邮箱</el-button>
           <el-button type="primary" @click="exportText">导出</el-button>
           <el-button type="primary" @click="search">查询</el-button>
           <el-button @click="handleAdd" type="warning">增加</el-button>
@@ -55,7 +56,7 @@
     </main-header>
     <!-- 表格 -->
     <base-table :tableData="companyData" @selectChange="handleSelectionChange">
-      <el-table-column type="selection" width="55"> </el-table-column>
+      <el-table-column :selectable="selectable" type="selection" width="55"> </el-table-column>
       <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="website" label="网址" show-overflow-tooltip>
         <template slot-scope="scope">
@@ -209,6 +210,8 @@ import ali from '@/store/modules/ali';
 import XLSX from 'xlsx';
 import { email } from '@/assets/js/emailTemplate';
 import mixin from '@/assets/js/mixin.ts';
+import index from '@/store/modules';
+import Axios from 'axios';
 export default Vue.extend({
   name: 'CompanyList',
   mixins: [mixin],
@@ -379,6 +382,14 @@ export default Vue.extend({
     this.initData();
   },
   methods: {
+    selectable(row, index) {
+      console.log(34345, row, index);
+      if (row.email && row.email.length > 3 && !row.emailCheck) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     // 更改开关
     changeSwitch(row) {
       console.log(row, 76897);
@@ -457,6 +468,25 @@ export default Vue.extend({
       } else {
         this.$message.error('请先选择需要发送的邮箱');
       }
+    },
+    emailVertify() {
+      let arr = [];
+      this.emailList.forEach((item, index) => {
+        if (item.email) {
+          arr.push({
+            id: item._id,
+            email: item.email
+          });
+        }
+        // Axios.get(
+        //   `https://api.mail-verifier.xyz/?cmd=verify&key=8680244EB6827DFE5A11F7A1A0BCF9DA&email=${item.email}`
+        // ).then(async result => {});
+      });
+
+      company.dispatch('vertifyEmailByDetective', arr).then(result => {
+        // this.$message.success('验证');
+        // this.initData();
+      });
     },
     sendEmail(obj) {
       console.log(obj, 99999);

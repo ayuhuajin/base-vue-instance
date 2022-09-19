@@ -47,6 +47,11 @@ export default root.registerModule('company', {
     async updateSwitch({ commit }, payload) {
       let result = await http.post(`/company/updateSwitch`, payload);
       return result.data;
+    },
+    // 邮箱是否有效
+    async vertifyEmailByDetective({ commit }, payload) {
+      let result = await http.post(`/company/vertifyEmailByDetective`, payload);
+      return result.data;
     }
   }
 });
