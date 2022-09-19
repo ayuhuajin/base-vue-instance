@@ -6,6 +6,7 @@
       style="width: 100%"
       @row-dblclick="doubleClick"
       @selection-change="handleSelectionChange"
+      @select-all="selectAll"
     >
       <slot></slot>
     </el-table>
@@ -40,6 +41,15 @@ export default Vue.extend({
     },
     handleSelectionChange(value) {
       this.$emit('selectChange', value);
+    },
+    selectAll(list) {
+      let arr = [];
+      list.forEach((item, index) => {
+        if (item.email && item.email.length > 3 && item.emailCheck && item.emailValid) {
+          arr.push(item);
+        }
+      });
+      this.$emit('selectAll', arr);
     }
   }
 });

@@ -1,4 +1,4 @@
-export let email = `<div style="padding: 20px 10px 20px;font-size: 14px;color: #333;line-height: 1.6;">
+export let email = `<div style="padding: 20px 10px 20px;font-size: 16px;color: #333;line-height: 1.6;">
     <h3 style="text-align: center;margin:0;margin-bottom: 20px;color: #222;">官网为商业赋能</h3>
     <p style="text-indent: 2em;margin-bottom:10px;"><span style="font-weight: bold;">{{address}}</span>
       需要一个网站来装修门面，官网相当于企业的官方形象，它代表一种权威。企业官网是客户在网络上了解企业的主要媒介，

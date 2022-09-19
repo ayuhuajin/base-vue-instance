@@ -55,7 +55,7 @@
       </div>
     </main-header>
     <!-- 表格 -->
-    <base-table :tableData="companyData" @selectChange="handleSelectionChange">
+    <base-table :tableData="companyData" @selectChange="handleSelectionChange" @selectAll="selectFilterAll">
       <el-table-column :selectable="selectable" type="selection" width="55"> </el-table-column>
       <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="website" label="网址" show-overflow-tooltip>
@@ -375,15 +375,17 @@ export default Vue.extend({
       havePhone: null,
       haveEmail: null,
       emailValid: null,
-      emailCheck: null
+      emailCheck: null,
+      emailList: [],
+      emailFilterList: []
     };
   },
   async mounted() {
     this.initData();
   },
   methods: {
+    // 判断是否可选中
     selectable(row, index) {
-      // console.log(34345, row, index);
       return true;
       // if (row.email && row.email.length > 3 && !row.emailCheck) {
       //   return true;
@@ -397,11 +399,6 @@ export default Vue.extend({
       company.dispatch('updateSwitch', { id: row._id, emailValid: row.emailValid }).then(result => {
         this.$message.success('发送成功');
       });
-    },
-    formateTime(obj) {
-      if (obj.time) {
-        return timeFormate.timeformatDay(obj.time);
-      }
     },
     async initData() {
       let result = await company.dispatch('getCompanyList', {
@@ -423,15 +420,6 @@ export default Vue.extend({
     },
     // 验证邮箱有效性
     vertifyEmail() {
-      // company
-      //   .dispatch('getEmailVertify', {
-      //     cmd: 'verify',
-      //     key: '8680244EB6827DFE5A11F7A1A0BCF9DA',
-      //     email: '1932182001@qq.com'
-      //   })
-      //   .then(result => {
-      //     console.log(result, 8989);
-      //   });
       let arr = [];
       this.emailList.forEach(item => {
         arr.push(item.companyName);
@@ -457,19 +445,6 @@ export default Vue.extend({
         this.initData();
       });
     },
-    // 批量发送
-    sendEmailBySelect() {
-      this.emailObj.html = email;
-      if (!this.emailObj.subject) {
-        this.showSendDialog = true;
-        return;
-      }
-      if (this.emailList && this.emailList.length > 0) {
-        this.sendEmail(this.emailList[this.len]);
-      } else {
-        this.$message.error('请先选择需要发送的邮箱');
-      }
-    },
     emailVertify() {
       let arr = [];
       this.emailList.forEach((item, index) => {
@@ -489,9 +464,22 @@ export default Vue.extend({
         // this.initData();
       });
     },
+    // 批量发送
+    sendEmailBySelect() {
+      this.emailObj.html = email;
+      if (!this.emailObj.subject) {
+        this.showSendDialog = true;
+        return;
+      }
+      if (this.emailFilterList && this.emailFilterList.length > 0) {
+        this.sendEmail(this.emailFilterList[this.len]);
+      } else {
+        this.$message.error('请先选择需要发送的邮箱');
+      }
+    },
     sendEmail(obj) {
       console.log(obj, 99999);
-      if (this.len >= this.emailList.length) {
+      if (this.len >= this.emailFilterList.length) {
         this.$message.success('发送成功');
         // this.initData();
         this.len = 0;
@@ -511,7 +499,7 @@ export default Vue.extend({
       console.log(this.emailObj, 999999);
       ali.dispatch('sendEmail', this.emailObj).then(result => {
         setTimeout(() => {
-          if (this.len <= this.emailList.length) {
+          if (this.len <= this.emailFilterList.length) {
             this.sendEmailBySelect();
           } else {
             // this.initData();
@@ -688,6 +676,10 @@ export default Vue.extend({
       company.dispatch('addCompany', data).then(result => {
         this.$message.success('添加公司成功');
       });
+    },
+    selectFilterAll(list) {
+      this.emailFilterList = list;
+      console.log(list, 12345);
     },
     handleSelectionChange(item) {
       this.emailList = item;
