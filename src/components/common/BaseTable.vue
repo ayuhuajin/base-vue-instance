@@ -43,8 +43,8 @@ export default Vue.extend({
       this.$emit('selectChange', value);
     },
     selectAll(list) {
-      let arr = [];
-      list.forEach((item, index) => {
+      let arr: any = [];
+      list.forEach((item: any) => {
         if (item.email && item.email.length > 3 && item.emailCheck && item.emailValid) {
           arr.push(item);
         }
