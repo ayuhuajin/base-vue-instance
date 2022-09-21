@@ -300,7 +300,7 @@ export default Vue.extend({
         // html:
         //   '{{address}}<p>一个精致的门面是吸引用户的基础</p><p>1.树立企业品牌的形象</p><p>2.提升企业信誉</p><p>3.品牌推广功能</p><p>4.产品展示功能</p><p>5.传播企业文化</p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank">http://shijue.show</a><br></p>', //内容
         html: email,
-        replyTo: '782118880@qq.com', //custom reply address
+        replyTo: '1932182001@qq.com', //custom reply address
         attachments: [
           {
             filename: 'contact.JPG',
