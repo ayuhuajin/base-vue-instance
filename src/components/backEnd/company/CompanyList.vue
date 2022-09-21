@@ -83,7 +83,12 @@
       <!-- <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column> -->
       <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
-      <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column> -->
+      <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="clickWebsite" label="是否点击" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span style="cursor:pointer;color:#409eff">{{ scope.row.clickWebsite ? '是' : '否' }}</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="operatingStatus" label="经营状态" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="legalPerson" label="法人" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="registeredCapital" label="注册资本" show-overflow-tooltip> </el-table-column>
@@ -289,7 +294,7 @@ export default Vue.extend({
         companyId: '',
         from: 'singhai@email.wulilang.com', //发送邮箱
         to: '', //发往哪里
-        // subject: '您的公司还差一个官网,让您的官网赋能商业',
+        // subject: '您的公司仅差一个官网,让您的官网赋能商业',
         subject: '',
         text: '', //标题
         // html:
@@ -448,20 +453,19 @@ export default Vue.extend({
     emailVertify() {
       let arr = [];
       this.emailList.forEach((item, index) => {
-        if (item.email) {
-          arr.push({
-            id: item._id,
-            email: item.email
-          });
-        }
+        // if (item.email) {
+        //   arr.push({
+        //     id: item._id,
+        //     email: item.email
+        //   });
+        // }
+        company.dispatch('vertifyEmailByDetective', item).then(result => {
+          // this.$message.success('验证');
+          // this.initData();
+        });
         // Axios.get(
         //   `https://api.mail-verifier.xyz/?cmd=verify&key=8680244EB6827DFE5A11F7A1A0BCF9DA&email=${item.email}`
         // ).then(async result => {});
-      });
-
-      company.dispatch('vertifyEmailByDetective', arr).then(result => {
-        // this.$message.success('验证');
-        // this.initData();
       });
     },
     // 批量发送
