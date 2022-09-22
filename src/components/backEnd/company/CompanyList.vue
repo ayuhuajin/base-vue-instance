@@ -20,6 +20,7 @@
           >
             <el-button type="primary">导入</el-button>
           </el-upload>
+          <div @click="dmo">initWb3</div>
           <el-button @click="vertifyEmail">验证</el-button>
           <el-button @click="emailVertify">验证邮箱</el-button>
           <el-button type="primary" @click="exportText">导出</el-button>
@@ -217,6 +218,10 @@ import { email } from '@/assets/js/emailTemplate';
 import mixin from '@/assets/js/mixin.ts';
 import index from '@/store/modules';
 import Axios from 'axios';
+import Web3 from 'web3';
+
+import { getBNBBalance } from '@/assets/js/demo';
+
 export default Vue.extend({
   name: 'CompanyList',
   mixins: [mixin],
@@ -389,6 +394,52 @@ export default Vue.extend({
     this.initData();
   },
   methods: {
+    initWb3() {
+      //创建 rpc 连接字符串
+      var rpcstring = 'https://bsc-dataseed1.defibit.io/';
+      //创建ws连接字符串
+      //var wstring = 'wss://bsc-ws-node.nariox.org:443';
+
+      //var wscweb3 = new Web3(new Web3.providers.WebsocketProvider(wstring ));
+      var rpcweb3 = new Web3(new Web3.providers.HttpProvider(rpcstring));
+      web3 = rpcweb3;
+      const getBNBBalance = async address => {
+        let result = await web3.eth.getBalance(address);
+        //由于使用的是大数模式，小数点有18位，所以获得的balance 要除以10^18次方才是正确的数据
+        //或者使用自带的转换工具
+        let balance = web3.utils.fromWei(result.toString(10), getweiname());
+        //打印结果
+        console.log('地址:' + address + '有' + balance + '个BNB');
+        return balance;
+      };
+
+      getBNBBalance('0xfD0b05fFB3c9d91a6f11d9e4442233162002208A');
+
+      function getweiname(tokendecimals = 18) {
+        let weiname = 'ether';
+        switch (tokendecimals) {
+          case 3:
+            weiname = 'Kwei';
+            break;
+          case 6:
+            weiname = 'mwei';
+            break;
+          case 9:
+            weiname = 'gwei';
+            break;
+          case 12:
+            weiname = 'microether ';
+            break;
+          case 15:
+            weiname = 'milliether';
+            break;
+          case 18:
+            weiname = 'ether';
+            break;
+        }
+        return weiname;
+      }
+    },
     // 判断是否可选中
     selectable(row, index) {
       return true;
@@ -532,6 +583,9 @@ export default Vue.extend({
       } else {
         window.open(`http://${scope.row.website}`);
       }
+    },
+    dmo() {
+      getBNBBalance('0xfD0b05fFB3c9d91a6f11d9e4442233162002208A');
     },
     exportText() {
       let arr = '';
