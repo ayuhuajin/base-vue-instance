@@ -39,8 +39,9 @@ export default Vue.extend({
     doubleClick() {
       console.log('双击');
     },
-    handleSelectionChange(value) {
-      this.$emit('selectChange', value);
+    handleSelectionChange(list) {
+      this.$emit('selectChange', list);
+      this.selectAll(list);
     },
     selectAll(list) {
       let arr: any = [];

@@ -387,7 +387,8 @@ export default Vue.extend({
       emailValid: null,
       emailCheck: null,
       emailList: [],
-      emailFilterList: []
+      emailFilterList: [],
+      vertifyLen: 0
     };
   },
   async mounted() {
@@ -492,7 +493,7 @@ export default Vue.extend({
         this.showSendDialog = true;
         return;
       }
-
+      this.emailObj.subject = obj.companyName;
       this.emailObj.email = obj.email;
       this.emailObj.to = obj.email;
       this.emailObj.companyId = obj._id;
@@ -501,23 +502,27 @@ export default Vue.extend({
         this.initData();
       });
     },
-    emailVertify() {
-      let arr = [];
-      this.emailList.forEach((item, index) => {
-        // if (item.email) {
-        //   arr.push({
-        //     id: item._id,
-        //     email: item.email
-        //   });
-        // }
-        company.dispatch('vertifyEmailByDetective', item).then(result => {
-          // this.$message.success('验证');
-          // this.initData();
+    sendVertify(item) {
+      if (this.vertifyLen >= this.emailList.length) {
+        this.vertifyLen = 0;
+        return;
+      }
+      this.vertifyLen++;
+      company
+        .dispatch('vertifyEmailByDetective', item)
+        .then(result => {
+          this.emailVertify();
+        })
+        .catch(e => {
+          this.emailVertify();
         });
-        // Axios.get(
-        //   `https://api.mail-verifier.xyz/?cmd=verify&key=8680244EB6827DFE5A11F7A1A0BCF9DA&email=${item.email}`
-        // ).then(async result => {});
-      });
+    },
+    emailVertify() {
+      console.log(this.vertifyLen, 'duochang');
+      if (this.emailList.length === 0) return;
+      if (this.vertifyLen <= this.emailList.length) {
+        this.sendVertify(this.emailList[this.vertifyLen]);
+      }
     },
     // 批量发送
     sendEmailBySelect() {
@@ -545,6 +550,7 @@ export default Vue.extend({
 
       this.len++;
       this.emailObj.to = obj.email;
+      this.emailObj.subject = obj.companyName;
       this.emailObj.companyId = obj._id;
       if (!obj.email || obj.email.length < 3) {
         this.sendEmailBySelect();
