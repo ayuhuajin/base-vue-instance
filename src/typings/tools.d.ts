@@ -7,3 +7,4 @@ declare module 'lodash';
 declare module 'nprogress';
 declare module 'vue-qr';
 declare module 'vue-clipboard2';
+declare module 'web3';

@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 export default Vue.extend({
   name: 'BaseTable',
@@ -40,12 +40,12 @@ export default Vue.extend({
       console.log('双击');
     },
     handleSelectionChange(list) {
-      this.$emit('selectChange', list);
       this.selectAll(list);
+      this.$emit('selectChange', list);
     },
     selectAll(list) {
-      let arr: any = [];
-      list.forEach((item: any) => {
+      let arr = [];
+      list.forEach(item => {
         if (item.email && item.email.length > 3 && item.emailCheck && item.emailValid) {
           arr.push(item);
         }
