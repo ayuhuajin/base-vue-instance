@@ -9,6 +9,13 @@
       </div>
       <el-button @click="transToken">转</el-button>
     </div>
+    <div>
+      <el-input v-model="contractAddress" />
+      <el-button @click="linkContract">合同</el-button>
+    </div>
+    <el-button @click="getEth">获取账户信息</el-button>
+    <el-button @click="approve">授权</el-button>
+    <el-button @click="getApproveBalance">获取授权金额</el-button>
   </div>
 </template>
 
@@ -22,6 +29,7 @@ export default Vue.extend({
 
       // https://goerli.infura.io/v3/
       // id:5,
+      contractAddress:'',
       address:'0x25Bf2A6EB6bdc3419017d7df8A2b06711c64a53c',
       address2:'0xD1012c6Ff813767276b4b44734AE5536749Ec783',
       web3:null,
@@ -45,6 +53,7 @@ export default Vue.extend({
           const accounts =  window.ethereum.send(
             "eth_requestAccounts"
           );
+          console.log(accounts ,'账号信息');
         // setError(null);
         } catch (error) {
           // setError("Unable to connect to Metamask");
@@ -63,16 +72,47 @@ export default Vue.extend({
       this.web3 = new Web3(web3Provider);
       })
     },
+    // 获取账户信息
+    async getEth(){
+      console.log(window.web3.currentProvider,5678);
+      let web3 = new Web3(window.web3.currentProvider)
+      let fromAddress = await web3.eth.getAccounts()
+      console.log(fromAddress,'fromAddress');
+    },
+    // 连接合约
+    linkContract(){
+
+    },
+    // 连接钱包
     linkWallet() {
       console.log("连接");
     },
+    // 转账
     transToken(){
-      console.log('转账');
+      let value = this.web3.utils.toWei('1','ether')
+      var message = {from:this.address,to:this.address2,value:value}
+      this.web3.eth.sendTransaction(message,(err,res)=>{
+        var output = ''
+        if(!err){
+          output+=res
+          console.log(res);
+        }else {
+          output = "error" +err
+        }
+        console.log("转账",output);
+      })
     },
+    // 获取余额
     async getBalance(){
       let result =  await this.web3.eth.getBalance(this.address);
       let result2 =  await this.web3.eth.getBalance(this.address2);
-      console.log(result/18,result2/18,9999);
+      console.log(result/Math.pow(10,18),result2/Math.pow(10,18),9999);
+    },
+    approve(){
+      console.log("授权");
+    },
+    getApproveBalance(){
+      console.log("授权金额");
     }
   },
 });
