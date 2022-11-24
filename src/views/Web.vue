@@ -1,0 +1,96 @@
+<template>
+  <div class="web3">
+    <el-button @click="linkWallet">连接</el-button>
+    <el-button @click="getBalance">获取</el-button>
+    <div class="transate">
+      <div class="account">
+        <el-input v-model="to" />
+        <el-input v-model="from" />
+      </div>
+      <el-button @click="transToken">转</el-button>
+    </div>
+  </div>
+</template>
+
+<script lang="js">
+import Vue from 'vue';
+import Web3 from 'web3'
+export default Vue.extend({
+  components: {},
+  data() {
+    return {
+
+      // https://goerli.infura.io/v3/
+      // id:5,
+      address:'0x25Bf2A6EB6bdc3419017d7df8A2b06711c64a53c',
+      address2:'0xD1012c6Ff813767276b4b44734AE5536749Ec783',
+      web3:null,
+      wallet:'',
+      from: "",
+      to: ""
+    }
+  },
+  mounted() {
+    this.init()
+  },
+  methods: {
+    init(){
+      window.addEventListener('load',async()=>{
+        let web3Provider
+        if (window.ethereum) {
+        web3Provider = window.ethereum;
+
+        try {
+          // window.ethereum.enable();
+          const accounts =  window.ethereum.send(
+            "eth_requestAccounts"
+          );
+        // setError(null);
+        } catch (error) {
+          // setError("Unable to connect to Metamask");
+          // alert("用户取消授权");
+          return;
+        }
+      } else if (window.web3) {
+
+        web3Provider = window.web3.currentProvider;
+        console.log("web3.currentProvider:");
+        console.log(window.web3.currentProvider);
+      } else {
+        web3Provider = new window.Web3.providers.HttpProvider("https://goerli.infura.io/v3/");
+        console.log("https://http-testnet.hecochain.com");
+      }
+      this.web3 = new Web3(web3Provider);
+      })
+    },
+    linkWallet() {
+      console.log("连接");
+    },
+    transToken(){
+      console.log('转账');
+    },
+    async getBalance(){
+      let result =  await this.web3.eth.getBalance(this.address);
+      let result2 =  await this.web3.eth.getBalance(this.address2);
+      console.log(result/18,result2/18,9999);
+    }
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.web3 {
+  padding: 20px;
+  color: #666;
+  .transate {
+    margin: 20px 0;
+    .account {
+      margin-bottom: 10px;
+      .el-input {
+        width: 500px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+</style>

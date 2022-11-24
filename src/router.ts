@@ -363,6 +363,12 @@ let router = new Router({
       meta: { title: '嗨前端-node' }
     },
     {
+      path: '/web3',
+      name: 'Web3',
+      component: () => import('./views/Web.vue'),
+      meta: { title: '嗨前端-web3' }
+    },
+    {
       path: '*',
       component: () => import('./components/common/404.vue')
     }
