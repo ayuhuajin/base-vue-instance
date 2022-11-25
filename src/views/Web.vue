@@ -22,6 +22,7 @@
 <script lang="js">
 import Vue from 'vue';
 import Web3 from 'web3'
+import abi from '../assets/js/ABI.js'
 export default Vue.extend({
   components: {},
   data() {
@@ -108,10 +109,31 @@ export default Vue.extend({
       let result2 =  await this.web3.eth.getBalance(this.address2);
       console.log(result/Math.pow(10,18),result2/Math.pow(10,18),9999);
     },
-    approve(){
-      console.log("授权");
+    async approve(){
+      if(window.web3){
+        let web3 = new Web3(window.web3.currentProvider)
+        let ethContract = new web3.eth.Contract(abi,'0xc04C56C496E72E420722AE7AE40f1f752ABa897B')
+        console.log(4564777,ethContract);
+        let str =  await ethContract.methods.kkk().call()
+        console.log(str,99999);
+
+        // 授权数量
+        // let amount = 100*Math.pow(10,18)
+        // let toAddress = "dddddd"
+        // 小狐狸账户
+        // let fromAddress = await web3.eth.getAccounts()
+        // ethContract.methods.approve(toAddress,amount+'').send({from:fromAddress[0]})
+      }
     },
     getApproveBalance(){
+      // if(window.web3){
+      //   let web3 = new Web3(window.web3.currentProvider)
+      //   let fromAddress = await web3.eth.getAccounts()
+      //   let ethContract = new Web3.eth.Contract(this.abi,'dddddddd')
+      //   let toAddress = "dddddd"
+      //   let balance = await ethContract.methods.allowance(fromAddress,toAddress).call()
+      //   ethContract.methods.approve(toAddress,amount+'').send({from:fromAddress[0]})
+      // }
       console.log("授权金额");
     }
   },
