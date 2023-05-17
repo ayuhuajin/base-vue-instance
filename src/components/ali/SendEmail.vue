@@ -214,12 +214,12 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-/deep/ .el-input {
+::v-deep .el-input {
   display: block;
   width: 300px;
   margin-top: 10px;
 }
-/deep/ .el-button {
+::v-deep .el-button {
   margin-top: 10px;
 }
 </style>

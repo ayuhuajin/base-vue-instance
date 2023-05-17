@@ -803,7 +803,7 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .company-list {
-  /deep/ .searchOption {
+  ::v-deep .searchOption {
     display: block;
   }
   .search {

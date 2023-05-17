@@ -277,7 +277,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 .user-dialog {
-  /deep/ .el-dialog__body {
+  ::v-deep .el-dialog__body {
     .operation {
       display: flex;
       justify-content: space-evenly;
