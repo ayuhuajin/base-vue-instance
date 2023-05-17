@@ -189,7 +189,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .gd-map {
-  /deep/ #container {
+  ::v-deep #container {
     overflow: hidden;
     width: 100vw;
     height: 100vw;

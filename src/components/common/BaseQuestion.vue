@@ -157,25 +157,25 @@ export default {
 </script>
 <style lang="scss">
 .base-question {
-  /deep/.el-radio {
+  ::v-deep.el-radio {
     display: flex;
     margin-top: 35px;
     margin-right: 0px;
     white-space: normal;
     color: #333;
   }
-  /deep/.el-radio__label {
+  ::v-deep.el-radio__label {
     white-space: normal;
     margin-top: -2px;
     line-height: 1.4;
   }
-  /deep/.el-checkbox {
+  ::v-deep.el-checkbox {
     display: flex;
     margin-top: 35px;
     margin-right: 0px;
     white-space: normal;
   }
-  /deep/.el-checkbox__label {
+  ::v-deep.el-checkbox__label {
     margin-top: -2px;
     white-space: normal;
     color: #333;

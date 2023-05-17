@@ -488,7 +488,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .map-test {
-  /deep/ #container {
+  ::v-deep #container {
     overflow: hidden;
     width: 100vw;
     height: 100vw;
