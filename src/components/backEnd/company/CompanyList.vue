@@ -305,14 +305,14 @@ export default Vue.extend({
         // html:
         //   '{{address}}<p>一个精致的门面是吸引用户的基础</p><p>1.树立企业品牌的形象</p><p>2.提升企业信誉</p><p>3.品牌推广功能</p><p>4.产品展示功能</p><p>5.传播企业文化</p><p>6.网上销售功能</p><p>7.发布资讯</p><p>8.扩展销售渠道，可利用企业网站进行更好的宣传，以便获得更多的潜在用户群体的关注</p><p><a href="http://shijue.show?id={{id}}" target="_blank">http://shijue.show</a><br></p>', //内容
         html: email,
-        replyTo: '1932182001@qq.com', //custom reply address
-        attachments: [
-          {
-            filename: 'contact.JPG',
-            content: '方式',
-            path: 'http://shijue.show/img/qrcode3.png'
-          }
-        ] // 附件
+        replyTo: '1932182001@qq.com' //custom reply address
+        // attachments: [
+        //   {
+        //     filename: 'contact.JPG',
+        //     content: '方式',
+        //     path: 'http://shijue.show/img/qrcode3.png'
+        //   }
+        // ] // 附件
       },
       isSendOptions: [
         {
@@ -496,6 +496,8 @@ export default Vue.extend({
       this.emailObj.subject = obj.companyName;
       this.emailObj.email = obj.email;
       this.emailObj.to = obj.email;
+      // this.emailObj.to = '455493143@qq.com';
+
       this.emailObj.companyId = obj._id;
       ali.dispatch('sendEmail', this.emailObj).then(result => {
         this.$message.success('发送成功');
@@ -538,7 +540,6 @@ export default Vue.extend({
       }
     },
     sendEmail(obj) {
-      console.log(obj, 99999);
       if (this.len >= this.emailFilterList.length) {
         this.$message.success('发送成功');
         // this.initData();
@@ -550,6 +551,7 @@ export default Vue.extend({
 
       this.len++;
       this.emailObj.to = obj.email;
+      // this.emailObj.to = '455493143@qq.com';
       this.emailObj.subject = obj.companyName;
       this.emailObj.companyId = obj._id;
       if (!obj.email || obj.email.length < 3) {
@@ -742,6 +744,11 @@ export default Vue.extend({
       });
     },
     selectFilterAll(list) {
+      // 过滤
+      list = list.filter(item => {
+        return item.email.length > 14 && !item.email.includes('abc') && !item.email.includes('123');
+      });
+
       this.emailFilterList = list;
       console.log(list, 12345);
     },
