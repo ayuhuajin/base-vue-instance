@@ -58,7 +58,13 @@
     <!-- 表格 -->
     <base-table :tableData="companyData" @selectChange="handleSelectionChange" @selectAll="selectFilterAll">
       <el-table-column :selectable="selectable" type="selection" width="55"> </el-table-column>
-      <el-table-column prop="companyName" label="名称" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="companyName" label="名称" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span style="cursor:pointer;color:#409eff" @click="jumpSearch(scope.row.companyName)">{{
+            scope.row.companyName
+          }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="website" label="网址" show-overflow-tooltip>
         <template slot-scope="scope">
           <span @click="jumpWebsite(scope)" style="cursor:pointer;color:#409eff">{{ scope.row.website }}</span>
@@ -81,7 +87,7 @@
           <span style="cursor:pointer;color:#409eff">{{ scope.row.emailCheck ? '是' : '否' }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column> -->
+      <el-table-column prop="phone" label="电话" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="sendNum" label="发送次数" show-overflow-tooltip> </el-table-column>
@@ -90,6 +96,9 @@
           <span style="cursor:pointer;color:#409eff">{{ scope.row.clickWebsite ? '是' : '否' }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="legalPerson" label="法人" show-overflow-tooltip> </el-table-column>
+      <el-table-column prop="registeredCapital" label="注册资本" show-overflow-tooltip> </el-table-column>
+
       <!-- <el-table-column prop="operatingStatus" label="经营状态" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="legalPerson" label="法人" show-overflow-tooltip> </el-table-column>
       <el-table-column prop="registeredCapital" label="注册资本" show-overflow-tooltip> </el-table-column>
@@ -441,6 +450,10 @@ export default Vue.extend({
     //     return weiname;
     //   }
     // },
+    jumpSearch(name) {
+      let url = `https://www.baidu.com/s?wd=${name}`;
+      window.open(url);
+    },
     // 判断是否可选中
     selectable(row, index) {
       return true;
