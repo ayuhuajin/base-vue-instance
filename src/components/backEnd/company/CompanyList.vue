@@ -511,6 +511,11 @@ export default Vue.extend({
       this.emailObj.to = obj.email;
       // this.emailObj.to = '455493143@qq.com';
 
+      if (!obj.emailValid || obj.email.length < 14 || obj.email.includes('abc') || obj.email.includes('123')) {
+        this.$message.error('当前邮箱不符合发送规则');
+        return;
+      }
+
       this.emailObj.companyId = obj._id;
       ali.dispatch('sendEmail', this.emailObj).then(result => {
         this.$message.success('发送成功');
